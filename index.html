@@ -166,6 +166,53 @@
             </p>
           </div>
 
+          <div class="coverage-grid" data-reveal>
+            <article class="coverage-card" data-coverage="smartcut">
+              <strong>التقطيع الذكي</strong>
+              <span>جاهز داخل Smart Cut</span>
+            </article>
+            <article class="coverage-card" data-coverage="captions">
+              <strong>Captions عربي/إنجليزي</strong>
+              <span>جاهزة مع 3 ستايلات</span>
+            </article>
+            <article class="coverage-card" data-coverage="audio">
+              <strong>تحسين الصوت</strong>
+              <span>Web Audio + Presets</span>
+            </article>
+            <article class="coverage-card" data-coverage="edit">
+              <strong>اقتراح مونتاج جاهز</strong>
+              <span>Templates + Transitions</span>
+            </article>
+            <article class="coverage-card" data-coverage="color">
+              <strong>تصحيح الألوان</strong>
+              <span>Auto حسب نوع الفيديو</span>
+            </article>
+            <article class="coverage-card" data-coverage="platform">
+              <strong>تجهيز المنصات</strong>
+              <span>YouTube / TikTok / Instagram</span>
+            </article>
+            <article class="coverage-card" data-coverage="search">
+              <strong>البحث بالكلمات</strong>
+              <span>بحث مباشر داخل النص</span>
+            </article>
+            <article class="coverage-card" data-coverage="fx">
+              <strong>مكتبة FX وانتقالات</strong>
+              <span>Glow / Focus / Scan / More</span>
+            </article>
+            <article class="coverage-card" data-coverage="voice">
+              <strong>AI Voice Over</strong>
+              <span>Preview + Attach</span>
+            </article>
+            <article class="coverage-card" data-coverage="assistant">
+              <strong>المساعد الذكي</strong>
+              <span>يفهم وينفذ الأوامر</span>
+            </article>
+            <article class="coverage-card" data-coverage="learning">
+              <strong>تعلم الأسلوب</strong>
+              <span>يحفظ التفضيلات محليًا</span>
+            </article>
+          </div>
+
           <div class="studio-shell">
             <article class="studio-preview-card" data-reveal>
               <div class="studio-toolbar">
@@ -238,7 +285,7 @@
             </article>
 
             <div class="studio-control-stack">
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="mediaLab" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Media Lab</p>
@@ -275,7 +322,7 @@
                 <div class="analysis-facts" id="analysisFacts"></div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="smartCutPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Smart Cut</p>
@@ -294,7 +341,7 @@
                 </p>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="captionsPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Captions</p>
@@ -335,7 +382,7 @@
                 <div class="caption-list" id="captionList"></div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="editPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Edit Engine</p>
@@ -384,10 +431,17 @@
                   <button class="button secondary mini-button" type="button" id="applyEditTemplateBtn">Apply Edit Plan</button>
                 </div>
 
+                <div class="fx-library" id="fxLibrary">
+                  <button class="fx-chip is-active" type="button" data-effect-quick="clean">Clean</button>
+                  <button class="fx-chip" type="button" data-effect-quick="glow">Neon Glow</button>
+                  <button class="fx-chip" type="button" data-effect-quick="focus">Focus Frame</button>
+                  <button class="fx-chip" type="button" data-effect-quick="scan">Scanlines</button>
+                </div>
+
                 <div class="edit-suggestions" id="editSuggestions"></div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="lookSoundPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Look & Sound</p>
@@ -434,7 +488,7 @@
                 </div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="voicePanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">AI Voice Over</p>
@@ -473,7 +527,7 @@
                 <div class="voiceover-status" id="voiceOverStatus"></div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="assistantPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Assistant</p>
@@ -501,7 +555,7 @@
                 <div class="assistant-log" id="assistantLog"></div>
               </article>
 
-              <article class="control-card" data-reveal>
+              <article class="control-card" id="searchPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Search</p>
@@ -516,7 +570,7 @@
                 <div class="search-results" id="searchResults"></div>
               </article>
 
-              <article class="control-card control-card--compact" data-reveal>
+              <article class="control-card control-card--compact" id="learningPanel" data-reveal>
                 <div class="control-heading">
                   <div>
                     <p class="mini-title">Style Learning</p>

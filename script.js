@@ -246,7 +246,9 @@ const refs = {
   searchResultsNode: document.getElementById("searchResults"),
   styleMemoryNode: document.getElementById("styleMemory"),
   applyLearnedStyleBtn: document.getElementById("applyLearnedStyleBtn"),
-  exportPlanBtn: document.getElementById("exportPlanBtn")
+  exportPlanBtn: document.getElementById("exportPlanBtn"),
+  coverageNodes: document.querySelectorAll("[data-coverage]"),
+  fxQuickButtons: document.querySelectorAll("[data-effect-quick]")
 };
 
 init();
@@ -372,6 +374,7 @@ function wireEvents() {
   refs.contentTypeSelect?.addEventListener("change", () => {
     state.contentType = refs.contentTypeSelect.value;
     renderAnalysisFacts();
+    applyContentRecommendations({ silent: true, record: false });
   });
 
   refs.contentLanguageSelect?.addEventListener("change", () => {
@@ -381,6 +384,8 @@ function wireEvents() {
   refs.effectSelect?.addEventListener("change", () => {
     state.effect = refs.effectSelect.value;
     syncPreviewState();
+    syncFxQuickButtons();
+    renderCoverageStatus();
   });
 
   refs.editTemplateSelect?.addEventListener("change", () => {
@@ -394,6 +399,20 @@ function wireEvents() {
 
   refs.sfxToggle?.addEventListener("change", () => {
     state.sfxEnabled = refs.sfxToggle.checked;
+  });
+
+  refs.fxQuickButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      state.effect = button.dataset.effectQuick || "clean";
+      if (refs.effectSelect) {
+        refs.effectSelect.value = state.effect;
+      }
+      syncPreviewState();
+      syncFxQuickButtons();
+      renderCoverageStatus();
+      renderEditSuggestions();
+      renderSummary();
+    });
   });
 
   refs.exportNameInput?.addEventListener("input", () => {
@@ -560,6 +579,7 @@ function resetWorkspace() {
   renderStyleMemory();
   renderVoiceOverStatus("جاهز للتعليق الصوتي", "يمكنك معاينة الصوت أو ربطه بالمشروع.");
   syncCaptionToTime(getSelectedTime());
+  renderCoverageStatus();
 }
 
 function syncControlsFromState() {
@@ -579,6 +599,7 @@ function syncControlsFromState() {
   if (refs.voiceRateInput) refs.voiceRateInput.value = String(state.voiceOver.rate);
   if (refs.voicePitchInput) refs.voicePitchInput.value = String(state.voiceOver.pitch);
   syncCaptionLanguageControl();
+  syncFxQuickButtons();
 }
 
 function syncCaptionLanguageControl() {
@@ -676,6 +697,8 @@ async function analyzeCurrentMedia() {
   renderEditSuggestions();
   renderSearchResults(refs.transcriptSearchInput?.value || "");
   syncCaptionToTime(getSelectedTime());
+  applyContentRecommendations({ silent: true, record: false });
+  renderCoverageStatus();
 
   updateStatus(
     "اكتمل تحليل المشروع",
@@ -1075,6 +1098,7 @@ function generateCaptions(options = {}) {
   renderSummary();
   syncCaptionToTime(getSelectedTime());
   renderStyleMemory();
+  renderCoverageStatus();
 
   if (!silent) {
     updateStatus(
@@ -1180,6 +1204,7 @@ function applySmartCut(mode, options = {}) {
   }
 
   renderStyleMemory();
+  renderCoverageStatus();
 
   if (!silent) {
     updateStatus("تم تنفيذ القص الذكي", note);
@@ -1212,6 +1237,7 @@ function applyPresetSelections(options = {}) {
   }
 
   renderStyleMemory();
+  renderCoverageStatus();
 
   if (!silent) {
     updateStatus(
@@ -1249,6 +1275,7 @@ function applyEditTemplate(options = {}) {
   renderEditSuggestions();
   renderSummary();
   renderStyleMemory();
+  renderCoverageStatus();
 
   if (state.sfxEnabled) {
     playTransitionSound();
@@ -1572,6 +1599,7 @@ function attachVoiceOverToProject() {
   renderSummary();
   renderStyleMemory();
   renderVoiceOverStatus("تم ربط Voice Over بالمشروع", "سيظهر داخل التقرير النهائي ويُعتبر جزءًا من الخطة.");
+  renderCoverageStatus();
   updateStatus("تم تجهيز Voice Over", "أصبح التعليق الصوتي جزءًا من المشروع الحالي.");
 }
 
@@ -1584,6 +1612,7 @@ function renderVoiceOverStatus(title, meta) {
     <strong>${title}</strong>
     <p>${meta}</p>
   `;
+  renderCoverageStatus();
 }
 
 function generateSuggestedVoiceOver() {
@@ -1985,6 +2014,7 @@ function applyLearnedStyle() {
     generateCaptions({ silent: true, record: false });
   }
 
+  renderCoverageStatus();
   updateStatus("تم تطبيق الأسلوب المتعلم", "جرى تحميل أكثر تفضيلاتك استخدامًا على المشروع الحالي.");
 }
 
@@ -2041,6 +2071,107 @@ function renderAnalysisMode(mode) {
   };
 
   return labelsByMode[mode] || mode;
+}
+
+function applyContentRecommendations(options = {}) {
+  const { silent = false, record = true } = options;
+  const presetsByType = {
+    tutorial: {
+      editTemplate: "tutorial",
+      transition: "cut",
+      effect: "focus",
+      audioPreset: "balanced",
+      colorPreset: "balanced",
+      platformPreset: "youtube"
+    },
+    vlog: {
+      editTemplate: "viral",
+      transition: "swipe",
+      effect: "glow",
+      audioPreset: "balanced",
+      colorPreset: "vibrant",
+      platformPreset: "tiktok"
+    },
+    commercial: {
+      editTemplate: "commercial",
+      transition: "zoom",
+      effect: "glow",
+      audioPreset: "cinematic",
+      colorPreset: "cinematic",
+      platformPreset: "instagram"
+    },
+    podcast: {
+      editTemplate: "podcast",
+      transition: "fade",
+      effect: "clean",
+      audioPreset: "podcast",
+      colorPreset: "balanced",
+      platformPreset: "youtube"
+    }
+  };
+
+  const recommended = presetsByType[state.contentType] || presetsByType.tutorial;
+  state.editTemplate = recommended.editTemplate;
+  state.transition = recommended.transition;
+  state.effect = recommended.effect;
+  state.audioPreset = recommended.audioPreset;
+  state.colorPreset = recommended.colorPreset;
+  state.platformPreset = recommended.platformPreset;
+
+  syncControlsFromState();
+  syncPreviewState();
+  renderEditSuggestions();
+  renderSummary();
+  renderCoverageStatus();
+
+  if (record) {
+    incrementPreference("editTemplate", state.editTemplate);
+    incrementPreference("transition", state.transition);
+    incrementPreference("effect", state.effect);
+    incrementPreference("audio", state.audioPreset);
+    incrementPreference("color", state.colorPreset);
+    incrementPreference("platform", state.platformPreset);
+  }
+
+  if (!silent) {
+    updateStatus(
+      "تم اختيار إعدادات تلقائية حسب نوع الفيديو",
+      `${labels.contentType[state.contentType]} • ${labels.editTemplate[state.editTemplate]} • ${labels.color[state.colorPreset]}`
+    );
+  }
+}
+
+function syncFxQuickButtons() {
+  refs.fxQuickButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.effectQuick === state.effect);
+  });
+}
+
+function renderCoverageStatus() {
+  refs.coverageNodes.forEach((node) => {
+    const key = node.dataset.coverage;
+    let isLive = true;
+
+    if (key === "captions") {
+      isLive = state.captions.length > 0 || state.captionStyle !== "highlight" || state.captionLanguage !== "ar";
+    } else if (key === "voice") {
+      isLive = state.voiceOver.attached || state.speaking || Boolean(state.voiceOver.text?.trim());
+    } else if (key === "learning") {
+      isLive = state.styleProfile.commands > 0 || Object.keys(state.styleProfile.platform || {}).length > 0;
+    } else if (key === "search") {
+      isLive = state.transcript.length > 0;
+    } else if (key === "audio") {
+      isLive = Boolean(state.audioPreset);
+    } else if (key === "fx") {
+      isLive = Boolean(state.effect);
+    } else if (key === "edit") {
+      isLive = Boolean(state.editTemplate);
+    } else if (key === "platform") {
+      isLive = Boolean(state.platformPreset);
+    }
+
+    node.classList.toggle("is-live", isLive);
+  });
 }
 
 function getTopClip() {

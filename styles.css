@@ -937,6 +937,38 @@ img {
   padding-top: 18px;
 }
 
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.coverage-card {
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: var(--shadow);
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.coverage-card strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.coverage-card span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.coverage-card.is-live {
+  background: linear-gradient(135deg, rgba(57, 215, 255, 0.1), rgba(125, 99, 255, 0.1));
+  border-color: rgba(57, 215, 255, 0.22);
+  transform: translateY(-1px);
+}
+
 .studio-shell {
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
@@ -984,7 +1016,8 @@ img {
 .toolbar-group,
 .action-row,
 .overlay-stack,
-.quick-commands {
+.quick-commands,
+.fx-library {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -1463,6 +1496,33 @@ img {
   color: var(--text);
   border-color: rgba(57, 215, 255, 0.2);
   transform: translateY(-1px);
+}
+
+.fx-chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.fx-chip:hover,
+.fx-chip:focus-visible {
+  transform: translateY(-1px);
+  color: var(--text);
+  border-color: rgba(57, 215, 255, 0.22);
+}
+
+.fx-chip.is-active {
+  background: linear-gradient(135deg, rgba(57, 215, 255, 0.12), rgba(125, 99, 255, 0.12));
+  border-color: rgba(57, 215, 255, 0.22);
+  color: var(--text);
 }
 
 .assistant-entry {
