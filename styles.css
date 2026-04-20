@@ -1009,7 +1009,10 @@ img {
 .field span,
 .assistant-entry p,
 .search-item p,
-.memory-item span {
+.memory-item span,
+.suggestion-item p,
+.analysis-item p,
+.voiceover-status p {
   color: var(--muted);
   line-height: 1.75;
 }
@@ -1030,6 +1033,39 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #040c15;
   aspect-ratio: 16 / 9;
+}
+
+.canvas-media::before,
+.canvas-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.studio-canvas[data-effect="glow"] .canvas-media::before {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 45%, rgba(57, 215, 255, 0.18), transparent 48%);
+  mix-blend-mode: screen;
+}
+
+.studio-canvas[data-effect="focus"] .canvas-media::before {
+  opacity: 1;
+  inset: 18px;
+  border: 2px solid rgba(57, 215, 255, 0.24);
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px rgba(125, 99, 255, 0.18);
+}
+
+.studio-canvas[data-effect="scan"] .canvas-media::after {
+  opacity: 1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(180deg, transparent, rgba(57, 215, 255, 0.08), transparent);
+  background-size: 100% 4px, 100% 100%;
+  mix-blend-mode: screen;
 }
 
 .studio-canvas[data-ratio="tiktok"] .canvas-media {
@@ -1122,7 +1158,7 @@ img {
 
 .studio-summary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 12px;
   margin-top: 18px;
 }
@@ -1288,12 +1324,17 @@ img {
   gap: 8px;
 }
 
+.field--full {
+  grid-column: 1 / -1;
+}
+
 .field span {
   font-size: 0.9rem;
 }
 
 .field input,
 .field select,
+.field textarea,
 .assistant-input-row input {
   width: 100%;
   min-height: 48px;
@@ -1308,15 +1349,39 @@ img {
 
 .field input:focus,
 .field select:focus,
+.field textarea:focus,
 .assistant-input-row input:focus {
   border-color: rgba(57, 215, 255, 0.32);
   box-shadow: 0 0 0 3px rgba(57, 215, 255, 0.08);
 }
 
+.field textarea {
+  min-height: 132px;
+  padding-block: 12px;
+  resize: vertical;
+}
+
+.field--checkbox {
+  align-content: end;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.field--checkbox input {
+  min-height: auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 8px;
+}
+
 .caption-list,
 .assistant-log,
 .search-results,
-.style-memory {
+.style-memory,
+.analysis-facts,
+.edit-suggestions,
+.voiceover-status {
   display: grid;
   gap: 10px;
   margin-top: 16px;
@@ -1325,7 +1390,9 @@ img {
 .caption-item,
 .assistant-entry,
 .search-item,
-.memory-item {
+.memory-item,
+.analysis-item,
+.suggestion-item {
   width: 100%;
   padding: 14px 16px;
   text-align: start;
@@ -1357,7 +1424,10 @@ img {
 .caption-item strong,
 .assistant-entry strong,
 .search-item strong,
-.memory-item strong {
+.memory-item strong,
+.analysis-item strong,
+.suggestion-item strong,
+.voiceover-status strong {
   display: block;
   margin-bottom: 4px;
 }
@@ -1462,6 +1532,29 @@ img {
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
+}
+
+.analysis-item,
+.suggestion-item,
+.voiceover-status {
+  position: relative;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.analysis-item span,
+.suggestion-item span {
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-family: "Plus Jakarta Sans", "Cairo", sans-serif;
+}
+
+.analysis-item p,
+.suggestion-item p,
+.voiceover-status p {
+  margin: 0 0 8px;
 }
 
 [data-reveal] {

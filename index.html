@@ -158,11 +158,11 @@
         <section class="section studio-section" id="demo">
           <div class="section-heading" data-reveal>
             <p class="eyebrow">Interactive Demo</p>
-            <h2>نسخة عملية تفاعلية تجسد الميزات بدل مجرد عرضها</h2>
+            <h2>استوديو عملي يلمّس كل وظائف SmartCut AI داخل المتصفح</h2>
             <p>
-              هذه اللوحة تعمل داخل المتصفح كنموذج احترافي: ارفع فيديوك أو استخدم المشروع التجريبي،
-              ثم جرّب القص الذكي، الترجمة، أوامر المساعد، البحث بالكلمات، حفظ الأسلوب، وتصدير تقرير
-              المشروع.
+              هذه النسخة لا تكتفي بالشرح؛ بل تمنحك سير عمل حقيقي: تحليل ملف، قص ذكي، ترجمة، محرك
+              مونتاج جاهز، تحسين صوت أثناء التشغيل، مكتبة FX، Voice Over، بحث بالكلمات، ومساعد ذكي
+              ينسق كل ذلك من واجهة واحدة.
             </p>
           </div>
 
@@ -173,15 +173,16 @@
                   <label class="button secondary mini-button file-trigger" for="videoUpload">رفع فيديو للتجربة</label>
                   <input id="videoUpload" type="file" accept="video/*" hidden />
                   <button class="button ghost mini-button" type="button" id="loadSampleBtn">تحميل مشروع تجريبي</button>
+                  <button class="button primary mini-button" type="button" id="analyzeMediaBtn">Analyze Media</button>
                 </div>
 
                 <div class="studio-status" aria-live="polite">
                   <strong id="analysisStatus">جاهز لتحليل مشروعك</strong>
-                  <span id="analysisMeta">ابدأ بالمشروع التجريبي أو ارفع ملف فيديو محلي لتجربة الواجهة بشكل عملي.</span>
+                  <span id="analysisMeta">ابدأ بالمشروع التجريبي أو ارفع فيديو محلي، ثم شغّل التحليل لبناء المقاطع والنتائج تلقائيًا.</span>
                 </div>
               </div>
 
-              <div class="studio-canvas" id="studioCanvas" data-ratio="youtube" data-look="balanced">
+              <div class="studio-canvas" id="studioCanvas" data-ratio="youtube" data-look="balanced" data-effect="clean">
                 <div class="canvas-media">
                   <video id="studioVideo" class="canvas-video" controls playsinline hidden></video>
                   <img
@@ -195,6 +196,8 @@
                       <span class="live-chip" id="platformChip">YouTube 16:9</span>
                       <span class="live-chip muted" id="audioChip">Balanced Audio</span>
                       <span class="live-chip muted" id="colorChip">Balanced Color</span>
+                      <span class="live-chip muted" id="templateChip">Tutorial Flow</span>
+                      <span class="live-chip muted" id="effectChip">Clean FX</span>
                     </div>
 
                     <div class="live-caption" id="liveCaption" data-style="highlight">
@@ -221,12 +224,57 @@
                   <span>حالة الترجمة</span>
                   <strong id="captionStateValue">غير مولدة</strong>
                 </article>
+                <article class="summary-card">
+                  <span>Voice Over</span>
+                  <strong id="voiceOverStateValue">غير نشط</strong>
+                </article>
+                <article class="summary-card">
+                  <span>FX الحالي</span>
+                  <strong id="fxStateValue">Clean</strong>
+                </article>
               </div>
 
               <div class="clip-lane" id="clipLane" aria-label="Timeline Overview"></div>
             </article>
 
             <div class="studio-control-stack">
+              <article class="control-card" data-reveal>
+                <div class="control-heading">
+                  <div>
+                    <p class="mini-title">Media Lab</p>
+                    <h3>حلّل الملف وابنِ مقاطع وكلمات المشروع بدقة أعلى</h3>
+                  </div>
+                </div>
+
+                <div class="field-grid">
+                  <label class="field field--full">
+                    <span>Transcript اختياري لتحسين البحث والكابشن</span>
+                    <textarea id="transcriptInput" rows="5" placeholder="ألصق النص هنا. يمكنك استخدام سطر لكل جملة أو فقرة قصيرة لكل لقطة."></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>نوع الفيديو</span>
+                    <select id="contentTypeSelect">
+                      <option value="tutorial">Tutorial / شرح</option>
+                      <option value="vlog">Vlog / محتوى يومي</option>
+                      <option value="commercial">Commercial / إعلان</option>
+                      <option value="podcast">Podcast / حديث مباشر</option>
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span>لغة النص المتوقع</span>
+                    <select id="contentLanguageSelect">
+                      <option value="ar">Arabic</option>
+                      <option value="en">English</option>
+                      <option value="bi">Mixed</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="analysis-facts" id="analysisFacts"></div>
+              </article>
+
               <article class="control-card" data-reveal>
                 <div class="control-heading">
                   <div>
@@ -290,6 +338,58 @@
               <article class="control-card" data-reveal>
                 <div class="control-heading">
                   <div>
+                    <p class="mini-title">Edit Engine</p>
+                    <h3>اقتراح مونتاج جاهز مع انتقالات وترتيب مشاهد ومكتبة FX</h3>
+                  </div>
+                </div>
+
+                <div class="field-grid">
+                  <label class="field">
+                    <span>قالب المونتاج</span>
+                    <select id="editTemplateSelect">
+                      <option value="tutorial">Tutorial Flow</option>
+                      <option value="viral">Viral Reel</option>
+                      <option value="podcast">Podcast Focus</option>
+                      <option value="commercial">Commercial Punch</option>
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span>الانتقال الافتراضي</span>
+                    <select id="transitionSelect">
+                      <option value="cut">Hard Cut</option>
+                      <option value="fade">Smooth Fade</option>
+                      <option value="zoom">Zoom Punch</option>
+                      <option value="swipe">Swipe Motion</option>
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span>تأثير المعاينة</span>
+                    <select id="effectSelect">
+                      <option value="clean">Clean</option>
+                      <option value="glow">Neon Glow</option>
+                      <option value="focus">Focus Frame</option>
+                      <option value="scan">Scanlines</option>
+                    </select>
+                  </label>
+
+                  <label class="field field--checkbox">
+                    <span>مؤثرات صوتية للانتقالات</span>
+                    <input id="sfxToggle" type="checkbox" checked />
+                  </label>
+                </div>
+
+                <div class="action-row">
+                  <button class="button secondary mini-button" type="button" id="applyEditTemplateBtn">Apply Edit Plan</button>
+                </div>
+
+                <div class="edit-suggestions" id="editSuggestions"></div>
+              </article>
+
+              <article class="control-card" data-reveal>
+                <div class="control-heading">
+                  <div>
                     <p class="mini-title">Look & Sound</p>
                     <h3>ألوان وصوت وإعداد منصة بنقرة واحدة</h3>
                   </div>
@@ -337,6 +437,45 @@
               <article class="control-card" data-reveal>
                 <div class="control-heading">
                   <div>
+                    <p class="mini-title">AI Voice Over</p>
+                    <h3>تحويل النص إلى صوت مع اختيار نبرة وسرعة القراءة</h3>
+                  </div>
+                </div>
+
+                <div class="field-grid">
+                  <label class="field field--full">
+                    <span>نص التعليق الصوتي</span>
+                    <textarea id="voiceOverText" rows="4" placeholder="اكتب النص الذي تريد قراءته صوتيًا داخل المشروع."></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>الصوت</span>
+                    <select id="voiceSelect"></select>
+                  </label>
+
+                  <label class="field">
+                    <span>السرعة</span>
+                    <input id="voiceRateInput" type="range" min="0.7" max="1.4" step="0.05" value="1" />
+                  </label>
+
+                  <label class="field">
+                    <span>النبرة</span>
+                    <input id="voicePitchInput" type="range" min="0.8" max="1.4" step="0.05" value="1" />
+                  </label>
+                </div>
+
+                <div class="action-row">
+                  <button class="button primary mini-button" type="button" id="previewVoiceOverBtn">Preview Voice</button>
+                  <button class="button secondary mini-button" type="button" id="stopVoiceOverBtn">Stop</button>
+                  <button class="button ghost mini-button" type="button" id="useVoiceOverBtn">استخدامه في المشروع</button>
+                </div>
+
+                <div class="voiceover-status" id="voiceOverStatus"></div>
+              </article>
+
+              <article class="control-card" data-reveal>
+                <div class="control-heading">
+                  <div>
                     <p class="mini-title">Assistant</p>
                     <h3>مساعد ذكي يقرأ طلبك وينفذ الخطوات المناسبة</h3>
                   </div>
@@ -346,7 +485,7 @@
                   <input
                     id="assistantCommandInput"
                     type="text"
-                    placeholder="مثال: احذف الصمت وولّد Captions ثنائية وجهز نسخة تيك توك"
+                    placeholder="مثال: احذف الصمت وولّد Captions ثنائية وجهز نسخة تيك توك وأضف Voice Over"
                   />
                   <button class="button primary mini-button" type="button" id="runAssistantBtn">Run</button>
                 </div>
@@ -356,6 +495,7 @@
                   <button class="quick-command" type="button" data-command="ولّد Captions ثنائية اللغة بستايل سريع">كابشن ثنائي</button>
                   <button class="quick-command" type="button" data-command="جهز نسخة تيك توك مع لون حيوي">نسخة TikTok</button>
                   <button class="quick-command" type="button" data-command="حسّن الصوت وأضف ألوان سينمائية">صوت + ألوان</button>
+                  <button class="quick-command" type="button" data-command="طبّق قالب Viral Reel مع Zoom Punch وVoice Over">Viral + VO</button>
                 </div>
 
                 <div class="assistant-log" id="assistantLog"></div>
