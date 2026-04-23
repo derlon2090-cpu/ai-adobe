@@ -657,13 +657,22 @@ function init() {
     refs.year.textContent = String(new Date().getFullYear());
   }
 
+  setActiveNav();
+  setupRevealObserver();
   updateSoundCount();
   initVoiceStudio();
-  setupRevealObserver();
-  syncMode();
-  syncTemplate();
-  syncUnmix();
-  renderLibrary();
+  initFeatureTabs();
+  initAudioPreviews();
+  initPricingModes();
+  initDemoProgress();
+
+  if (refs.editorShell && refs.libraryList && refs.detailTitle) {
+    syncMode();
+    syncTemplate();
+    syncUnmix();
+    renderLibrary();
+  }
+
   bindEvents();
 }
 
@@ -740,6 +749,153 @@ function bindEvents() {
       refs.systemStatus.textContent =
         "تم تجهيز نسخة Keep Vocals لاستخدامها داخل التايم لاين أو لإعادة تسجيل Voice Over فوقها.";
     }
+  });
+}
+
+function setActiveNav() {
+  const links = document.querySelectorAll(".site-nav a[href]");
+  if (!links.length) return;
+
+  const current = window.location.pathname.split("/").pop() || "index.html";
+
+  links.forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    const target = href.split("/").pop();
+    const isMatch =
+      target === current ||
+      (current === "index.html" && (href === "#top" || target === "" || target === "index.html"));
+
+    link.classList.toggle("is-current", isMatch);
+  });
+}
+
+function initFeatureTabs() {
+  const tabGroups = document.querySelectorAll("[data-tabs]");
+  if (!tabGroups.length) return;
+
+  tabGroups.forEach((group) => {
+    const buttons = group.querySelectorAll("[data-tab-target]");
+    const panels = group.querySelectorAll("[data-tab-panel]");
+    if (!buttons.length || !panels.length) return;
+
+    const activate = (target) => {
+      buttons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.tabTarget === target);
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.tabPanel !== target;
+        panel.classList.toggle("is-active", panel.dataset.tabPanel === target);
+      });
+    };
+
+    const initial =
+      group.querySelector("[data-tab-target].is-active")?.dataset.tabTarget ||
+      buttons[0].dataset.tabTarget;
+
+    activate(initial);
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activate(button.dataset.tabTarget || initial);
+      });
+    });
+  });
+}
+
+function initAudioPreviews() {
+  const buttons = document.querySelectorAll("[data-audio-preview]");
+  if (!buttons.length) return;
+
+  const player = document.getElementById("globalPreviewAudio");
+  if (!player) return;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const src = button.dataset.audioPreview;
+      if (!src) return;
+
+      const isSame = player.getAttribute("src") === src && !player.paused;
+
+      buttons.forEach((item) => item.classList.remove("is-playing"));
+
+      if (isSame) {
+        player.pause();
+        button.classList.remove("is-playing");
+        return;
+      }
+
+      player.setAttribute("src", src);
+      player.play().catch(() => {});
+      button.classList.add("is-playing");
+    });
+  });
+
+  player.addEventListener("ended", () => {
+    buttons.forEach((item) => item.classList.remove("is-playing"));
+  });
+}
+
+function initPricingModes() {
+  const switcher = document.getElementById("pricingModeSwitch");
+  const cards = document.querySelectorAll("[data-price-card]");
+  if (!switcher || !cards.length) return;
+
+  const buttons = switcher.querySelectorAll("[data-price-mode]");
+  const applyMode = (mode) => {
+    buttons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.priceMode === mode);
+    });
+
+    cards.forEach((card) => {
+      const min = Number(card.dataset.totalMin || 0);
+      const max = Number(card.dataset.totalMax || 0);
+      const months = Number(card.dataset.months || 1);
+      const priceNode = card.querySelector("[data-price-value]");
+      const helperNode = card.querySelector("[data-price-helper]");
+      if (!priceNode || !helperNode) return;
+
+      if (mode === "monthly") {
+        const monthlyMin = min / months;
+        const monthlyMax = max / months;
+        priceNode.textContent = formatPriceRange(monthlyMin, monthlyMax, true);
+        helperNode.textContent = months === 1 ? "السعر الشهري المباشر" : `متوسط شهري على ${months} ${months >= 3 ? "شهور" : "شهر"}`;
+        return;
+      }
+
+      priceNode.textContent = formatPriceRange(min, max, false);
+      helperNode.textContent = months === 1 ? "إجمالي الباقة الشهرية" : `إجمالي باقة ${months} ${months >= 3 ? "شهور" : "شهر"}`;
+    });
+  };
+
+  const initial = switcher.querySelector("[data-price-mode].is-active")?.dataset.priceMode || "total";
+  applyMode(initial);
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      applyMode(button.dataset.priceMode || "total");
+    });
+  });
+}
+
+function formatPriceRange(min, max, monthly) {
+  const prefix = monthly ? "$" : "$";
+  if (Math.abs(min - max) < 0.001) {
+    return `${prefix}${min.toFixed(min % 1 === 0 ? 0 : 2)}`;
+  }
+
+  const left = min.toFixed(min % 1 === 0 ? 0 : 2);
+  const right = max.toFixed(max % 1 === 0 ? 0 : 2);
+  return `${prefix}${left} – ${prefix}${right}`;
+}
+
+function initDemoProgress() {
+  document.querySelectorAll("[data-auto-progress]").forEach((bar, index) => {
+    window.setTimeout(() => {
+      const target = bar.dataset.progressTarget || "84%";
+      bar.style.setProperty("--progress-width", target);
+      bar.classList.add("is-animated");
+    }, 180 + index * 160);
   });
 }
 
@@ -929,7 +1085,7 @@ function syncVoiceStudio() {
 }
 
 function showVoiceStudio(preset) {
-  if (!refs.voiceStudioBox) return;
+  if (!refs.voiceStudioBox || !preset) return;
 
   refs.voiceStudioBox.hidden = false;
   hideDetailAudio();
@@ -1044,6 +1200,8 @@ function stopVoicePreview() {
 }
 
 function renderLibrary() {
+  if (!refs.libraryList || !libraries[state.panel]) return;
+
   refs.libraryTabs?.querySelectorAll("[data-panel]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.panel === state.panel);
   });
@@ -1089,6 +1247,8 @@ function renderLibrary() {
 }
 
 function renderDetail(item) {
+  if (!refs.detailLabel || !refs.detailTitle || !refs.detailText || !refs.detailTags) return;
+
   if (!item) {
     refs.detailLabel.textContent = "Library Detail";
     refs.detailTitle.textContent = "No item";

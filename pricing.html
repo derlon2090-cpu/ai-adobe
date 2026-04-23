@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="صفحة Pricing من Orphix: مقارنة خطط Astrix Video Pro مع عرض إجمالي الباقة أو المتوسط الشهري تلقائيًا."
+    />
+    <title>Orphix | Pricing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="subpage">
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Orphix">
+          <span class="brand-mark">O</span>
+          <span class="brand-text">
+            <strong>Orphix</strong>
+            <small>Astrix Video Pro</small>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main Navigation">
+          <a href="index.html">Home</a>
+          <a href="ai-features.html">AI Features</a>
+          <a href="sound-meme.html">Sound & Meme</a>
+          <a href="editor-experience.html">Editor Experience</a>
+          <a href="pro-features.html">Pro Features</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <a class="button ghost compact" href="#plans">Choose Plan</a>
+      </header>
+
+      <main class="subpage-main">
+        <section class="page-hero">
+          <div class="page-hero-copy" data-reveal>
+            <p class="eyebrow">Pricing</p>
+            <h1>اختر الخطة المناسبة لك</h1>
+            <p>
+              صُممت الخطط لتغطي التجربة السريعة، الاستخدام المستمر، والإنتاج الاحترافي طويل المدى.
+              يمكنك أيضًا عرض المتوسط الشهري تلقائيًا لتقارن القيمة بسهولة.
+            </p>
+          </div>
+
+          <article class="page-hero-card" data-reveal>
+            <strong>Most Popular</strong>
+            <span>الخطة السنوية هي أفضل نقطة توازن بين السعر والقيمة.</span>
+            <strong>Flexible Range</strong>
+            <span>كل باقة تعرض نطاقًا سعريًا يناسب مستويات مختلفة من الاستخدام.</span>
+          </article>
+        </section>
+
+        <section class="section" id="plans">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Pricing Toggle</p>
+            <h2>اعرض السعر كما يناسب قرارك</h2>
+            <p>بدّل بين إجمالي الباقة أو متوسط السعر الشهري لتعرف القيمة الفعلية بسرعة.</p>
+          </div>
+
+          <div class="pricing-switch" id="pricingModeSwitch" data-reveal>
+            <button class="switch-chip is-active" type="button" data-price-mode="total">إجمالي الباقة</button>
+            <button class="switch-chip" type="button" data-price-mode="monthly">متوسط شهري</button>
+          </div>
+
+          <div class="pricing-grid">
+            <article class="price-card" data-reveal data-price-card data-total-min="5.99" data-total-max="9.99" data-months="1">
+              <span class="plan-tag">🟢 شهر</span>
+              <h3>Monthly Pro</h3>
+              <strong data-price-value>$5.99 – $9.99</strong>
+              <p data-price-helper>إجمالي الباقة الشهرية</p>
+              <ul class="price-list">
+                <li>مثالية للتجربة أو لصناع المحتوى النشطين شهريًا</li>
+                <li>مرونة كاملة بدون التزام طويل</li>
+              </ul>
+            </article>
+
+            <article class="price-card" data-reveal data-price-card data-total-min="15" data-total-max="27" data-months="3">
+              <span class="plan-tag">🟡 3 شهور</span>
+              <h3>Quarter Plan</h3>
+              <strong data-price-value>$15 – $27</strong>
+              <p data-price-helper>إجمالي باقة 3 شهور</p>
+              <ul class="price-list">
+                <li>أفضل قيمة للمشاريع القصيرة والمتوسطة</li>
+                <li>أنسب للتجارب الممتدة أو الحملات القصيرة</li>
+              </ul>
+            </article>
+
+            <article class="price-card" data-reveal data-price-card data-total-min="28" data-total-max="45" data-months="6">
+              <span class="plan-tag">🔵 6 شهور</span>
+              <h3>Half-Year Pro</h3>
+              <strong data-price-value>$28 – $45</strong>
+              <p data-price-helper>إجمالي باقة 6 شهور</p>
+              <ul class="price-list">
+                <li>مناسبة للمستخدمين المستمرين وصناع المحتوى المحترفين</li>
+                <li>أقل تكلفة شهرية من الباقات القصيرة</li>
+              </ul>
+            </article>
+
+            <article
+              class="price-card featured popular-card"
+              data-reveal
+              data-price-card
+              data-total-min="49"
+              data-total-max="79"
+              data-months="12"
+            >
+              <span class="popular-badge">Most Popular</span>
+              <span class="plan-tag">🟣 سنة</span>
+              <h3>Annual Pro</h3>
+              <strong data-price-value>$49 – $79</strong>
+              <p data-price-helper>إجمالي باقة 12 شهر</p>
+              <ul class="price-list">
+                <li>الخيار الأفضل لمن يريد توفير أكبر على المدى الطويل</li>
+                <li>أفضل نقطة توازن لمعظم المستخدمين</li>
+              </ul>
+            </article>
+
+            <article class="price-card" data-reveal data-price-card data-total-min="89" data-total-max="129" data-months="24">
+              <span class="plan-tag">🔴 سنتين</span>
+              <h3>2-Year Pro</h3>
+              <strong data-price-value>$89 – $129</strong>
+              <p data-price-helper>إجمالي باقة 24 شهر</p>
+              <ul class="price-list">
+                <li>للاستخدام الاحترافي طويل المدى</li>
+                <li>تكلفة شهرية أقل بشكل واضح</li>
+              </ul>
+            </article>
+
+            <article class="price-card" data-reveal data-price-card data-total-min="119" data-total-max="169" data-months="36">
+              <span class="plan-tag">⚫ 3 سنوات</span>
+              <h3>3-Year Pro</h3>
+              <strong data-price-value>$119 – $169</strong>
+              <p data-price-helper>إجمالي باقة 36 شهر</p>
+              <ul class="price-list">
+                <li>أعلى قيمة وأقل تكلفة شهرية</li>
+                <li>الخطة الأوفر للإنتاج اليومي المكثف</li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="pricing-note" data-reveal>ابدأ بالخطة التي تناسبك، وارتقِ بإنتاجك في أي وقت.</p>
+        </section>
+
+        <section class="section">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Plan Comparison</p>
+            <h2>مقارنة سريعة بين الخطط</h2>
+          </div>
+
+          <div class="comparison-grid">
+            <article class="comparison-card" data-reveal>
+              <strong>الخطط القصيرة</strong>
+              <ul class="price-list">
+                <li>أفضل للتجربة أو حملات قصيرة</li>
+                <li>مرونة عالية</li>
+                <li>تكلفة شهرية أعلى نسبيًا</li>
+              </ul>
+            </article>
+            <article class="comparison-card" data-reveal>
+              <strong>الخطط الطويلة</strong>
+              <ul class="price-list">
+                <li>أفضل قيمة على المدى البعيد</li>
+                <li>أقل تكلفة شهرية</li>
+                <li>مثالية لصناع المحتوى المستمرين</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-section" data-reveal>
+          <div>
+            <p class="eyebrow">Start</p>
+            <h2>ابدأ الآن، ثم ارتقِ إلى الباقة التي تناسب سرعتك في الإنتاج.</h2>
+            <p>يمكنك دائمًا التبديل لاحقًا، لكن الأهم أن تبدأ من الخطة التي تخدمك اليوم.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="button primary large" href="index.html">ابدأ الآن</a>
+            <a class="button ghost large" href="ai-features.html">راجع المزايا</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Orphix</p>
+        <span>Astrix Video Pro</span>
+        <small>Copyright © <span id="year">2026</span></small>
+      </footer>
+    </div>
+
+    <a class="floating-cta" href="#plans">Choose Plan</a>
+    <script src="script.js"></script>
+  </body>
+</html>
