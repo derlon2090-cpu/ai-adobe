@@ -304,6 +304,7 @@ img {
 
 .hero-lead,
 .section-heading p,
+.why-panel p,
 .metric-card span,
 .feature-card p,
 .sound-card p,
@@ -328,7 +329,29 @@ img {
   margin-top: 26px;
 }
 
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.hero-trust span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
 .metric-card,
+.why-panel,
 .feature-card,
 .sound-card,
 .workflow-card,
@@ -355,6 +378,47 @@ img {
   margin-bottom: 8px;
   color: var(--amber);
   font-family: "Manrope", sans-serif;
+}
+
+.why-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 18px;
+}
+
+.why-panel {
+  padding: 24px;
+}
+
+.why-panel h3 {
+  margin: 10px 0 12px;
+  font-size: 1.45rem;
+}
+
+.why-panel.emphasis {
+  background:
+    radial-gradient(circle at top left, rgba(135, 107, 255, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(14, 20, 34, 0.92), rgba(8, 11, 19, 0.98));
+}
+
+.problem-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.problem-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .hero-studio {
@@ -920,6 +984,13 @@ img {
   font-weight: 800;
 }
 
+.pricing-note {
+  margin: 22px 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
 .section-heading h2 {
   font-size: clamp(2rem, 4vw, 3.4rem);
   margin-bottom: 14px;
@@ -941,6 +1012,7 @@ img {
 
 .unmix-card,
 .explain-card,
+.why-panel,
 .sound-card,
 .feature-card,
 .workflow-card,
@@ -1166,6 +1238,10 @@ img {
   }
 
   .unmix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-layout {
     grid-template-columns: 1fr;
   }
 
