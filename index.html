@@ -194,13 +194,20 @@
 
                   <div class="tool-explain">
                     <div class="tool-explain-header">
-                      <p class="mini-label">AI Explain</p>
+                      <p class="mini-label" id="detailLabel">AI Explain</p>
                       <strong id="detailTitle">AI Auto Editor</strong>
                     </div>
                     <p id="detailText">
                       يصنع فيديو كامل تلقائيًا من ترتيب اللقطات إلى الموسيقى والانتقالات المناسبة.
                     </p>
                     <div class="detail-tags" id="detailTags"></div>
+                    <div class="detail-audio" id="detailAudioBox" hidden>
+                      <div class="detail-audio-head">
+                        <span>معاينة فعلية للصوت</span>
+                        <small id="detailAudioMeta">جاهز للتشغيل من مكتبتك الخاصة</small>
+                      </div>
+                      <audio id="detailAudio" controls preload="none"></audio>
+                    </div>
                   </div>
                 </aside>
               </div>
@@ -336,6 +343,10 @@
           <div class="section-heading" data-reveal>
             <p class="eyebrow">Sound & Meme Library</p>
             <h2>ميزة قوية فعلًا: صوت وميمز جاهزة داخل التطبيق، مع مزامنة تلقائية مع الحركة.</h2>
+            <p>
+              تم استيراد الحزمة الصوتية وترتيبها داخل مكتبة منظمة إلى فئات مثل: أصوات تجارية، انتقالات،
+              سينمائي، كاميرا، واجهة، وميمز سريعة مع معاينة مباشرة لكل عنصر.
+            </p>
           </div>
 
           <div class="sound-grid">

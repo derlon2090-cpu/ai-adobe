@@ -44,17 +44,192 @@ const libraries = {
     }
   ],
   sounds: [
-    { id: "whoosh", title: "Whoosh Transition", description: "مؤثر انتقال سريع ونظيف", meta: "Transition / 00:02", tags: ["Whoosh", "Clean"] },
-    { id: "impact", title: "Impact Strong", description: "ضربة مناسبة للهوك أو المشهد الإعلاني", meta: "Impact / 00:01", tags: ["Impact", "Hook"] },
-    { id: "swish", title: "Swish Movement", description: "مؤثر حركة خفيف للمشاهد القصيرة", meta: "Motion / 00:02", tags: ["Motion", "Fast"] },
-    { id: "rise", title: "Energy Rise", description: "رفع تدريجي قبل الانتقال أو العنوان", meta: "Build / 00:03", tags: ["Rise", "Energy"] },
-    { id: "clap", title: "Clap Crowd", description: "تصفيق داخلي جاهز للمشاهد التفاعلية", meta: "Crowd / 00:03", tags: ["Clap", "Crowd"] }
+    {
+      id: "ad-sting",
+      title: "صوت إعلان خاطف",
+      description: "نبضة قصيرة لافتتاح خصم أو ظهور منتج أو لقطة Call To Action.",
+      meta: "Commercial / Promo",
+      tags: ["إعلان", "تجاري", "قصير"],
+      audioSrc: "assets/sound-effects/library/commercial/ad-sting-pop.mp3"
+    },
+    {
+      id: "commercial-soft",
+      title: "صوت تجاري ناعم",
+      description: "نغمة ناعمة مناسبة لعرض سعر أو كرت منتج أو انتقال متجر إلكتروني.",
+      meta: "Commercial / Soft",
+      tags: ["تجاري", "عرض", "ناعم"],
+      audioSrc: "assets/sound-effects/library/commercial/commercial-soft-tone.mp3"
+    },
+    {
+      id: "sale-alert",
+      title: "تنبيه عرض سريع",
+      description: "تنبيه قصير يلفت الانتباه للعروض والخصومات ورسائل الإعلان السريعة.",
+      meta: "Promo / Alert",
+      tags: ["عرض", "تنبيه", "سريع"],
+      audioSrc: "assets/sound-effects/library/commercial/sale-alert-notification.mp3"
+    },
+    {
+      id: "whoosh-air",
+      title: "هووش انتقال قصير",
+      description: "انتقال هوائي سريع ومناسب لقصات الريلز واللقطات السريعة.",
+      meta: "Transition / Air",
+      tags: ["انتقال", "هواء", "ريلز"],
+      audioSrc: "assets/sound-effects/library/transitions/whoosh-air-short.mp3"
+    },
+    {
+      id: "whoosh-clean",
+      title: "هووش سينمائي نظيف",
+      description: "سوش سلس يركب على حركة كاميرا أو دخول نص أو تحريك منتج.",
+      meta: "Transition / Clean",
+      tags: ["انتقال", "نظيف", "موشن"],
+      audioSrc: "assets/sound-effects/library/transitions/whoosh-clean-short.mp3"
+    },
+    {
+      id: "cinematic-hit",
+      title: "ضربة سينمائية",
+      description: "ضربة قوية للهوك أو كشف عنوان أو لحظة إبراز مشهد مهم.",
+      meta: "Cinematic / Hit",
+      tags: ["سينمائي", "ضربة", "هوك"],
+      audioSrc: "assets/sound-effects/library/cinematic/cinematic-hit-sharp.wav"
+    },
+    {
+      id: "cinematic-braam",
+      title: "براام تشويقي",
+      description: "صوت Trailer داكن يعطي ثقلًا للحظة الانتقال أو النهاية الدرامية.",
+      meta: "Trailer / Dark",
+      tags: ["براام", "تشويق", "داكن"],
+      audioSrc: "assets/sound-effects/library/cinematic/cinematic-braam-dark.wav"
+    },
+    {
+      id: "cinematic-riser",
+      title: "رايزر تشويق للإعلان",
+      description: "تصاعد قصير قبل الكشف عن المنتج أو السعر أو الكادر النهائي.",
+      meta: "Trailer / Build",
+      tags: ["رايزر", "إعلان", "بناء"],
+      audioSrc: "assets/sound-effects/library/cinematic/cinematic-riser-build.mp3"
+    },
+    {
+      id: "suspense-boom",
+      title: "بوم تشويقي",
+      description: "ضربة تشويق مركزة تناسب المشاهد الداكنة أو الإعلان الدرامي.",
+      meta: "Impact / Dark",
+      tags: ["بوم", "تشويق", "درامي"],
+      audioSrc: "assets/sound-effects/library/cinematic/suspense-boom-dark.mp3"
+    },
+    {
+      id: "camera-click",
+      title: "التقاط كاميرا",
+      description: "كليك واضح لإظهار التصوير، المنتج، أو الانتقال بين الصور.",
+      meta: "Camera / Click",
+      tags: ["كاميرا", "تصوير", "كليك"],
+      audioSrc: "assets/sound-effects/library/camera/camera-click.mp3"
+    },
+    {
+      id: "camera-soft",
+      title: "كاميرا ناعمة",
+      description: "نسخة أنعم من كليك الكاميرا للمحتوى الراقي أو البراندات الهادئة.",
+      meta: "Camera / Soft",
+      tags: ["كاميرا", "ناعم", "براند"],
+      audioSrc: "assets/sound-effects/library/camera/camera-soft-click.wav"
+    },
+    {
+      id: "page-turn",
+      title: "تقليب صفحة",
+      description: "مناسب لشرح، قصة، أو انتقال بين لقطات يقدم فيها النص خطوة جديدة.",
+      meta: "Utility / Page",
+      tags: ["صفحة", "تعليمي", "شرح"],
+      audioSrc: "assets/sound-effects/library/utility/page-turn.wav"
+    },
+    {
+      id: "clock-tick",
+      title: "عد تنازلي",
+      description: "إيقاع توتر خفيف مناسب للعروض المحدودة أو التشويق قبل النتيجة.",
+      meta: "Utility / Timing",
+      tags: ["عداد", "توتر", "وقت"],
+      audioSrc: "assets/sound-effects/library/utility/clock-ticking.mp3"
+    },
+    {
+      id: "impact-punch",
+      title: "ضربة إعلان قوية",
+      description: "Punch قصير ومباشر لربط النص أو السعر أو عنصر البيع الرئيسي.",
+      meta: "Interface / Punch",
+      tags: ["ضربة", "إعلان", "بيع"],
+      audioSrc: "assets/sound-effects/library/interface/impact-punch.mp3"
+    },
+    {
+      id: "product-shine",
+      title: "لمعة منتج",
+      description: "صوت لمعة خفيف لظهور شعار أو منتج أو سلايد فاخر.",
+      meta: "Brand / Shine",
+      tags: ["لمعة", "منتج", "فاخر"],
+      audioSrc: "assets/sound-effects/library/interface/product-shine.mp3"
+    },
+    {
+      id: "ui-success",
+      title: "نجاح ناعم",
+      description: "تأكيد إيجابي بسيط لخطوات التطبيق أو التفاعل أو الإرسال الناجح.",
+      meta: "UI / Success",
+      tags: ["نجاح", "واجهة", "تأكيد"],
+      audioSrc: "assets/sound-effects/library/interface/ui-success-soft.mp3"
+    },
+    {
+      id: "ui-error",
+      title: "خطأ تنبيهي",
+      description: "تنبيه واضح للأخطاء أو الإلغاء أو الأحداث التي تحتاج انتباهًا فوريًا.",
+      meta: "UI / Error",
+      tags: ["خطأ", "تنبيه", "واجهة"],
+      audioSrc: "assets/sound-effects/library/interface/ui-error-alert.mp3"
+    },
+    {
+      id: "alarm-urgent",
+      title: "منبه عاجل",
+      description: "تنبيه أطول للمشاهد الطارئة أو المحتوى الذي يحتاج إحساس استعجال.",
+      meta: "Alert / Strong",
+      tags: ["منبه", "عاجل", "قوي"],
+      audioSrc: "assets/sound-effects/library/interface/alarm-urgent.mp3"
+    }
   ],
   memes: [
-    { id: "laugh", title: "Cartoon Laugh", description: "ضحكة ميم سريعة للمحتوى الخفيف", meta: "Meme / Viral", tags: ["Laugh", "Funny"] },
-    { id: "drama", title: "Dramatic No", description: "ردة فعل درامية ترند", meta: "Meme / Reaction", tags: ["Reaction", "Drama"] },
-    { id: "pop", title: "Pop Meme Hit", description: "صوت ترند قصير للمونتاج السريع", meta: "Meme / Short", tags: ["Pop", "Trend"] },
-    { id: "crowd", title: "Crowd Cheering", description: "تشجيع جماهيري لإبراز اللحظات القوية", meta: "Meme / Crowd", tags: ["Cheer", "Hype"] }
+    {
+      id: "meme-win",
+      title: "فوز سريع",
+      description: "ردة فعل خفيفة للحظة النجاح أو الإنجاز أو الجواب الصح.",
+      meta: "Meme / Win",
+      tags: ["فوز", "نجاح", "ردة فعل"],
+      audioSrc: "assets/sound-effects/library/meme/victory-win.wav"
+    },
+    {
+      id: "meme-xp",
+      title: "XP Ping",
+      description: "صوت قصير مناسب لنقطة مكتسبة أو ترقية أو إنجاز سريع.",
+      meta: "Meme / XP",
+      tags: ["XP", "ترقية", "قصير"],
+      audioSrc: "assets/sound-effects/library/meme/xp-ping.mp3"
+    },
+    {
+      id: "meme-tension",
+      title: "ترقب متسارع",
+      description: "إيقاع متكرر لرفع التوتر قبل كشف النتيجة أو المفاجأة.",
+      meta: "Meme / Tension",
+      tags: ["ترقب", "توتر", "كشف"],
+      audioSrc: "assets/sound-effects/library/meme/tension-tick.mp3"
+    },
+    {
+      id: "meme-glitch-out",
+      title: "قلتش خروج",
+      description: "خروج سريع بنكهة Glitch للمحتوى التقني أو المزاح السريع.",
+      meta: "Meme / Glitch",
+      tags: ["قلتش", "خروج", "تقني"],
+      audioSrc: "assets/sound-effects/library/meme/glitch-out.mp3"
+    },
+    {
+      id: "meme-glitch-in",
+      title: "قلتش دخول",
+      description: "دخول Glitch أو Reveal مفاجئ للنص أو الصورة أو الميم.",
+      meta: "Meme / Reveal",
+      tags: ["قلتش", "دخول", "Reveal"],
+      audioSrc: "assets/sound-effects/library/meme/glitch-in.wav"
+    }
   ],
   voice: [
     { id: "voiceover", title: "AI Voice Over", description: "حوّل النص إلى تعليق صوتي طبيعي داخل المشروع.", meta: "Voice / AI", tags: ["Natural", "Narration"] },
@@ -143,9 +318,13 @@ const refs = {
   libraryTabs: document.getElementById("libraryTabs"),
   librarySearch: document.getElementById("librarySearch"),
   libraryList: document.getElementById("libraryList"),
+  detailLabel: document.getElementById("detailLabel"),
   detailTitle: document.getElementById("detailTitle"),
   detailText: document.getElementById("detailText"),
   detailTags: document.getElementById("detailTags"),
+  detailAudioBox: document.getElementById("detailAudioBox"),
+  detailAudioMeta: document.getElementById("detailAudioMeta"),
+  detailAudio: document.getElementById("detailAudio"),
   explainToolBtn: document.getElementById("explainToolBtn"),
   syncSoundBtn: document.getElementById("syncSoundBtn"),
   systemStatus: document.getElementById("systemStatus"),
@@ -330,7 +509,7 @@ function renderLibrary() {
       <p>${item.description}</p>
       <div class="library-meta">
         <span>${item.meta}</span>
-        <span>${item.tags[0]}</span>
+        <span>${item.audioSrc ? "معاينة مباشرة" : item.tags[0]}</span>
       </div>
     `;
 
@@ -348,12 +527,15 @@ function renderLibrary() {
 
 function renderDetail(item) {
   if (!item) {
+    refs.detailLabel.textContent = "Library Detail";
     refs.detailTitle.textContent = "No item";
     refs.detailText.textContent = "لا توجد عناصر مطابقة للبحث الحالي.";
     refs.detailTags.innerHTML = "";
+    hideDetailAudio();
     return;
   }
 
+  refs.detailLabel.textContent = item.audioSrc ? "Sound Preview" : "AI Explain";
   refs.detailTitle.textContent = item.title;
   refs.detailText.textContent = item.description;
   refs.detailTags.innerHTML = "";
@@ -363,6 +545,43 @@ function renderDetail(item) {
     span.textContent = tag;
     refs.detailTags.appendChild(span);
   });
+
+  if (item.audioSrc) {
+    if (refs.detailAudioMeta) {
+      refs.detailAudioMeta.textContent = `${item.meta} • ${item.tags.slice(0, 2).join(" • ")}`;
+    }
+
+    if (refs.detailAudioBox) {
+      refs.detailAudioBox.hidden = false;
+    }
+
+    if (refs.detailAudio) {
+      const currentSrc = refs.detailAudio.getAttribute("src");
+      if (currentSrc !== item.audioSrc) {
+        refs.detailAudio.pause();
+        refs.detailAudio.setAttribute("src", item.audioSrc);
+        refs.detailAudio.load();
+      }
+    }
+  } else {
+    hideDetailAudio();
+  }
+}
+
+function hideDetailAudio() {
+  if (refs.detailAudioBox) {
+    refs.detailAudioBox.hidden = true;
+  }
+
+  if (refs.detailAudioMeta) {
+    refs.detailAudioMeta.textContent = "جاهز للتشغيل من مكتبتك الخاصة";
+  }
+
+  if (refs.detailAudio) {
+    refs.detailAudio.pause();
+    refs.detailAudio.removeAttribute("src");
+    refs.detailAudio.load();
+  }
 }
 
 function syncUnmix() {

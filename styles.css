@@ -742,6 +742,37 @@ img {
   font-size: 0.78rem;
 }
 
+.detail-audio {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-audio-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.detail-audio-head span {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.detail-audio-head small {
+  color: var(--muted);
+}
+
+.detail-audio audio {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 14px;
+}
+
 .promise-strip {
   display: flex;
   flex-wrap: wrap;
