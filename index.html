@@ -208,6 +208,50 @@
                       </div>
                       <audio id="detailAudio" controls preload="none"></audio>
                     </div>
+                    <div class="voice-studio" id="voiceStudioBox" hidden>
+                      <div class="voice-studio-head">
+                        <span>Voice Over Studio</span>
+                        <small id="voiceStatus">اكتب النص، اختر المدة، ثم دع Orphex يقترح الصوت والسرعة المناسبة.</small>
+                      </div>
+
+                      <label class="voice-field">
+                        <span>النص المراد تحويله إلى صوت</span>
+                        <textarea
+                          id="voiceScript"
+                          rows="5"
+                          placeholder="اكتب نص الإعلان أو التعليق الصوتي هنا..."
+                        ></textarea>
+                      </label>
+
+                      <div class="voice-grid">
+                        <label class="voice-field">
+                          <span>المدة المستهدفة بالثواني</span>
+                          <input id="voiceDuration" type="number" min="5" max="120" step="1" value="15" />
+                        </label>
+
+                        <label class="voice-field">
+                          <span>صوت المتصفح المستخدم</span>
+                          <select id="voiceSelect"></select>
+                        </label>
+                      </div>
+
+                      <div class="voice-grid compact">
+                        <div class="voice-metric">
+                          <span>السرعة الذكية</span>
+                          <strong id="voiceRateOutput">1.00x</strong>
+                        </div>
+                        <div class="voice-metric">
+                          <span>المدة المتوقعة</span>
+                          <strong id="voiceEstimateOutput">0.0s</strong>
+                        </div>
+                      </div>
+
+                      <div class="voice-actions">
+                        <button class="button primary mini" type="button" id="voiceSuggestBtn">اقتراح مناسب</button>
+                        <button class="button secondary mini" type="button" id="voicePreviewBtn">تشغيل الصوت</button>
+                        <button class="button tertiary mini" type="button" id="voiceStopBtn">إيقاف</button>
+                      </div>
+                    </div>
                   </div>
                 </aside>
               </div>
@@ -343,6 +387,7 @@
           <div class="section-heading" data-reveal>
             <p class="eyebrow">Sound & Meme Library</p>
             <h2>ميزة قوية فعلًا: صوت وميمز جاهزة داخل التطبيق، مع مزامنة تلقائية مع الحركة.</h2>
+            <span class="section-count" id="soundCountBadge">50 curated sounds</span>
             <p>
               تم استيراد الحزمة الصوتية وترتيبها داخل مكتبة منظمة إلى فئات مثل: أصوات تجارية، انتقالات،
               سينمائي، كاميرا، واجهة، وميمز سريعة مع معاينة مباشرة لكل عنصر.
