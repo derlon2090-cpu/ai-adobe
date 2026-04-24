@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Astrix Studio by Orphix: dark dashboard UI for AI video tools with sound, memes, updates, and coming soon cards."
+      content="Orphex dashboard UI with dark purple-blue gradients, app cards, updates, and a polished creative tools experience."
     />
-    <title>Astrix Studio | Orphix</title>
+    <title>Orphex</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -94,6 +94,30 @@
         <path d="M15 18H9a2 2 0 0 1-2-2v-4a5 5 0 1 1 10 0v4a2 2 0 0 1-2 2Z" />
         <path d="M10 20a2 2 0 0 0 4 0" />
       </symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="6" height="6" rx="1.5" />
+        <rect x="14" y="4" width="6" height="6" rx="1.5" />
+        <rect x="4" y="14" width="6" height="6" rx="1.5" />
+        <rect x="14" y="14" width="6" height="6" rx="1.5" />
+      </symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24">
+        <path d="M4 8.5A2.5 2.5 0 0 1 6.5 6H10l2 2h5.5A2.5 2.5 0 0 1 20 10.5v7A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-9Z" />
+      </symbol>
+      <symbol id="i-plugin" viewBox="0 0 24 24">
+        <path d="M14.5 7a2.5 2.5 0 1 0-4.9-.8L7 8.8V12h3.2l2.6-2.6A2.5 2.5 0 0 0 14.5 7Z" />
+        <path d="M12 12l6 6" />
+        <path d="M8 14l-2 2" />
+        <path d="M5 17l2 2" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="M6 6l12 12" />
+        <path d="M18 6L6 18" />
+      </symbol>
     </svg>
 
     <div class="bg-orb orb-a"></div>
@@ -101,38 +125,25 @@
     <div class="bg-grid" aria-hidden="true"></div>
 
     <div class="page-shell">
-      <header class="site-header dashboard-header">
-        <a class="brand dashboard-brand" href="index.html" aria-label="Astrix Studio">
-          <span class="brand-mark">A</span>
-          <span class="brand-text">
-            <strong>Astrix Studio</strong>
-            <small>by Orphix</small>
-          </span>
-        </a>
-
-        <div class="dashboard-header-actions">
-          <a class="button tertiary compact" href="pricing.html">Login</a>
-          <a class="button primary compact" href="pricing.html">Get Started</a>
-        </div>
-      </header>
-
       <main class="dashboard-home-main">
         <section class="dashboard-masthead" data-reveal>
-          <div class="masthead-mark">A</div>
-          <div class="masthead-copy">
-            <h1>Astrix Studio</h1>
-            <p>CREATE WITHOUT LIMITS</p>
+          <div class="masthead-lockup">
+            <img class="masthead-logo" src="assets/orphex-logo.jpg" alt="Orphex logo" />
+            <div class="masthead-copy">
+              <h1>Orphex</h1>
+              <p>CREATE WITHOUT LIMITS</p>
+            </div>
           </div>
         </section>
 
         <section class="dashboard-frame" id="dashboardShell" data-reveal>
-          <aside class="dashboard-sidebar">
+          <aside class="dashboard-sidebar" id="dashboardSidebar">
             <div class="sidebar-top">
               <a class="sidebar-brand" href="index.html">
-                <span class="sidebar-brand-mark">A</span>
+                <img class="sidebar-brand-logo" src="assets/orphex-logo.jpg" alt="Orphex logo" />
                 <span>
-                  <strong>Astrix</strong>
-                  <small>Studio</small>
+                  <strong>Orphex</strong>
+                  <small>Creative Suite</small>
                 </span>
               </a>
 
@@ -141,26 +152,22 @@
                   <svg class="line-icon"><use href="#i-home"></use></svg>
                   <span>Home</span>
                 </a>
-                <a class="sidebar-link" href="ai-features.html">
-                  <svg class="line-icon"><use href="#i-spark"></use></svg>
-                  <span>AI Tools</span>
-                </a>
-                <a class="sidebar-link" href="editor-experience.html">
-                  <svg class="line-icon"><use href="#i-director"></use></svg>
-                  <span>Editor</span>
-                </a>
-                <a class="sidebar-link" href="sound-meme.html">
-                  <svg class="line-icon"><use href="#i-sound"></use></svg>
-                  <span>Sound &amp; Meme</span>
-                </a>
-                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Templates are being prepared.">
-                  <svg class="line-icon"><use href="#i-template"></use></svg>
-                  <span>Templates</span>
+                <button class="sidebar-link sidebar-button" type="button" data-open-apps>
+                  <svg class="line-icon"><use href="#i-grid"></use></svg>
+                  <span>Apps</span>
                 </button>
-                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Updates center is being prepared.">
+                <a class="sidebar-link" href="#dashboardUpdates">
                   <svg class="line-icon"><use href="#i-update"></use></svg>
                   <span>Updates</span>
                   <span class="sidebar-link-badge">3</span>
+                </a>
+                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Assets library is coming soon.">
+                  <svg class="line-icon"><use href="#i-folder"></use></svg>
+                  <span>Assets</span>
+                </button>
+                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Plugins hub is coming soon.">
+                  <svg class="line-icon"><use href="#i-plugin"></use></svg>
+                  <span>Plugins</span>
                 </button>
                 <button class="sidebar-link sidebar-button" type="button" data-processing-label="Settings will be available soon.">
                   <svg class="line-icon"><use href="#i-settings"></use></svg>
@@ -170,16 +177,22 @@
             </div>
 
             <div class="sidebar-account">
-              <span class="account-avatar">A</span>
+              <img class="account-avatar-image" src="assets/orphex-logo.jpg" alt="" />
               <div class="account-meta">
-                <strong>Astrix Studio</strong>
+                <strong>Orphex Studio</strong>
                 <span>Pro Plan</span>
               </div>
             </div>
           </aside>
 
+          <button class="dashboard-sidebar-backdrop" id="dashboardSidebarBackdrop" type="button" aria-label="Close sidebar"></button>
+
           <div class="dashboard-main">
             <div class="dashboard-main-top">
+              <button class="dashboard-menu-toggle" id="dashboardMenuToggle" type="button" aria-label="Open sidebar">
+                <svg class="line-icon"><use href="#i-menu"></use></svg>
+              </button>
+
               <div class="dashboard-window-controls" aria-hidden="true">
                 <span></span>
                 <span></span>
@@ -189,282 +202,178 @@
 
             <section class="dashboard-hero-panel">
               <div class="dashboard-intro">
-                <p class="eyebrow">Dashboard</p>
-                <h2>Welcome to Astrix</h2>
-                <p>All your AI video tools. One place.</p>
+                <h2>Welcome to Orphex</h2>
+                <p>All your creative tools. One place.</p>
 
                 <label class="dashboard-search">
                   <svg class="line-icon"><use href="#i-search"></use></svg>
-                  <input id="dashboardSearch" type="search" placeholder="Search tools, features, sounds..." />
+                  <input id="dashboardSearch" type="search" placeholder="Search apps, plugins, and assets..." />
                 </label>
               </div>
 
               <article class="dashboard-hero-art">
-                <div class="dashboard-art-top">
-                  <span class="dashboard-chip">Dashboard Preview</span>
-                  <a class="art-explore" href="#dashboardTools">
-                    <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                    <span>Explore Tools</span>
-                  </a>
-                </div>
-
-                <div class="dashboard-art-copy">
-                  <strong>Dark UI + Blue / Purple Glow</strong>
-                  <p>A polished control center for AI editing, sound, and meme tools in one place.</p>
-                </div>
+                <a class="art-explore" href="#appsModal" data-open-apps>
+                  <span>Explore Store</span>
+                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                </a>
               </article>
             </section>
 
-            <section class="dashboard-section dashboard-tools-section" id="dashboardTools">
+            <section class="dashboard-section dashboard-tools-section" id="dashboardApps">
               <div class="dashboard-section-head">
                 <div>
-                  <p class="eyebrow">My Tools</p>
-                  <h3>Coming Soon Tools</h3>
+                  <h3>My Apps</h3>
                 </div>
-                <a class="dashboard-link" href="ai-features.html">
+                <button class="dashboard-link dashboard-link-button" type="button" data-open-apps>
                   <span>View All</span>
                   <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                </a>
+                </button>
               </div>
 
               <div class="dashboard-card-grid">
                 <button
-                  class="tool-card"
+                  class="tool-card app-card theme-photo"
                   type="button"
                   data-tool-card
-                  data-search="ai editor auto editing video"
-                  data-processing-label="AI Editor is processing..."
+                  data-search="orphex photo photo editing image design"
+                  data-processing-label="Orphex Photo is coming soon."
                 >
                   <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon icon-violet">
-                    <svg class="line-icon"><use href="#i-spark"></use></svg>
+                  <span class="app-card-tile">
+                    <img src="assets/orphex-logo.jpg" alt="" />
                   </span>
                   <div class="tool-card-copy">
-                    <strong>AI Editor</strong>
-                    <small>Automatic first-cut generation</small>
+                    <strong>Orphex Photo</strong>
+                    <small>Photo Editing</small>
                   </div>
                   <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
-                  class="tool-card"
+                  class="tool-card app-card theme-design"
                   type="button"
                   data-tool-card
-                  data-search="smart cut silence cleanup short clips"
-                  data-processing-label="Smart Cut is processing..."
+                  data-search="orphex design vector design"
+                  data-processing-label="Orphex Design is coming soon."
                 >
                   <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon">
-                    <svg class="line-icon"><use href="#i-cut"></use></svg>
+                  <span class="app-card-tile">
+                    <span>A</span>
                   </span>
                   <div class="tool-card-copy">
-                    <strong>Smart Cut</strong>
-                    <small>Silence cleanup and sharper pacing</small>
+                    <strong>Orphex Design</strong>
+                    <small>Vector Design</small>
                   </div>
                   <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
-                  class="tool-card"
+                  class="tool-card app-card theme-motion"
                   type="button"
                   data-tool-card
-                  data-search="director motion zoom transitions"
-                  data-processing-label="AI Director is processing..."
+                  data-search="orphex motion motion graphics"
+                  data-processing-label="Orphex Motion is coming soon."
                 >
                   <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon icon-violet">
-                    <svg class="line-icon"><use href="#i-director"></use></svg>
+                  <span class="app-card-tile">
+                    <span>M</span>
                   </span>
                   <div class="tool-card-copy">
-                    <strong>AI Director</strong>
-                    <small>Zoom, timing, and motion guidance</small>
+                    <strong>Orphex Motion</strong>
+                    <small>Motion Graphics</small>
                   </div>
                   <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
-                  class="tool-card"
+                  class="tool-card app-card theme-audio"
                   type="button"
                   data-tool-card
-                  data-search="voice cleaner audio cleanup noise"
-                  data-processing-label="Voice Cleaner is processing..."
+                  data-search="orphex audio audio editing"
+                  data-processing-label="Orphex Audio is coming soon."
                 >
                   <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon icon-blue">
-                    <svg class="line-icon"><use href="#i-voice"></use></svg>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Voice Cleaner</strong>
-                    <small>Noise removal and cleaner dialogue</small>
-                  </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </button>
-
-                <button
-                  class="tool-card"
-                  type="button"
-                  data-tool-card
-                  data-search="video enhancer quality 4k upscale"
-                  data-processing-label="Video Enhancer is processing..."
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon icon-blue">
-                    <svg class="line-icon"><use href="#i-enhance"></use></svg>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Video Enhancer</strong>
-                    <small>Sharper image feel and cleaner finish</small>
-                  </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </button>
-
-                <button
-                  class="tool-card"
-                  type="button"
-                  data-tool-card
-                  data-search="meme sound library sync audio system"
-                  data-processing-label="Meme & Sound system is processing..."
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="tool-icon icon-violet">
+                  <span class="app-card-tile">
                     <svg class="line-icon"><use href="#i-sound"></use></svg>
                   </span>
                   <div class="tool-card-copy">
-                    <strong>Meme &amp; Sound</strong>
-                    <small>Internal hits, memes, and smart sync</small>
+                    <strong>Orphex Audio</strong>
+                    <small>Audio Editing</small>
+                  </div>
+                  <span class="tool-badge">Coming Soon</span>
+                </button>
+
+                <button
+                  class="tool-card app-card theme-3d"
+                  type="button"
+                  data-tool-card
+                  data-search="orphex 3d 3d modeling"
+                  data-processing-label="Orphex 3D is coming soon."
+                >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
+                  <span class="app-card-tile">
+                    <span>3D</span>
+                  </span>
+                  <div class="tool-card-copy">
+                    <strong>Orphex 3D</strong>
+                    <small>3D Modeling</small>
                   </div>
                   <span class="tool-badge">Coming Soon</span>
                 </button>
               </div>
 
               <div class="dashboard-empty" id="dashboardEmptyState">
-                <strong id="dashboardEmptyTitle">Tools are being prepared. Stay tuned.</strong>
-                <span id="dashboardEmptyText">Every tool shown here is intentionally marked as in progress to keep the dashboard clean and honest.</span>
+                <strong id="dashboardEmptyTitle">Apps are being prepared. Stay tuned.</strong>
+                <span id="dashboardEmptyText">Search only filters the first five apps shown on the dashboard home.</span>
               </div>
             </section>
 
-            <div class="dashboard-bottom-grid">
-              <section class="dashboard-section" id="dashboardUpdates">
-                <div class="dashboard-section-head">
-                  <div>
-                    <p class="eyebrow">Latest Updates</p>
-                    <h3>What is coming next</h3>
+            <section class="dashboard-section" id="dashboardUpdates">
+              <div class="dashboard-section-head">
+                <div>
+                  <h3>Latest Updates</h3>
+                </div>
+                <button class="dashboard-link dashboard-link-button" type="button" data-processing-label="Opening full updates feed...">
+                  <span>View All</span>
+                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                </button>
+              </div>
+
+              <div class="update-list">
+                <article class="update-row">
+                  <div class="update-meta">
+                    <span class="app-update-tile">
+                      <img src="assets/orphex-logo.jpg" alt="" />
+                    </span>
+                    <div>
+                      <strong>Orphex Photo</strong>
+                      <p>Version 2.1.0</p>
+                    </div>
                   </div>
-                  <button class="dashboard-link dashboard-link-button" type="button" data-processing-label="Opening update feed...">
-                    <span>View All</span>
-                    <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                  </button>
-                </div>
-
-                <div class="update-list">
-                  <article class="update-row">
-                    <div class="update-meta">
-                      <span class="tool-icon icon-violet">
-                        <svg class="line-icon"><use href="#i-bolt"></use></svg>
-                      </span>
-                      <div>
-                        <strong>New AI Features Coming</strong>
-                        <p>More automation layers are being prepared for faster first-cut workflows.</p>
-                      </div>
-                    </div>
-                    <div class="update-actions">
-                      <span class="update-tag">What's new</span>
-                      <button class="button tertiary mini" type="button" data-processing-label="Opening AI feature notes...">Learn More</button>
-                    </div>
-                  </article>
-
-                  <article class="update-row">
-                    <div class="update-meta">
-                      <span class="tool-icon icon-blue">
-                        <svg class="line-icon"><use href="#i-sound"></use></svg>
-                      </span>
-                      <div>
-                        <strong>Sound Library Expansion</strong>
-                        <p>Commercial hits, transitions, cinematic FX, and quicker browsing are expanding.</p>
-                      </div>
-                    </div>
-                    <div class="update-actions">
-                      <span class="update-tag">What's new</span>
-                      <button class="button tertiary mini" type="button" data-processing-label="Opening sound system notes...">Learn More</button>
-                    </div>
-                  </article>
-
-                  <article class="update-row">
-                    <div class="update-meta">
-                      <span class="tool-icon">
-                        <svg class="line-icon"><use href="#i-bell"></use></svg>
-                      </span>
-                      <div>
-                        <strong>Meme System Update</strong>
-                        <p>Better meme browsing, instant placement, and cleaner sync logic are on the way.</p>
-                      </div>
-                    </div>
-                    <div class="update-actions">
-                      <span class="update-tag">What's new</span>
-                      <button class="button tertiary mini" type="button" data-processing-label="Opening meme system notes...">Learn More</button>
-                    </div>
-                  </article>
-                </div>
-              </section>
-
-              <aside class="dashboard-section dashboard-side-panel">
-                <div class="dashboard-section-head">
-                  <div>
-                    <p class="eyebrow">Sound &amp; Meme System</p>
-                    <h3>Built inside the platform</h3>
+                  <div class="update-actions">
+                    <button class="button tertiary mini" type="button" data-processing-label="Preparing Orphex Photo update...">Update</button>
                   </div>
-                </div>
+                </article>
 
-                <div class="sound-system-stack">
-                  <article class="sound-system-card">
-                    <div class="sound-card-head">
-                      <span class="tool-icon icon-blue">
-                        <svg class="line-icon"><use href="#i-sound"></use></svg>
-                      </span>
-                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">Play</button>
+                <article class="update-row">
+                  <div class="update-meta">
+                    <span class="app-update-tile motion">
+                      <span>M</span>
+                    </span>
+                    <div>
+                      <strong>Orphex Motion</strong>
+                      <p>Version 1.4.2</p>
                     </div>
-                    <strong>Sound Effects Library</strong>
-                    <p>Organized commercial hits, transitions, and cinematic FX with quick search.</p>
-                  </article>
-
-                  <article class="sound-system-card">
-                    <div class="sound-card-head">
-                      <span class="tool-icon icon-violet">
-                        <svg class="line-icon"><use href="#i-play"></use></svg>
-                      </span>
-                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">Play</button>
-                    </div>
-                    <strong>Meme Board</strong>
-                    <p>Ready meme reactions with one-click placement and a stronger neon personality.</p>
-                  </article>
-
-                  <article class="sound-system-card">
-                    <div class="sound-card-head">
-                      <span class="tool-icon">
-                        <svg class="line-icon"><use href="#i-bolt"></use></svg>
-                      </span>
-                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">Play</button>
-                    </div>
-                    <strong>Auto Sync AI</strong>
-                    <p>Suggests hit points for cuts, zooms, and transitions so edits feel tighter.</p>
-                  </article>
-                </div>
-
-                <div class="dashboard-mini-cta">
-                  <a class="button primary" href="pricing.html">Start Editing</a>
-                  <a class="button secondary" href="pricing.html">Try Astrix Pro</a>
-                </div>
-              </aside>
-            </div>
+                  </div>
+                  <div class="update-actions">
+                    <button class="button tertiary mini" type="button" data-processing-label="Preparing Orphex Motion update...">Update</button>
+                  </div>
+                </article>
+              </div>
+            </section>
           </div>
         </section>
       </main>
-
-      <footer class="site-footer">
-        <p>Astrix Studio</p>
-        <span>Dashboard concept by Orphix</span>
-        <small>Copyright &copy; <span id="year">2026</span></small>
-      </footer>
     </div>
 
     <div class="processing-modal" id="processingModal" hidden>
@@ -475,7 +384,72 @@
       </div>
     </div>
 
-    <a class="floating-cta" href="pricing.html">Get Started</a>
+    <div class="apps-modal" id="appsModal" aria-hidden="true">
+      <button class="apps-modal-backdrop" id="appsModalBackdrop" type="button" aria-label="Close apps modal"></button>
+      <div class="apps-modal-panel" role="dialog" aria-modal="true" aria-labelledby="appsModalTitle">
+        <div class="apps-modal-head">
+          <div>
+            <p class="eyebrow">All Apps</p>
+            <h3 id="appsModalTitle">Orphex App Library</h3>
+          </div>
+          <button class="apps-modal-close" id="appsModalClose" type="button" aria-label="Close apps modal">
+            <svg class="line-icon"><use href="#i-close"></use></svg>
+          </button>
+        </div>
+
+        <div class="apps-modal-grid">
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><img src="assets/orphex-logo.jpg" alt="" /></span>
+            <strong>Orphex Photo</strong>
+            <small>Photo Editing</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><span>A</span></span>
+            <strong>Orphex Design</strong>
+            <small>Vector Design</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><span>M</span></span>
+            <strong>Orphex Motion</strong>
+            <small>Motion Graphics</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><svg class="line-icon"><use href="#i-sound"></use></svg></span>
+            <strong>Orphex Audio</strong>
+            <small>Audio Editing</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><span>3D</span></span>
+            <strong>Orphex 3D</strong>
+            <small>3D Modeling</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><svg class="line-icon"><use href="#i-spark"></use></svg></span>
+            <strong>Orphex AI</strong>
+            <small>Creative AI Tools</small>
+            <span class="tool-badge">Available Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><svg class="line-icon"><use href="#i-folder"></use></svg></span>
+            <strong>Orphex Assets</strong>
+            <small>Asset Manager</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+          <article class="apps-modal-card">
+            <span class="app-card-tile"><svg class="line-icon"><use href="#i-plugin"></use></svg></span>
+            <strong>Orphex Plugins</strong>
+            <small>Plugin Hub</small>
+            <span class="tool-badge">Coming Soon</span>
+          </article>
+        </div>
+      </div>
+    </div>
+
     <audio id="globalPreviewAudio" preload="none"></audio>
     <script src="script.js"></script>
   </body>

@@ -599,10 +599,16 @@ const refs = {
   heroDemoSubtitle: document.getElementById("heroDemoSubtitle"),
   heroProgressLabel: document.getElementById("heroProgressLabel"),
   dashboardShell: document.getElementById("dashboardShell"),
+  dashboardSidebar: document.getElementById("dashboardSidebar"),
+  dashboardSidebarBackdrop: document.getElementById("dashboardSidebarBackdrop"),
+  dashboardMenuToggle: document.getElementById("dashboardMenuToggle"),
   dashboardSearch: document.getElementById("dashboardSearch"),
   dashboardEmptyState: document.getElementById("dashboardEmptyState"),
   dashboardEmptyTitle: document.getElementById("dashboardEmptyTitle"),
   dashboardEmptyText: document.getElementById("dashboardEmptyText"),
+  appsModal: document.getElementById("appsModal"),
+  appsModalClose: document.getElementById("appsModalClose"),
+  appsModalBackdrop: document.getElementById("appsModalBackdrop"),
   processingModal: document.getElementById("processingModal"),
   processingTitle: document.getElementById("processingTitle"),
   processingText: document.getElementById("processingText"),
@@ -985,8 +991,12 @@ function initDashboardHome() {
 
   const toolCards = Array.from(document.querySelectorAll("[data-tool-card]"));
   const processingNodes = Array.from(document.querySelectorAll("[data-processing-label]"));
+  const appsNodes = Array.from(document.querySelectorAll("[data-open-apps]"));
+  const sidebarLinks = Array.from(document.querySelectorAll(".sidebar-link"));
 
   hideProcessingModal();
+  closeAppsModal();
+  closeDashboardSidebar();
 
   const applyFilter = () => {
     const query = (refs.dashboardSearch?.value || "").trim().toLowerCase();
@@ -1003,18 +1013,26 @@ function initDashboardHome() {
       refs.dashboardEmptyState.hidden = visibleCount > 0;
       if (!visibleCount) {
         if (refs.dashboardEmptyTitle) {
-          refs.dashboardEmptyTitle.textContent = "Tools are being prepared. Stay tuned.";
+          refs.dashboardEmptyTitle.textContent = "Apps are being prepared. Stay tuned.";
         }
         if (refs.dashboardEmptyText) {
           refs.dashboardEmptyText.textContent = query
-            ? `No tools matched "${query}" yet.`
-            : "Every tool shown here is still under preparation.";
+            ? `No apps matched "${query}" yet.`
+            : "Every app shown here is still under preparation.";
         }
       }
     }
   };
 
   refs.dashboardSearch?.addEventListener("input", applyFilter);
+
+  appsNodes.forEach((node) => {
+    node.addEventListener("click", (event) => {
+      event.preventDefault();
+      openAppsModal();
+      closeDashboardSidebar();
+    });
+  });
 
   processingNodes.forEach((node) => {
     node.addEventListener("click", (event) => {
@@ -1031,7 +1049,61 @@ function initDashboardHome() {
     }
   });
 
+  refs.appsModalClose?.addEventListener("click", closeAppsModal);
+  refs.appsModalBackdrop?.addEventListener("click", closeAppsModal);
+  refs.dashboardMenuToggle?.addEventListener("click", toggleDashboardSidebar);
+  refs.dashboardSidebarBackdrop?.addEventListener("click", closeDashboardSidebar);
+
+  sidebarLinks.forEach((node) => {
+    node.addEventListener("click", () => {
+      if (window.innerWidth <= 860 && !node.hasAttribute("data-open-apps")) {
+        closeDashboardSidebar();
+      }
+    });
+  });
+
+  document.addEventListener("keydown", handleDashboardKeydown);
+
   applyFilter();
+}
+
+function openAppsModal() {
+  if (!refs.appsModal) return;
+
+  refs.appsModal.classList.add("is-open");
+  refs.appsModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("apps-modal-open");
+}
+
+function closeAppsModal() {
+  if (!refs.appsModal) return;
+
+  refs.appsModal.classList.remove("is-open");
+  refs.appsModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("apps-modal-open");
+}
+
+function toggleDashboardSidebar() {
+  if (!refs.dashboardShell) return;
+
+  refs.dashboardShell.classList.toggle("is-sidebar-open");
+}
+
+function closeDashboardSidebar() {
+  refs.dashboardShell?.classList.remove("is-sidebar-open");
+}
+
+function handleDashboardKeydown(event) {
+  if (event.key !== "Escape") return;
+
+  if (refs.appsModal?.classList.contains("is-open")) {
+    closeAppsModal();
+    return;
+  }
+
+  if (refs.dashboardShell?.classList.contains("is-sidebar-open")) {
+    closeDashboardSidebar();
+  }
 }
 
 function showProcessingModal(title) {
