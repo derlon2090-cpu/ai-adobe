@@ -3031,6 +3031,7 @@ img {
   position: relative;
   display: grid;
   place-items: center;
+  aspect-ratio: var(--editor-aspect, 1 / 1);
   min-height: 480px;
   padding: 22px;
   border-radius: 28px;
@@ -3062,6 +3063,15 @@ img {
   object-fit: contain;
   transition: filter 180ms ease, transform 180ms ease;
   will-change: filter, transform;
+}
+
+.editor-preview-canvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.38);
 }
 
 .editor-meta-strip,
@@ -3101,6 +3111,25 @@ img {
   line-height: 1.7;
 }
 
+.editor-select,
+.editor-text-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font: inherit;
+}
+
+.editor-select:focus-visible,
+.editor-text-input:focus-visible {
+  outline: none;
+  border-color: rgba(124, 58, 237, 0.28);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+}
+
 .preset-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3129,6 +3158,11 @@ img {
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.24));
   border-color: rgba(124, 58, 237, 0.26);
   box-shadow: 0 18px 36px rgba(39, 17, 74, 0.28);
+}
+
+.button.is-active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(124, 58, 237, 0.24));
+  border-color: rgba(124, 58, 237, 0.22);
 }
 
 .control-group {
@@ -3173,6 +3207,15 @@ img {
 .slider-field input[type="range"] {
   width: 100%;
   accent-color: #7c3aed;
+}
+
+.color-field input[type="color"] {
+  width: 100%;
+  height: 52px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .editor-action-grid {

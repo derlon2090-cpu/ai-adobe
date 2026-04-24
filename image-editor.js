@@ -3,7 +3,9 @@
   if (!shell) return;
 
   const refs = {
-    previewImage: document.getElementById("editorPreviewImage"),
+    previewFrame: document.getElementById("editorPreviewFrame"),
+    previewCanvas: document.getElementById("editorPreviewCanvas"),
+    sourceImage: document.getElementById("editorSourceImage"),
     uploadInput: document.getElementById("editorUploadInput"),
     uploadButton: document.getElementById("editorUploadButton"),
     sampleButton: document.getElementById("editorSampleButton"),
@@ -13,28 +15,60 @@
     downloadPngButton: document.getElementById("editorDownloadPngButton"),
     downloadJpgButton: document.getElementById("editorDownloadJpgButton"),
     presetStatus: document.getElementById("editorPresetStatus"),
+    frameStatus: document.getElementById("editorFrameStatus"),
     fileName: document.getElementById("editorFileName"),
     imageMeta: document.getElementById("editorImageMeta"),
     sizeMeta: document.getElementById("editorSizeMeta"),
     transformMeta: document.getElementById("editorTransformMeta"),
+    featureMeta: document.getElementById("editorFeatureMeta"),
+    frameMeta: document.getElementById("editorFrameMeta"),
+    statusBox: document.getElementById("editorStatusBox"),
     statusText: document.getElementById("editorStatusText"),
     brightnessRange: document.getElementById("brightnessRange"),
     contrastRange: document.getElementById("contrastRange"),
     saturationRange: document.getElementById("saturationRange"),
     warmthRange: document.getElementById("warmthRange"),
     blurRange: document.getElementById("blurRange"),
+    zoomRange: document.getElementById("zoomRange"),
+    panXRange: document.getElementById("panXRange"),
+    panYRange: document.getElementById("panYRange"),
+    cutoutRange: document.getElementById("cutoutRange"),
+    textInput: document.getElementById("editorTextInput"),
+    textSizeRange: document.getElementById("textSizeRange"),
+    textXRange: document.getElementById("textXRange"),
+    textYRange: document.getElementById("textYRange"),
+    textColorInput: document.getElementById("editorTextColor"),
+    exportSizeSelect: document.getElementById("exportSizeSelect"),
+    cutoutButton: document.getElementById("editorCutoutButton"),
+    restoreBgButton: document.getElementById("editorRestoreBgButton"),
+    clearTextButton: document.getElementById("editorClearTextButton"),
     brightnessValue: document.getElementById("brightnessValue"),
     contrastValue: document.getElementById("contrastValue"),
     saturationValue: document.getElementById("saturationValue"),
     warmthValue: document.getElementById("warmthValue"),
     blurValue: document.getElementById("blurValue"),
+    zoomValue: document.getElementById("zoomValue"),
+    panXValue: document.getElementById("panXValue"),
+    panYValue: document.getElementById("panYValue"),
+    cutoutValue: document.getElementById("cutoutValue"),
+    textSizeValue: document.getElementById("textSizeValue"),
+    textXValue: document.getElementById("textXValue"),
+    textYValue: document.getElementById("textYValue"),
+    textColorValue: document.getElementById("textColorValue"),
+    textLengthValue: document.getElementById("textLengthValue"),
+    exportSizeValue: document.getElementById("exportSizeValue"),
     presetButtons: Array.from(document.querySelectorAll("[data-preset]")),
+    frameButtons: Array.from(document.querySelectorAll("[data-frame]")),
     transformButtons: Array.from(document.querySelectorAll("[data-transform]"))
   };
 
-  if (!refs.previewImage) return;
+  if (!refs.previewCanvas || !refs.sourceImage || !refs.previewFrame) return;
 
-  const sampleSrc = refs.previewImage.getAttribute("src") || "assets/orphex-logo.jpg";
+  const previewContext = refs.previewCanvas.getContext("2d");
+  if (!previewContext) return;
+
+  const sampleSrc = refs.sourceImage.getAttribute("src") || "assets/orphex-logo.jpg";
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
   const presets = {
     custom: { label: "Custom Preset", brightness: 100, contrast: 100, saturation: 100, warmth: 0, blur: 0 },
@@ -43,6 +77,21 @@
     product: { label: "Product Preset", brightness: 112, contrast: 124, saturation: 108, warmth: 6, blur: 0 },
     noir: { label: "Noir Preset", brightness: 96, contrast: 138, saturation: 0, warmth: 0, blur: 0 },
     glow: { label: "Social Glow Preset", brightness: 112, contrast: 118, saturation: 136, warmth: 12, blur: 1 }
+  };
+
+  const frameModes = {
+    original: { label: "Original Frame", aspect: null },
+    square: { label: "Square Frame", aspect: 1 },
+    portrait: { label: "4:5 Frame", aspect: 4 / 5 },
+    story: { label: "9:16 Frame", aspect: 9 / 16 },
+    landscape: { label: "16:9 Frame", aspect: 16 / 9 }
+  };
+
+  const exportSizes = {
+    source: { label: "Source Fit", longSide: null },
+    "1080": { label: "1080 px", longSide: 1080 },
+    "1600": { label: "1600 px", longSide: 1600 },
+    "2048": { label: "2048 px", longSide: 2048 }
   };
 
   const state = {
@@ -57,14 +106,42 @@
     rotation: 0,
     flipX: 1,
     flipY: 1,
+    frame: "original",
+    zoom: 100,
+    panX: 0,
+    panY: 0,
+    exportSize: "source",
     compare: false,
-    preset: "custom"
+    preset: "custom",
+    cutoutEnabled: false,
+    cutoutThreshold: 44,
+    text: "",
+    textSize: 72,
+    textX: 0,
+    textY: 28,
+    textColor: "#ffffff",
+    dragging: false,
+    dragStartX: 0,
+    dragStartY: 0,
+    dragOriginX: 0,
+    dragOriginY: 0,
+    cutoutCacheKey: "",
+    cutoutCanvas: null
   };
 
   bindEvents();
-  syncSliders();
-  updatePreview();
-  updateMeta();
+  syncControls();
+
+  refs.sourceImage.addEventListener("load", () => {
+    invalidateCutoutCache();
+    renderPreview();
+    updateMeta();
+  });
+
+  if (refs.sourceImage.complete) {
+    renderPreview();
+    updateMeta();
+  }
 
   function bindEvents() {
     refs.uploadButton?.addEventListener("click", () => refs.uploadInput?.click());
@@ -74,25 +151,62 @@
     refs.autoEnhanceButton?.addEventListener("click", () => applyPreset("product", true));
     refs.downloadPngButton?.addEventListener("click", () => exportImage("png"));
     refs.downloadJpgButton?.addEventListener("click", () => exportImage("jpeg"));
+    refs.cutoutButton?.addEventListener("click", enableCutout);
+    refs.restoreBgButton?.addEventListener("click", disableCutout);
+    refs.clearTextButton?.addEventListener("click", clearTextOverlay);
 
     refs.uploadInput?.addEventListener("change", handleUpload);
-    refs.previewImage.addEventListener("load", updateMeta);
 
     [
       ["brightness", refs.brightnessRange],
       ["contrast", refs.contrastRange],
       ["saturation", refs.saturationRange],
       ["warmth", refs.warmthRange],
-      ["blur", refs.blurRange]
+      ["blur", refs.blurRange],
+      ["zoom", refs.zoomRange],
+      ["panX", refs.panXRange],
+      ["panY", refs.panYRange],
+      ["cutoutThreshold", refs.cutoutRange],
+      ["textSize", refs.textSizeRange],
+      ["textX", refs.textXRange],
+      ["textY", refs.textYRange]
     ].forEach(([key, input]) => {
       input?.addEventListener("input", () => {
+        ensureEditedView();
         state[key] = Number(input.value);
-        state.preset = "custom";
-        syncPresetButtons();
-        syncSliders();
-        updatePreview();
-        setStatus("Adjustments updated.", "The preview reflects your latest brightness, color, or clarity changes.");
+        if (key === "cutoutThreshold") {
+          invalidateCutoutCache();
+        }
+        if (key === "brightness" || key === "contrast" || key === "saturation" || key === "warmth" || key === "blur") {
+          state.preset = "custom";
+        }
+        syncControls();
+        renderPreview();
+        updateMeta();
       });
+    });
+
+    refs.textInput?.addEventListener("input", () => {
+      ensureEditedView();
+      state.text = refs.textInput?.value || "";
+      syncControls();
+      renderPreview();
+      updateMeta();
+    });
+
+    refs.textColorInput?.addEventListener("input", () => {
+      ensureEditedView();
+      state.textColor = refs.textColorInput?.value || "#ffffff";
+      syncControls();
+      renderPreview();
+      updateMeta();
+    });
+
+    refs.exportSizeSelect?.addEventListener("change", () => {
+      state.exportSize = refs.exportSizeSelect?.value || "source";
+      syncControls();
+      updateMeta();
+      setStatus("Export size updated.", "The new download size will be used the next time you export the image.");
     });
 
     refs.presetButtons.forEach((button) => {
@@ -102,11 +216,23 @@
       });
     });
 
+    refs.frameButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        ensureEditedView();
+        state.frame = button.dataset.frame || "original";
+        syncControls();
+        renderPreview();
+        updateMeta();
+        setStatus("Frame updated.", "The live preview and exported result now use the selected crop format.");
+      });
+    });
+
     refs.transformButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const action = button.dataset.transform;
         if (!action) return;
 
+        ensureEditedView();
         if (action === "rotate-left") {
           state.rotation -= 90;
         } else if (action === "rotate-right") {
@@ -118,10 +244,16 @@
         }
 
         normalizeRotation();
-        updatePreview();
+        renderPreview();
+        updateMeta();
         setStatus("Transform applied.", "Rotation and flip controls affect both the live preview and exported file.");
       });
     });
+
+    refs.previewCanvas.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
   }
 
   function handleUpload(event) {
@@ -132,33 +264,44 @@
     reader.onload = () => {
       const rawName = file.name.replace(/\.[^.]+$/, "") || "edited-image";
       const extension = (file.name.split(".").pop() || "png").toLowerCase();
+      ensureEditedView();
       state.source = String(reader.result || sampleSrc);
       state.fileName = sanitizeName(rawName);
       state.extension = extension === "jpg" ? "jpeg" : extension;
-      refs.previewImage.src = state.source;
+      refs.sourceImage.src = state.source;
+      invalidateCutoutCache();
+      refs.uploadInput.value = "";
       setStatus("Image uploaded.", "Your image is ready for live editing inside Orphex.");
     };
     reader.readAsDataURL(file);
   }
 
   function useSample() {
+    ensureEditedView();
     state.source = sampleSrc;
     state.fileName = "orphex-logo";
     state.extension = "png";
-    refs.previewImage.src = sampleSrc;
+    refs.sourceImage.src = sampleSrc;
+    invalidateCutoutCache();
+    syncControls();
+    renderPreview();
+    updateMeta();
     setStatus("Sample restored.", "The default Orphex sample is active again for quick testing.");
   }
 
   function toggleCompare() {
     state.compare = !state.compare;
     refs.compareButton?.setAttribute("aria-pressed", state.compare ? "true" : "false");
-    refs.compareButton && (refs.compareButton.textContent = state.compare ? "Show Edited" : "Before / After");
-    updatePreview();
+    if (refs.compareButton) {
+      refs.compareButton.textContent = state.compare ? "Show Edited" : "Before / After";
+    }
+    renderPreview();
+    updateMeta();
     setStatus(
       state.compare ? "Before view enabled." : "Edited view restored.",
       state.compare
-        ? "Preview is temporarily showing the original image with the current transform only."
-        : "Preview is back to the edited version."
+        ? "Preview is temporarily showing the source image without color, cutout, or text changes."
+        : "Preview is back to the full edited result."
     );
   }
 
@@ -171,13 +314,25 @@
     state.rotation = 0;
     state.flipX = 1;
     state.flipY = 1;
+    state.frame = "original";
+    state.zoom = 100;
+    state.panX = 0;
+    state.panY = 0;
+    state.exportSize = "source";
     state.compare = false;
     state.preset = "custom";
-    refs.compareButton?.setAttribute("aria-pressed", "false");
-    refs.compareButton && (refs.compareButton.textContent = "Before / After");
-    syncSliders();
-    updatePreview();
-    setStatus("Editor reset.", "All adjustments, transform changes, and compare mode were cleared.");
+    state.cutoutEnabled = false;
+    state.cutoutThreshold = 44;
+    state.text = "";
+    state.textSize = 72;
+    state.textX = 0;
+    state.textY = 28;
+    state.textColor = "#ffffff";
+    invalidateCutoutCache();
+    syncControls();
+    renderPreview();
+    updateMeta();
+    setStatus("Editor reset.", "All adjustments, crop settings, cutout changes, text, and transforms were cleared.");
   }
 
   function applyPreset(presetName, markAsAuto) {
@@ -191,85 +346,357 @@
     state.warmth = preset.warmth;
     state.blur = preset.blur;
     state.compare = false;
-    refs.compareButton?.setAttribute("aria-pressed", "false");
-    refs.compareButton && (refs.compareButton.textContent = "Before / After");
-    syncSliders();
-    updatePreview();
+    syncControls();
+    renderPreview();
+    updateMeta();
     setStatus(
       markAsAuto ? "Auto Enhance applied." : `${preset.label} applied.`,
       markAsAuto
         ? "Orphex boosted the image with a balanced, high-clarity preset."
-        : "You can keep the preset as-is or fine-tune the sliders manually."
+        : "You can keep the preset as-is or fine-tune every slider manually."
     );
   }
 
-  function syncSliders() {
-    if (refs.brightnessRange) refs.brightnessRange.value = String(state.brightness);
-    if (refs.contrastRange) refs.contrastRange.value = String(state.contrast);
-    if (refs.saturationRange) refs.saturationRange.value = String(state.saturation);
-    if (refs.warmthRange) refs.warmthRange.value = String(state.warmth);
-    if (refs.blurRange) refs.blurRange.value = String(state.blur);
-
-    if (refs.brightnessValue) refs.brightnessValue.textContent = `${state.brightness}%`;
-    if (refs.contrastValue) refs.contrastValue.textContent = `${state.contrast}%`;
-    if (refs.saturationValue) refs.saturationValue.textContent = `${state.saturation}%`;
-    if (refs.warmthValue) refs.warmthValue.textContent = `${state.warmth}%`;
-    if (refs.blurValue) refs.blurValue.textContent = `${state.blur}px`;
-
-    syncPresetButtons();
+  function enableCutout() {
+    ensureEditedView();
+    state.cutoutEnabled = true;
+    invalidateCutoutCache();
+    syncControls();
+    renderPreview();
+    updateMeta();
+    setStatus("Quick cutout enabled.", "Background cleanup works best on clean backdrops. PNG export preserves transparency.");
   }
 
-  function syncPresetButtons() {
+  function disableCutout() {
+    ensureEditedView();
+    state.cutoutEnabled = false;
+    syncControls();
+    renderPreview();
+    updateMeta();
+    setStatus("Background restored.", "The original background is visible again.");
+  }
+
+  function clearTextOverlay() {
+    ensureEditedView();
+    state.text = "";
+    syncControls();
+    renderPreview();
+    updateMeta();
+    setStatus("Text removed.", "The overlay text was cleared from the current design.");
+  }
+
+  function handlePointerDown(event) {
+    if (!refs.previewFrame.contains(event.target)) return;
+    state.dragging = true;
+    state.dragStartX = event.clientX;
+    state.dragStartY = event.clientY;
+    state.dragOriginX = state.panX;
+    state.dragOriginY = state.panY;
+    refs.previewCanvas.setPointerCapture?.(event.pointerId);
+    refs.previewCanvas.style.cursor = "grabbing";
+  }
+
+  function handlePointerMove(event) {
+    if (!state.dragging) return;
+
+    const rect = refs.previewFrame.getBoundingClientRect();
+    const deltaX = event.clientX - state.dragStartX;
+    const deltaY = event.clientY - state.dragStartY;
+    const panX = state.dragOriginX + (deltaX / Math.max(1, rect.width)) * 120;
+    const panY = state.dragOriginY + (deltaY / Math.max(1, rect.height)) * 120;
+
+    ensureEditedView();
+    state.panX = clamp(panX, -60, 60);
+    state.panY = clamp(panY, -60, 60);
+    syncControls();
+    renderPreview();
+    updateMeta();
+  }
+
+  function handlePointerUp(event) {
+    if (!state.dragging) return;
+    state.dragging = false;
+    refs.previewCanvas.releasePointerCapture?.(event.pointerId);
+    refs.previewCanvas.style.cursor = "grab";
+  }
+
+  function syncControls() {
+    setInputValue(refs.brightnessRange, state.brightness);
+    setInputValue(refs.contrastRange, state.contrast);
+    setInputValue(refs.saturationRange, state.saturation);
+    setInputValue(refs.warmthRange, state.warmth);
+    setInputValue(refs.blurRange, state.blur);
+    setInputValue(refs.zoomRange, state.zoom);
+    setInputValue(refs.panXRange, state.panX);
+    setInputValue(refs.panYRange, state.panY);
+    setInputValue(refs.cutoutRange, state.cutoutThreshold);
+    setInputValue(refs.textInput, state.text);
+    setInputValue(refs.textSizeRange, state.textSize);
+    setInputValue(refs.textXRange, state.textX);
+    setInputValue(refs.textYRange, state.textY);
+    setInputValue(refs.textColorInput, state.textColor);
+    setInputValue(refs.exportSizeSelect, state.exportSize);
+
+    setText(refs.brightnessValue, `${state.brightness}%`);
+    setText(refs.contrastValue, `${state.contrast}%`);
+    setText(refs.saturationValue, `${state.saturation}%`);
+    setText(refs.warmthValue, `${state.warmth}%`);
+    setText(refs.blurValue, `${state.blur}px`);
+    setText(refs.zoomValue, `${state.zoom}%`);
+    setText(refs.panXValue, `${state.panX}%`);
+    setText(refs.panYValue, `${state.panY}%`);
+    setText(refs.cutoutValue, String(state.cutoutThreshold));
+    setText(refs.textSizeValue, `${state.textSize}px`);
+    setText(refs.textXValue, `${state.textX}%`);
+    setText(refs.textYValue, `${state.textY}%`);
+    setText(refs.textColorValue, state.textColor.toLowerCase());
+    setText(refs.textLengthValue, `${state.text.trim().length} chars`);
+    setText(refs.exportSizeValue, exportSizes[state.exportSize]?.label || "Source Fit");
+
+    refs.compareButton?.setAttribute("aria-pressed", state.compare ? "true" : "false");
+    if (refs.compareButton) {
+      refs.compareButton.textContent = state.compare ? "Show Edited" : "Before / After";
+    }
+
     refs.presetButtons.forEach((button) => {
       button.classList.toggle("is-active", button.dataset.preset === state.preset);
     });
-  }
 
-  function updatePreview() {
-    const filter = state.compare ? "none" : buildFilter();
-    refs.previewImage.style.filter = filter;
-    refs.previewImage.style.transform = `rotate(${state.rotation}deg) scale(${state.flipX}, ${state.flipY})`;
+    refs.frameButtons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.frame === state.frame);
+    });
 
     if (refs.presetStatus) {
       refs.presetStatus.textContent = presets[state.preset]?.label || "Custom Preset";
     }
-
-    updateMeta();
-  }
-
-  function updateMeta() {
-    const width = refs.previewImage.naturalWidth || 0;
-    const height = refs.previewImage.naturalHeight || 0;
-    const orientation = `${state.flipX === -1 ? "Flip X" : "Normal X"} • ${state.flipY === -1 ? "Flip Y" : "Normal Y"}`;
-
-    if (refs.fileName) {
-      refs.fileName.textContent = `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}`;
+    if (refs.frameStatus) {
+      refs.frameStatus.textContent = frameModes[state.frame]?.label || "Original Frame";
     }
-    if (refs.imageMeta) {
-      refs.imageMeta.textContent = width && height ? `${width} × ${height} px` : "Preview image loaded";
+    if (refs.cutoutButton) {
+      refs.cutoutButton.classList.toggle("is-active", state.cutoutEnabled);
+      refs.cutoutButton.textContent = state.cutoutEnabled ? "Cutout Active" : "Remove Background";
     }
-    if (refs.sizeMeta) {
-      refs.sizeMeta.textContent = state.compare ? "Original preview mode" : "Edited preview mode";
-    }
-    if (refs.transformMeta) {
-      refs.transformMeta.textContent = `Rotation ${normalizeDisplayRotation()}° • ${orientation}`;
+    if (refs.previewCanvas) {
+      refs.previewCanvas.style.cursor = state.dragging ? "grabbing" : "grab";
     }
   }
 
-  function setStatus(title, text) {
-    const statusBox = document.getElementById("editorStatusBox");
-    const strong = statusBox?.querySelector("strong");
-    if (strong) strong.textContent = title;
-    if (refs.statusText) refs.statusText.textContent = text;
+  function renderPreview() {
+    const dimensions = getRenderDimensions("preview");
+    refs.previewCanvas.width = dimensions.width;
+    refs.previewCanvas.height = dimensions.height;
+    refs.previewFrame.style.setProperty("--editor-aspect", `${dimensions.width} / ${dimensions.height}`);
+    drawScene(previewContext, dimensions.width, dimensions.height, false, "png");
   }
 
-  function normalizeRotation() {
-    const normalized = ((state.rotation % 360) + 360) % 360;
-    state.rotation = normalized;
+  function drawScene(context, width, height, isExport, exportType) {
+    context.clearRect(0, 0, width, height);
+
+    if (isExport && exportType === "jpeg") {
+      context.fillStyle = "#0b0f1a";
+      context.fillRect(0, 0, width, height);
+    }
+
+    const source = getRenderableSource();
+    const sourceWidth = getSourceWidth(source);
+    const sourceHeight = getSourceHeight(source);
+    if (!sourceWidth || !sourceHeight) return;
+
+    const rotation = normalizeDisplayRotation();
+    const radians = (rotation * Math.PI) / 180;
+    const rotatedBaseWidth = rotation === 90 || rotation === 270 ? sourceHeight : sourceWidth;
+    const rotatedBaseHeight = rotation === 90 || rotation === 270 ? sourceWidth : sourceHeight;
+    const coverScale = Math.max(width / rotatedBaseWidth, height / rotatedBaseHeight) * (state.zoom / 100);
+    const offsetX = (state.panX / 100) * width * 0.55;
+    const offsetY = (state.panY / 100) * height * 0.55;
+
+    context.save();
+    context.translate(width / 2 + offsetX, height / 2 + offsetY);
+    context.scale(state.flipX * coverScale, state.flipY * coverScale);
+    context.rotate(radians);
+    context.filter = state.compare ? "none" : buildFilter();
+    context.drawImage(source, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
+    context.restore();
+    context.filter = "none";
+
+    if (!state.compare && state.text.trim()) {
+      drawTextOverlay(context, width, height);
+    }
   }
 
-  function normalizeDisplayRotation() {
-    return ((state.rotation % 360) + 360) % 360;
+  function drawTextOverlay(context, width, height) {
+    const lines = splitText(state.text.trim(), 26);
+    if (!lines.length) return;
+
+    const fontSize = clamp(state.textSize, 24, 180);
+    const x = width / 2 + (state.textX / 100) * width * 0.45;
+    const y = height / 2 + (state.textY / 100) * height * 0.45;
+    const lineHeight = fontSize * 1.12;
+
+    context.save();
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = `800 ${fontSize}px Inter, Arial, sans-serif`;
+    context.lineJoin = "round";
+    context.lineWidth = Math.max(2, fontSize * 0.08);
+    context.strokeStyle = "rgba(11, 15, 26, 0.58)";
+    context.fillStyle = state.textColor;
+    context.shadowColor = "rgba(0, 0, 0, 0.28)";
+    context.shadowBlur = fontSize * 0.22;
+    context.shadowOffsetY = Math.max(2, fontSize * 0.04);
+
+    const startY = y - ((lines.length - 1) * lineHeight) / 2;
+    lines.forEach((line, index) => {
+      const lineY = startY + index * lineHeight;
+      context.strokeText(line, x, lineY);
+      context.fillText(line, x, lineY);
+    });
+    context.restore();
+  }
+
+  function exportImage(type) {
+    const dimensions = getRenderDimensions("export");
+    const canvas = document.createElement("canvas");
+    canvas.width = dimensions.width;
+    canvas.height = dimensions.height;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    drawScene(context, dimensions.width, dimensions.height, true, type);
+
+    const link = document.createElement("a");
+    const extension = type === "jpeg" ? "jpg" : "png";
+    link.href = canvas.toDataURL(type === "jpeg" ? "image/jpeg" : "image/png", 0.92);
+    link.download = `${state.fileName}-edited.${extension}`;
+    link.click();
+
+    setStatus("Export complete.", `The edited image was prepared as ${extension.toUpperCase()} using the current frame, cutout, text, and adjustments.`);
+  }
+
+  function getRenderDimensions(mode) {
+    const source = getRenderableSource();
+    const sourceWidth = getSourceWidth(source) || refs.sourceImage.naturalWidth || 1200;
+    const sourceHeight = getSourceHeight(source) || refs.sourceImage.naturalHeight || 1200;
+    const rotation = normalizeDisplayRotation();
+    const rotatedWidth = rotation === 90 || rotation === 270 ? sourceHeight : sourceWidth;
+    const rotatedHeight = rotation === 90 || rotation === 270 ? sourceWidth : sourceHeight;
+    const aspect = getFrameAspect(rotatedWidth, rotatedHeight);
+
+    if (mode === "preview") {
+      const longSide = 1280;
+      if (aspect >= 1) {
+        return { width: longSide, height: Math.round(longSide / aspect) };
+      }
+      return { width: Math.round(longSide * aspect), height: longSide };
+    }
+
+    const exportConfig = exportSizes[state.exportSize] || exportSizes.source;
+    if (!exportConfig.longSide) {
+      if (aspect >= rotatedWidth / rotatedHeight) {
+        return { width: rotatedWidth, height: Math.round(rotatedWidth / aspect) };
+      }
+      return { width: Math.round(rotatedHeight * aspect), height: rotatedHeight };
+    }
+
+    if (aspect >= 1) {
+      return { width: exportConfig.longSide, height: Math.round(exportConfig.longSide / aspect) };
+    }
+    return { width: Math.round(exportConfig.longSide * aspect), height: exportConfig.longSide };
+  }
+
+  function getFrameAspect(width, height) {
+    const frame = frameModes[state.frame];
+    if (!frame || !frame.aspect) {
+      return width / Math.max(1, height);
+    }
+    return frame.aspect;
+  }
+
+  function getRenderableSource() {
+    if (!state.cutoutEnabled || state.compare) {
+      return refs.sourceImage;
+    }
+
+    const cacheKey = `${state.source}|${state.cutoutThreshold}|${refs.sourceImage.naturalWidth}x${refs.sourceImage.naturalHeight}`;
+    if (state.cutoutCanvas && state.cutoutCacheKey === cacheKey) {
+      return state.cutoutCanvas;
+    }
+
+    const canvas = document.createElement("canvas");
+    const width = refs.sourceImage.naturalWidth || refs.sourceImage.width;
+    const height = refs.sourceImage.naturalHeight || refs.sourceImage.height;
+    canvas.width = width;
+    canvas.height = height;
+
+    const context = canvas.getContext("2d");
+    if (!context) return refs.sourceImage;
+
+    context.drawImage(refs.sourceImage, 0, 0, width, height);
+    const imageData = context.getImageData(0, 0, width, height);
+    const pixels = imageData.data;
+    const cornerSamples = getCornerSamples(pixels, width, height);
+
+    for (let index = 0; index < pixels.length; index += 4) {
+      const r = pixels[index];
+      const g = pixels[index + 1];
+      const b = pixels[index + 2];
+      const alpha = pixels[index + 3];
+
+      const minDistance = Math.min(
+        colorDistance(r, g, b, cornerSamples.topLeft),
+        colorDistance(r, g, b, cornerSamples.topRight),
+        colorDistance(r, g, b, cornerSamples.bottomLeft),
+        colorDistance(r, g, b, cornerSamples.bottomRight)
+      );
+
+      if (minDistance < state.cutoutThreshold) {
+        const strength = minDistance / Math.max(1, state.cutoutThreshold);
+        pixels[index + 3] = Math.max(0, Math.round(alpha * strength * strength));
+      }
+    }
+
+    context.putImageData(imageData, 0, 0);
+    state.cutoutCanvas = canvas;
+    state.cutoutCacheKey = cacheKey;
+    return canvas;
+  }
+
+  function getCornerSamples(pixels, width, height) {
+    const sampleSize = clamp(Math.round(Math.min(width, height) * 0.08), 8, 40);
+    return {
+      topLeft: averageCorner(pixels, width, 0, 0, sampleSize, sampleSize),
+      topRight: averageCorner(pixels, width, width - sampleSize, 0, width, sampleSize),
+      bottomLeft: averageCorner(pixels, width, 0, height - sampleSize, sampleSize, height),
+      bottomRight: averageCorner(pixels, width, width - sampleSize, height - sampleSize, width, height)
+    };
+  }
+
+  function averageCorner(pixels, width, startX, startY, endX, endY) {
+    let totalR = 0;
+    let totalG = 0;
+    let totalB = 0;
+    let count = 0;
+
+    for (let y = startY; y < endY; y += 1) {
+      for (let x = startX; x < endX; x += 1) {
+        const index = (y * width + x) * 4;
+        totalR += pixels[index];
+        totalG += pixels[index + 1];
+        totalB += pixels[index + 2];
+        count += 1;
+      }
+    }
+
+    return {
+      r: totalR / Math.max(1, count),
+      g: totalG / Math.max(1, count),
+      b: totalB / Math.max(1, count)
+    };
+  }
+
+  function colorDistance(r, g, b, target) {
+    return Math.sqrt((r - target.r) ** 2 + (g - target.g) ** 2 + (b - target.b) ** 2);
   }
 
   function buildFilter() {
@@ -282,40 +709,84 @@
     ].join(" ");
   }
 
-  function exportImage(type) {
-    const image = new Image();
-    image.onload = () => {
-      const rotation = normalizeDisplayRotation();
-      const radians = (rotation * Math.PI) / 180;
-      const swapSides = rotation === 90 || rotation === 270;
-      const sourceWidth = image.naturalWidth || image.width;
-      const sourceHeight = image.naturalHeight || image.height;
-      const canvas = document.createElement("canvas");
+  function updateMeta() {
+    const width = refs.sourceImage.naturalWidth || 0;
+    const height = refs.sourceImage.naturalHeight || 0;
+    const exportDimensions = getRenderDimensions("export");
+    const featureSummary = `${state.cutoutEnabled ? "Cutout on" : "Cutout off"} | ${state.text.trim() ? "Text on" : "Text off"}`;
+    const orientation = `${state.flipX === -1 ? "Flip X" : "Normal X"} | ${state.flipY === -1 ? "Flip Y" : "Normal Y"}`;
 
-      canvas.width = swapSides ? sourceHeight : sourceWidth;
-      canvas.height = swapSides ? sourceWidth : sourceHeight;
+    setText(refs.fileName, `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}`);
+    setText(refs.imageMeta, width && height ? `${width} x ${height} px source` : "Preview image loaded");
+    setText(refs.sizeMeta, `${exportDimensions.width} x ${exportDimensions.height} export`);
+    setText(refs.transformMeta, `Rotation ${normalizeDisplayRotation()} deg | ${orientation}`);
+    setText(refs.featureMeta, featureSummary);
+    setText(refs.frameMeta, `${frameModes[state.frame]?.label || "Original Frame"} | ${exportSizes[state.exportSize]?.label || "Source Fit"}`);
+  }
 
-      const context = canvas.getContext("2d");
-      if (!context) return;
+  function setStatus(title, text) {
+    const strong = refs.statusBox?.querySelector("strong");
+    if (strong) {
+      strong.textContent = title;
+    }
+    setText(refs.statusText, text);
+  }
 
-      context.save();
-      context.translate(canvas.width / 2, canvas.height / 2);
-      context.scale(state.flipX, state.flipY);
-      context.rotate(radians);
-      context.filter = state.compare ? "none" : buildFilter();
-      context.drawImage(image, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
-      context.restore();
+  function invalidateCutoutCache() {
+    state.cutoutCacheKey = "";
+    state.cutoutCanvas = null;
+  }
 
-      const link = document.createElement("a");
-      const extension = type === "jpeg" ? "jpg" : "png";
-      link.href = canvas.toDataURL(type === "jpeg" ? "image/jpeg" : "image/png", 0.92);
-      link.download = `${state.fileName}-edited.${extension}`;
-      link.click();
+  function ensureEditedView() {
+    if (!state.compare) return;
+    state.compare = false;
+  }
 
-      setStatus("Export complete.", `Your edited image was prepared as ${extension.toUpperCase()} and downloaded from the current Orphex preview.`);
-    };
+  function normalizeRotation() {
+    state.rotation = normalizeDisplayRotation();
+  }
 
-    image.src = state.source;
+  function normalizeDisplayRotation() {
+    return ((state.rotation % 360) + 360) % 360;
+  }
+
+  function splitText(value, maxChars) {
+    const words = value.split(/\s+/).filter(Boolean);
+    if (!words.length) return [];
+
+    const lines = [];
+    let current = words[0];
+
+    for (let index = 1; index < words.length; index += 1) {
+      const next = words[index];
+      if (`${current} ${next}`.length <= maxChars) {
+        current = `${current} ${next}`;
+      } else {
+        lines.push(current);
+        current = next;
+      }
+    }
+
+    lines.push(current);
+    return lines.slice(0, 3);
+  }
+
+  function setInputValue(node, value) {
+    if (!node) return;
+    node.value = String(value);
+  }
+
+  function setText(node, value) {
+    if (!node) return;
+    node.textContent = value;
+  }
+
+  function getSourceWidth(source) {
+    return source instanceof HTMLCanvasElement ? source.width : source.naturalWidth || source.width;
+  }
+
+  function getSourceHeight(source) {
+    return source instanceof HTMLCanvasElement ? source.height : source.naturalHeight || source.height;
   }
 
   function sanitizeName(value) {
