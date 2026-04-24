@@ -592,6 +592,12 @@ const explainQueue = [
 const refs = {
   year: document.getElementById("year"),
   revealNodes: document.querySelectorAll("[data-reveal]"),
+  heroDemoCard: document.querySelector(".hero-demo-card"),
+  heroDemoToggle: document.getElementById("heroDemoToggle"),
+  heroDemoStatus: document.getElementById("heroDemoStatus"),
+  heroDemoTitle: document.getElementById("heroDemoTitle"),
+  heroDemoSubtitle: document.getElementById("heroDemoSubtitle"),
+  heroProgressLabel: document.getElementById("heroProgressLabel"),
   editorShell: document.getElementById("editorShell"),
   modeSwitch: document.getElementById("modeSwitch"),
   templateGroup: document.getElementById("templateGroup"),
@@ -647,7 +653,10 @@ const state = {
   selectedItemId: "auto-editor",
   explainIndex: 0,
   availableVoices: [],
-  activeUtterance: null
+  activeUtterance: null,
+  heroSceneIndex: 0,
+  heroDemoPaused: false,
+  heroDemoTimer: null
 };
 
 init();
@@ -665,6 +674,7 @@ function init() {
   initAudioPreviews();
   initPricingModes();
   initDemoProgress();
+  initHeroDemo();
 
   if (refs.editorShell && refs.libraryList && refs.detailTitle) {
     syncMode();
@@ -748,6 +758,16 @@ function bindEvents() {
     if (refs.systemStatus) {
       refs.systemStatus.textContent =
         "تم تجهيز نسخة Keep Vocals لاستخدامها داخل التايم لاين أو لإعادة تسجيل Voice Over فوقها.";
+    }
+  });
+  refs.heroDemoToggle?.addEventListener("click", () => {
+    state.heroDemoPaused = !state.heroDemoPaused;
+    refs.heroDemoCard?.setAttribute("data-demo-paused", state.heroDemoPaused ? "true" : "false");
+    refs.heroDemoToggle.setAttribute("aria-pressed", state.heroDemoPaused ? "true" : "false");
+
+    const label = refs.heroDemoToggle.querySelector("span");
+    if (label) {
+      label.textContent = state.heroDemoPaused ? "استئناف الديمو" : "إيقاف الديمو";
     }
   });
 }
@@ -886,7 +906,7 @@ function formatPriceRange(min, max, monthly) {
 
   const left = min.toFixed(min % 1 === 0 ? 0 : 2);
   const right = max.toFixed(max % 1 === 0 ? 0 : 2);
-  return `${prefix}${left} – ${prefix}${right}`;
+  return `${prefix}${left} - ${prefix}${right}`;
 }
 
 function initDemoProgress() {
@@ -897,6 +917,57 @@ function initDemoProgress() {
       bar.classList.add("is-animated");
     }, 180 + index * 160);
   });
+}
+
+function initHeroDemo() {
+  if (!refs.heroDemoTitle || !refs.heroDemoSubtitle || !refs.heroDemoStatus) return;
+
+  const scenes = [
+    {
+      status: "AI Auto Editor - يعمل الآن",
+      title: "Upload. Arrange. Publish.",
+      subtitle: "يرتب المقاطع ويصنع أول نسخة قابلة للنشر خلال دقائق.",
+      progress: "AI يعالج مشروع Reel مدته 29 ثانية"
+    },
+    {
+      status: "Sound & Meme Sync - جاهز",
+      title: "Drop a meme. Match the cut.",
+      subtitle: "يربط المؤثرات والميمز بالحركة والزووم والانتقالات من نفس المكتبة الداخلية.",
+      progress: "تمت مزامنة 3 مؤثرات و2 ميم مع التايم لاين"
+    },
+    {
+      status: "Voice + Subtitle - قيد المعالجة",
+      title: "Clean. Caption. Export.",
+      subtitle: "ينقّي الصوت، يولّد الكابشن، ثم يجهّز نسخ HD و4K وSocial من نفس المشروع.",
+      progress: "AI Voice Cleaner وAuto Subtitle أنهيا 88% من المشروع"
+    }
+  ];
+
+  const applyScene = () => {
+    const scene = scenes[state.heroSceneIndex];
+    if (!scene) return;
+
+    refs.heroDemoStatus.textContent = scene.status;
+    refs.heroDemoTitle.textContent = scene.title;
+    refs.heroDemoSubtitle.textContent = scene.subtitle;
+
+    if (refs.heroProgressLabel) {
+      refs.heroProgressLabel.textContent = scene.progress;
+    }
+  };
+
+  applyScene();
+  refs.heroDemoCard?.setAttribute("data-demo-paused", "false");
+
+  if (state.heroDemoTimer) {
+    window.clearInterval(state.heroDemoTimer);
+  }
+
+  state.heroDemoTimer = window.setInterval(() => {
+    if (state.heroDemoPaused) return;
+    state.heroSceneIndex = (state.heroSceneIndex + 1) % scenes.length;
+    applyScene();
+  }, 3200);
 }
 
 function syncMode() {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Orphix يقدم Astrix Video Pro: منصة مونتاج فيديو احترافي بالذكاء الاصطناعي، مع الصوت والميمز والترجمة والتحسين والتصدير السريع في مكان واحد."
+      content="Orphix يقدم Astrix Video Pro: مونتاج فيديو احترافي بالذكاء الاصطناعي مع الصوت والميمز والترجمة والتحسين والتصدير السريع في مكان واحد."
     />
     <title>Orphix | Astrix Video Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,6 +17,83 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-spark" viewBox="0 0 24 24">
+        <path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3Z" />
+        <path d="M19 4v4" />
+        <path d="M21 6h-4" />
+      </symbol>
+      <symbol id="i-film" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2.5" />
+        <path d="M8.5 10.5L14.5 12l-6 1.5v-3Z" />
+        <path d="M7 5v14" />
+        <path d="M17 5v14" />
+      </symbol>
+      <symbol id="i-audio" viewBox="0 0 24 24">
+        <path d="M5 15V9" />
+        <path d="M9 18V6" />
+        <path d="M13 14V10" />
+        <path d="M17 20V4" />
+        <path d="M21 13V11" />
+      </symbol>
+      <symbol id="i-captions" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="3" />
+        <path d="M7 10h10" />
+        <path d="M7 14h6" />
+      </symbol>
+      <symbol id="i-export" viewBox="0 0 24 24">
+        <path d="M12 3v12" />
+        <path d="M7 8l5-5 5 5" />
+        <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" />
+      </symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24">
+        <path d="M12 21V9" />
+        <path d="M7 14l5-5 5 5" />
+        <path d="M5 5h14" />
+      </symbol>
+      <symbol id="i-magic" viewBox="0 0 24 24">
+        <path d="M5 19L19 5" />
+        <path d="M4 20l4-1-3-3-1 4Z" />
+        <path d="M14 4l1 2" />
+        <path d="M18 8l2 1" />
+        <path d="M16 10l1 2" />
+      </symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24">
+        <path d="M5 14h3l4 4V6L8 10H5v4Z" />
+        <path d="M16 9a4 4 0 0 1 0 6" />
+        <path d="M18.5 6.5a7 7 0 0 1 0 11" />
+      </symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24">
+        <path d="M6 17l-2 3V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6Z" />
+        <path d="M8 10h8" />
+        <path d="M8 13h5" />
+      </symbol>
+      <symbol id="i-timeline" viewBox="0 0 24 24">
+        <path d="M4 12h16" />
+        <rect x="5" y="9" width="4" height="6" rx="1.5" />
+        <rect x="11" y="7" width="4" height="10" rx="1.5" />
+        <rect x="17" y="10" width="2" height="4" rx="1" />
+      </symbol>
+      <symbol id="i-cloud" viewBox="0 0 24 24">
+        <path d="M7 18a4 4 0 1 1 .7-7.94A5.5 5.5 0 0 1 18 11a3.5 3.5 0 1 1 0 7H7Z" />
+      </symbol>
+      <symbol id="i-unmix" viewBox="0 0 24 24">
+        <path d="M4 12h4" />
+        <path d="M16 12h4" />
+        <path d="M10 8v8" />
+        <path d="M14 5v14" />
+        <path d="M8 6v12" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M10 8.8l5.4 3.2L10 15.2V8.8Z" />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="M13 6l6 6-6 6" />
+      </symbol>
+    </svg>
+
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
     <div class="bg-grid" aria-hidden="true"></div>
@@ -34,7 +111,7 @@
         <nav class="site-nav" aria-label="Main Navigation">
           <a href="index.html">Home</a>
           <a href="ai-features.html">AI Features</a>
-          <a href="sound-meme.html">Sound & Meme</a>
+          <a href="sound-meme.html">Sound &amp; Meme</a>
           <a href="editor-experience.html">Editor Experience</a>
           <a href="pro-features.html">Pro Features</a>
           <a href="pricing.html">Pricing</a>
@@ -44,229 +121,177 @@
       </header>
 
       <main>
-        <section class="hero" id="top">
+        <section class="hero hero-sales" id="top">
           <div class="hero-copy" data-reveal>
             <div class="hero-badges">
               <span class="pill accent">Orphix Pro</span>
               <span class="pill soft">AI Editing Suite</span>
-              <span class="pill soft">Built-in Sound & Meme Library</span>
+              <span class="pill soft">Blue + Purple Workflow</span>
             </div>
 
             <p class="eyebrow">Orphix presents Astrix Video Pro</p>
-            <h1>مونتاج فيديو احترافي بالذكاء الاصطناعي، مع الصوت والميمز وكل أدوات الإنتاج في مكان واحد</h1>
+            <h1>اصنع فيديو احترافي بالذكاء الاصطناعي خلال دقائق</h1>
             <p class="hero-lead">
-              أنشئ، حرّر، حسّن، وأصدر فيديوهاتك بسرعة من شاشة واحدة فقط.
-              بدون الحاجة إلى مواقع خارجية، وبدون تعقيد برامج المونتاج التقليدية.
+              مونتاج + صوت + ميمز + ترجمة + تحسين جودة في مكان واحد. أنشئ، حرّر، حسّن، وأصدر
+              فيديوهاتك بسرعة من شاشة واحدة فقط وبدون الحاجة إلى أدوات خارجية.
             </p>
 
             <div class="hero-actions">
               <a class="button primary" href="pricing.html">ابدأ الآن</a>
-              <a class="button secondary" href="ai-features.html">شاهد المزايا</a>
-              <a class="button ghost" href="pricing.html">قارن الاشتراكات</a>
+              <a class="button secondary" href="#core-features">شاهد المزايا</a>
+              <a class="button ghost" href="#pricing-preview">قارن الاشتراكات</a>
             </div>
 
             <div class="hero-trust">
-              <span>مونتاج ذكي بالكامل</span>
-              <span>مكتبة أصوات وميمز داخلية</span>
-              <span>ترجمة وصوت وتحسين جودة</span>
-              <span>تصدير سريع HD / 4K / Social</span>
+              <span>
+                <svg class="line-icon"><use href="#i-spark"></use></svg>
+                <span>مونتاج ذكي بالكامل</span>
+              </span>
+              <span>
+                <svg class="line-icon"><use href="#i-sound"></use></svg>
+                <span>مكتبة أصوات وميمز داخلية</span>
+              </span>
+              <span>
+                <svg class="line-icon"><use href="#i-captions"></use></svg>
+                <span>ترجمة وصوت وتحسين جودة</span>
+              </span>
+              <span>
+                <svg class="line-icon"><use href="#i-export"></use></svg>
+                <span>تصدير سريع HD / 4K / Social</span>
+              </span>
+            </div>
+
+            <div class="promise-strip home-promise">
+              <span>التطبيق مجاني</span>
+              <span>أدوات AI باشتراك شهري</span>
+              <span>جاهز للجوال والكمبيوتر</span>
             </div>
           </div>
 
-          <div class="hero-studio" data-reveal>
-            <article class="editor-shell" id="editorShell" data-mode="easy" data-template="tiktok">
-              <div class="editor-topbar">
-                <div class="topbar-left">
-                  <span class="brand-inline">Astrix Video Pro</span>
-                  <div class="topbar-links">
-                    <span>File</span>
-                    <span>Tools</span>
-                    <span>AI</span>
-                    <span>Export</span>
-                  </div>
-                </div>
+          <div class="hero-demo-card" data-reveal>
+            <div class="demo-card-head">
+              <div>
+                <p class="mini-label">Quick Demo</p>
+                <strong>واجهة بيع أقوى مع ديمو متحرك</strong>
+              </div>
+              <span class="live-label">Live Preview</span>
+            </div>
 
-                <div class="mode-switch" id="modeSwitch">
-                  <button class="mode-chip is-active" type="button" data-mode="easy">Easy</button>
-                  <button class="mode-chip" type="button" data-mode="pro">Pro</button>
+            <div class="demo-stage">
+              <img src="assets/orphex-reference.jpg" alt="واجهة Astrix Video Pro من Orphix" />
+
+              <button class="demo-play" id="heroDemoToggle" type="button" aria-pressed="false">
+                <svg class="line-icon"><use href="#i-play"></use></svg>
+                <span>إيقاف الديمو</span>
+              </button>
+
+              <div class="demo-overlay">
+                <p class="demo-kicker" id="heroDemoStatus">AI Auto Editor - يعمل الآن</p>
+                <strong id="heroDemoTitle">Upload. Arrange. Publish.</strong>
+                <span id="heroDemoSubtitle">
+                  يقرأ المقاطع، يركب الترتيب، ويجهز أول نسخة قابلة للنشر في دقائق.
+                </span>
+
+                <div class="demo-progress">
+                  <div class="progress-track">
+                    <div class="progress-fill" data-auto-progress data-progress-target="82%"></div>
+                  </div>
+                  <small id="heroProgressLabel">AI يعالج مشروع Reel مدته 29 ثانية</small>
                 </div>
               </div>
 
-              <div class="editor-grid">
-                <aside class="app-sidebar">
-                  <button class="new-project">+ New Project</button>
-
-                  <nav class="sidebar-menu">
-                    <button class="sidebar-item is-active" type="button">Media</button>
-                    <button class="sidebar-item" type="button">Templates</button>
-                    <button class="sidebar-item" type="button">AI Editor</button>
-                    <button class="sidebar-item" type="button">Text</button>
-                    <button class="sidebar-item" type="button">Audio</button>
-                    <button class="sidebar-item" type="button">Transitions</button>
-                    <button class="sidebar-item" type="button">Effects</button>
-                    <button class="sidebar-item" type="button">Cloud Sync</button>
-                  </nav>
-
-                  <div class="upgrade-card">
-                    <strong>Orphix Pro</strong>
-                    <p>فعّل الذكاء الاصطناعي، الصوت، الميمز، والـ Cloud Sync في تجربة بيع أقوى من شاشة واحدة.</p>
-                    <span class="upgrade-pill">Plans from $5.99</span>
-                  </div>
-                </aside>
-
-                <section class="project-panel">
-                  <div class="panel-header">
-                    <div>
-                      <p class="mini-label">Project Media</p>
-                      <h2 id="currentTemplateTitle">TikTok Fast Mode</h2>
-                    </div>
-                    <div class="template-group" id="templateGroup">
-                      <button class="template-chip is-active" type="button" data-template="tiktok">TikTok</button>
-                      <button class="template-chip" type="button" data-template="youtube">YouTube</button>
-                      <button class="template-chip" type="button" data-template="ads">Ads</button>
-                      <button class="template-chip" type="button" data-template="podcast">Podcast</button>
-                    </div>
-                  </div>
-
-                  <div class="media-preview">
-                    <div class="preview-header">
-                      <span class="live-label" id="modeLabel">Easy AI Mode</span>
-                      <span class="live-label muted" id="ratioLabel">9:16 Social</span>
-                      <span class="live-label muted" id="renderLabel">AI Fast Render</span>
-                    </div>
-
-                    <div class="preview-window">
-                      <img src="assets/orphex-reference.jpg" alt="واجهة محرر Astrix Video Pro من Orphix" />
-                      <div class="preview-copy">
-                        <strong id="previewHeadline">DROP. CUT. PUBLISH.</strong>
-                        <span id="previewSubline">Astrix AI يرتب اللقطات ويجهز النسخة الجاهزة للنشر</span>
-                      </div>
-                    </div>
-
-                    <div class="track-strip">
-                      <div class="track-row">
-                        <span>Video Track</span>
-                        <div class="track-fill video-fill" id="videoTrackFill"></div>
-                      </div>
-                      <div class="track-row">
-                        <span>Sound FX</span>
-                        <div class="track-fill fx-fill" id="fxTrackFill"></div>
-                      </div>
-                      <div class="track-row">
-                        <span>Voice</span>
-                        <div class="track-fill voice-fill" id="voiceTrackFill"></div>
-                      </div>
-                      <div class="track-row">
-                        <span>Music</span>
-                        <div class="track-fill music-fill" id="musicTrackFill"></div>
-                      </div>
-                    </div>
-
-                    <div class="editor-footer">
-                      <button class="button tertiary mini" type="button" id="explainToolBtn">AI Explain Button</button>
-                      <button class="button tertiary mini" type="button" id="syncSoundBtn">Sound Sync AI</button>
-                    </div>
-                  </div>
-                </section>
-
-                <aside class="inspector-panel">
-                  <div class="inspector-tabs" id="libraryTabs">
-                    <button class="inspector-tab is-active" type="button" data-panel="ai">AI Tools</button>
-                    <button class="inspector-tab" type="button" data-panel="sounds">Sound FX</button>
-                    <button class="inspector-tab" type="button" data-panel="memes">Memes</button>
-                    <button class="inspector-tab" type="button" data-panel="voice">VoiceOver</button>
-                    <button class="inspector-tab" type="button" data-panel="unmix">Music Remove</button>
-                  </div>
-
-                  <label class="search-box">
-                    <input id="librarySearch" type="search" placeholder="ابحث داخل المكتبة..." />
-                  </label>
-
-                  <div class="library-list" id="libraryList"></div>
-
-                  <div class="tool-explain">
-                    <div class="tool-explain-header">
-                      <p class="mini-label" id="detailLabel">AI Explain</p>
-                      <strong id="detailTitle">AI Auto Editor</strong>
-                    </div>
-                    <p id="detailText">
-                      يصنع فيديو كامل تلقائيًا من ترتيب اللقطات إلى الموسيقى والانتقالات المناسبة.
-                    </p>
-                    <div class="detail-tags" id="detailTags"></div>
-                    <div class="detail-audio" id="detailAudioBox" hidden>
-                      <div class="detail-audio-head">
-                        <span>معاينة فعلية للصوت</span>
-                        <small id="detailAudioMeta">جاهز للتشغيل من مكتبتك الخاصة</small>
-                      </div>
-                      <audio id="detailAudio" controls preload="none"></audio>
-                    </div>
-                    <div class="voice-studio" id="voiceStudioBox" hidden>
-                      <div class="voice-studio-head">
-                        <span>Voice Over Studio</span>
-                        <small id="voiceStatus">اكتب النص، اختر المدة، ثم دع Orphix يقترح الصوت والسرعة المناسبة.</small>
-                      </div>
-
-                      <label class="voice-field">
-                        <span>النص المراد تحويله إلى صوت</span>
-                        <textarea
-                          id="voiceScript"
-                          rows="5"
-                          placeholder="اكتب نص الإعلان أو التعليق الصوتي هنا..."
-                        ></textarea>
-                      </label>
-
-                      <div class="voice-grid">
-                        <label class="voice-field">
-                          <span>المدة المستهدفة بالثواني</span>
-                          <input id="voiceDuration" type="number" min="5" max="120" step="1" value="15" />
-                        </label>
-
-                        <label class="voice-field">
-                          <span>صوت المتصفح المستخدم</span>
-                          <select id="voiceSelect"></select>
-                        </label>
-                      </div>
-
-                      <div class="voice-grid compact">
-                        <div class="voice-metric">
-                          <span>السرعة الذكية</span>
-                          <strong id="voiceRateOutput">1.00x</strong>
-                        </div>
-                        <div class="voice-metric">
-                          <span>المدة المتوقعة</span>
-                          <strong id="voiceEstimateOutput">0.0s</strong>
-                        </div>
-                      </div>
-
-                      <div class="voice-actions">
-                        <button class="button primary mini" type="button" id="voiceSuggestBtn">اقتراح مناسب</button>
-                        <button class="button secondary mini" type="button" id="voicePreviewBtn">تشغيل الصوت</button>
-                        <button class="button tertiary mini" type="button" id="voiceStopBtn">إيقاف</button>
-                      </div>
-                    </div>
-                  </div>
-                </aside>
+              <div class="demo-controls" aria-hidden="true">
+                <span>00:00</span>
+                <div class="demo-scrub">
+                  <span></span>
+                </div>
+                <span>00:29</span>
               </div>
-            </article>
+            </div>
+
+            <div class="demo-sidecards">
+              <article class="sales-card mini-card">
+                <span class="card-icon">
+                  <svg class="line-icon"><use href="#i-film"></use></svg>
+                </span>
+                <div>
+                  <strong>One Screen Editing</strong>
+                  <p>واجهة واحدة تجمع المشروع، الصوت، الميمز، والتصدير.</p>
+                </div>
+              </article>
+
+              <article class="sales-card mini-card">
+                <span class="card-icon icon-violet">
+                  <svg class="line-icon"><use href="#i-unmix"></use></svg>
+                </span>
+                <div>
+                  <strong>AI Music Unmix</strong>
+                  <p>ميزة نادرة لفصل الغناء عن الموسيقى داخل نفس المشروع.</p>
+                </div>
+              </article>
+
+              <article class="sales-card mini-card">
+                <span class="card-icon icon-blue">
+                  <svg class="line-icon"><use href="#i-export"></use></svg>
+                </span>
+                <div>
+                  <strong>Fast Render</strong>
+                  <p>تجهيز نسخ HD و4K وSocial من نفس التايم لاين.</p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section class="section">
+        <section class="section section-compact">
           <div class="section-heading" data-reveal>
-            <p class="eyebrow">Social Proof</p>
-            <h2>مصمم لصناع المحتوى الذين يحتاجون سرعة إنتاج يومية</h2>
-            <p>حتى قبل الإطلاق الكامل، تم بناء Orphix بمنطق يناسب احتياجات الريلز، الإعلانات، والفرق السريعة.</p>
+            <p class="eyebrow">Demo Flow</p>
+            <h2>من رفع الفيديو إلى التصدير في أربع خطوات واضحة</h2>
+            <p>هذا هو المسار الذي يراه المستخدم من أول دقيقة، وهو ما يجعل الصفحة تقنع بسرعة بدل أن تشرح كل شيء دفعة واحدة.</p>
           </div>
 
-          <div class="comparison-grid">
-            <article class="comparison-card" data-reveal>
-              <strong>جاهز للإطلاق قريبًا</strong>
-              <p>الواجهة والـ flow مصممان كصفحة بيع واضحة يمكن تطويرها لاحقًا إلى منتج فعلي.</p>
+          <div class="flow-board">
+            <article class="flow-step" data-reveal>
+              <span class="card-icon">
+                <svg class="line-icon"><use href="#i-upload"></use></svg>
+              </span>
+              <strong>1. ارفع الفيديو</strong>
+              <span>اسحب المقاطع أو الملفات الصوتية واترك Orphix يقرأ المشروع فورًا.</span>
             </article>
-            <article class="comparison-card" data-reveal>
-              <strong>مناسب لصناع المحتوى</strong>
-              <p>التركيز واضح على الريلز، الإعلانات، الفيديوهات القصيرة، والمحتوى اليومي سريع النشر.</p>
+
+            <article class="flow-step" data-reveal>
+              <span class="card-icon icon-violet">
+                <svg class="line-icon"><use href="#i-spark"></use></svg>
+              </span>
+              <strong>2. دع AI يرتب</strong>
+              <span>AI Auto Editor وSmart Cut يرتبان اللقطات ويحذفان السكتات والأخطاء.</span>
             </article>
+
+            <article class="flow-step" data-reveal>
+              <span class="card-icon icon-blue">
+                <svg class="line-icon"><use href="#i-sound"></use></svg>
+              </span>
+              <strong>3. أضف الصوت والميمز</strong>
+              <span>مكتبة داخلية جاهزة مع Sound Sync AI وتعليق صوتي داخل نفس الواجهة.</span>
+            </article>
+
+            <article class="flow-step" data-reveal>
+              <span class="card-icon">
+                <svg class="line-icon"><use href="#i-export"></use></svg>
+              </span>
+              <strong>4. صدّر وانشر</strong>
+              <span>اختر HD أو 4K أو Social Formats وانهِ الفيديو بسرعة بدون تعقيد.</span>
+            </article>
+          </div>
+
+          <div class="progress-demo" data-reveal>
+            <div class="progress-head">
+              <strong>AI Pipeline Preview</strong>
+              <span>Upload → AI Edit → Sound → Export</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" data-auto-progress data-progress-target="88%"></div>
+            </div>
           </div>
         </section>
 
@@ -275,14 +300,13 @@
             <p class="eyebrow">Why Astrix Video Pro</p>
             <h2>كل أدوات صناعة الفيديو في تطبيق واحد</h2>
             <p>
-              Astrix Video Pro ليس مجرد محرر فيديو، بل منصة إنتاج متكاملة تعتمد على الذكاء
-              الاصطناعي لتسريع كل خطوة في صناعة المحتوى.
+              Astrix Video Pro ليس مجرد محرر فيديو، بل منصة إنتاج متكاملة تعتمد على الذكاء الاصطناعي لتسريع كل خطوة في صناعة المحتوى.
             </p>
           </div>
 
           <div class="why-layout">
             <article class="why-panel" data-reveal>
-              <p class="mini-label">بدل ما تستخدم 5 تطبيقات مختلفة من أجل:</p>
+              <p class="mini-label">بدل استخدام عدة تطبيقات من أجل:</p>
               <div class="problem-list">
                 <span>المونتاج</span>
                 <span>تنظيف الصوت</span>
@@ -294,385 +318,236 @@
             </article>
 
             <article class="why-panel emphasis" data-reveal>
-              <h3>Astrix Video Pro يجمعها كلها في مكان واحد.</h3>
+              <div class="panel-head-inline">
+                <div>
+                  <p class="mini-label">Orphix Difference</p>
+                  <h3>Astrix يجمعها كلها في مكان واحد.</h3>
+                </div>
+                <span class="rare-badge">AI Music Unmix</span>
+              </div>
               <p>
-                افتح المشروع، اسحب المقاطع، وابدأ من نفس الواجهة في القص، الشرح، تحسين الجودة،
-                إضافة المؤثرات، والميمز، ثم التصدير السريع للنشر.
+                افتح المشروع، اسحب المقاطع، وابدأ من نفس الواجهة في القص والترجمة والصوت والميمز والمؤثرات والتصدير، مع ميزة نادرة لإزالة الموسيقى أو عزل الصوت البشري من نفس الملف.
               </p>
               <div class="problem-list">
                 <span>واجهة واحدة</span>
-                <span>AI يساعد بدل ما يعقّد</span>
-                <span>أسرع لصانع المحتوى اليومي</span>
-                <span>جاهز للمبتدئ والمحترف</span>
+                <span>AI يساعد بدل أن يعقّد</span>
+                <span>مناسب للمبتدئ والمحترف</span>
+                <span>أسرع للنشر اليومي</span>
               </div>
             </article>
           </div>
         </section>
 
-        <section class="section" id="studio">
+        <section class="section" id="core-features">
           <div class="section-heading" data-reveal>
-            <p class="eyebrow">Rare Pro Feature</p>
-            <h2>ميزة نادرة داخل Orphix: إزالة الموسيقى من الأغنية بالذكاء الاصطناعي داخل المشروع نفسه.</h2>
-            <p>
-              بدل الاعتماد على أدوات خارجية، يوفر Orphix ميزة
-              <strong>AI Music Unmix</strong>
-              لفصل الصوت عن الموسيقى أو استخراج الـ Acapella بضغطة واحدة، ثم إدخاله مباشرة في
-              التايم لاين.
-            </p>
+            <p class="eyebrow">Top Features</p>
+            <h2>أهم أربع مسارات يحتاجها المستخدم من أول نظرة</h2>
+            <p>بدل تكديس كل الميزات مرة واحدة، الصفحة الرئيسية تعرض فقط ما يقنع المستخدم ثم تنقله للتفاصيل داخل الصفحات المتخصصة.</p>
           </div>
 
-          <div class="unmix-grid">
-            <article class="unmix-card" data-reveal>
-              <div class="unmix-head">
+          <div class="feature-link-grid">
+            <a class="feature-link-card" href="ai-features.html" data-reveal>
+              <div class="feature-link-head">
+                <span class="card-icon">
+                  <svg class="line-icon"><use href="#i-spark"></use></svg>
+                </span>
                 <div>
-                  <p class="mini-label">AI Music Unmix</p>
-                  <h3>فصل الأغنية إلى Vocals + Instrumental</h3>
-                </div>
-                <span class="rare-badge">Rare</span>
-              </div>
-
-              <div class="mix-bars">
-                <label class="mix-control">
-                  <span>Vocals</span>
-                  <input id="vocalSlider" type="range" min="0" max="100" value="82" />
-                </label>
-                <label class="mix-control">
-                  <span>Instrumental</span>
-                  <input id="musicSlider" type="range" min="0" max="100" value="18" />
-                </label>
-              </div>
-
-              <div class="mix-visual">
-                <div class="mix-column">
-                  <strong id="vocalValue">82%</strong>
-                  <span>الصوت البشري</span>
-                </div>
-                <div class="mix-meter">
-                  <div class="mix-progress vocals" id="vocalProgress"></div>
-                  <div class="mix-progress music" id="musicProgress"></div>
-                </div>
-                <div class="mix-column">
-                  <strong id="musicValue">18%</strong>
-                  <span>الموسيقى</span>
+                  <p class="mini-label">Stage 1</p>
+                  <h3>ابدأ أسرع</h3>
                 </div>
               </div>
+              <p>AI Auto Editor وSmart Cut وTemplate System يجهزون أول نسخة بسرعة بدل البدء من الصفر.</p>
+              <span class="feature-link-meta">
+                شاهد صفحة الذكاء الاصطناعي
+                <svg class="line-icon"><use href="#i-arrow"></use></svg>
+              </span>
+            </a>
 
-              <div class="action-row">
-                <button class="button primary mini" type="button" id="removeMusicBtn">Remove Music</button>
-                <button class="button secondary mini" type="button" id="keepVocalsBtn">Keep Vocals</button>
+            <a class="feature-link-card" href="ai-features.html" data-reveal>
+              <div class="feature-link-head">
+                <span class="card-icon icon-violet">
+                  <svg class="line-icon"><use href="#i-captions"></use></svg>
+                </span>
+                <div>
+                  <p class="mini-label">Stage 2</p>
+                  <h3>أنهِ الصوت والنص</h3>
+                </div>
               </div>
-            </article>
+              <p>AI Voice Cleaner وAI Auto Subtitle وAI Voice Over تنهي الترجمة والتعليق الصوتي من نفس المشروع.</p>
+              <span class="feature-link-meta">
+                اكتشف أدوات الصوت والترجمة
+                <svg class="line-icon"><use href="#i-arrow"></use></svg>
+              </span>
+            </a>
 
-            <article class="explain-card" data-reveal>
-              <p class="mini-label">AI Explain Output</p>
-              <h3 id="smartExplainerTitle">كيف تعمل الأداة الحالية؟</h3>
-              <p id="smartExplainerText">
-                اضغط على أي أداة أو استخدم زر AI Explain داخل الاستوديو ليظهر شرح بسيط وواضح يناسب المبتدئ.
-              </p>
-              <div class="explain-status" id="systemStatus">
-                الوضع الحالي: النسخة الاحترافية مصممة لتسرّع إنتاجك وتبقي كل شيء داخل نفس الواجهة.
+            <a class="feature-link-card neon-card" href="sound-meme.html" data-reveal>
+              <div class="feature-link-head">
+                <span class="card-icon icon-blue">
+                  <svg class="line-icon"><use href="#i-chat"></use></svg>
+                </span>
+                <div>
+                  <p class="mini-label">Stage 3</p>
+                  <h3>أضف لمسة مختلفة</h3>
+                </div>
               </div>
-            </article>
-          </div>
-        </section>
+              <p>Sound Effects Library وMeme Sound Board وSound Sync AI تجعل المحتوى أسرع وأقوى بدون البحث في الإنترنت.</p>
+              <span class="feature-link-meta">
+                هذه أقوى ميزة تنافسية
+                <svg class="line-icon"><use href="#i-arrow"></use></svg>
+              </span>
+            </a>
 
-        <section class="section" id="features">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">AI Features</p>
-            <h2>ذكاء اصطناعي حقيقي يخدم صانع المحتوى</h2>
-            <p>كل ميزة هنا مصممة لتختصر الوقت وتزيد الجودة بدل ما تضيف خطوات معقدة.</p>
-          </div>
-
-          <div class="feature-grid">
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">01</span>
-              <h3>🧠 AI Auto Editor</h3>
-              <p>يصنع فيديو كامل تلقائيًا، من ترتيب اللقطات إلى الموسيقى والانتقالات المناسبة.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">02</span>
-              <h3>✂️ Smart Cut AI</h3>
-              <p>يحذف السكتات، الأخطاء، والتكرار غير الضروري تلقائيًا.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">03</span>
-              <h3>🎬 AI Director Mode</h3>
-              <p>يقترح إخراجًا احترافيًا: زووم، انتقالات، توقيت، وإيقاع بصري مناسب.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">04</span>
-              <h3>🎙️ AI Voice Cleaner</h3>
-              <p>ينقي الصوت ويزيل الضوضاء لتحصل على كلام أوضح وأنظف.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">05</span>
-              <h3>🌍 AI Auto Subtitle</h3>
-              <p>ترجمة تلقائية مع تنسيق احترافي يناسب المحتوى القصير والطويل.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">06</span>
-              <h3>🗣️ AI Voice Over</h3>
-              <p>حوّل النص إلى صوت طبيعي داخل نفس المشروع.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">07</span>
-              <h3>🎨 AI Video Enhancer</h3>
-              <p>يحسّن جودة الفيديو ويجهّزه بمظهر أقرب إلى 4K.</p>
-            </article>
-            <article class="feature-card" data-reveal>
-              <span class="feature-index">08</span>
-              <h3>⚡ AI Fast Render</h3>
-              <p>تصدير سريع جدًا لتقليل وقت الانتظار والنشر أسرع.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section sound-section" id="sound">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Sound & Meme Library</p>
-            <h2>مكتبة صوت وميمز داخلية جاهزة للاستخدام</h2>
-            <span class="section-count" id="soundCountBadge">50 صوتًا مرتبًا</span>
-            <p>
-              واحدة من أقوى ميزات Astrix Video Pro هي أن المؤثرات والميمز موجودة داخل التطبيق نفسه،
-              بدون تحميل خارجي، مع بحث سريع باسم الصوت أو نوعه.
-            </p>
-          </div>
-
-          <div class="sound-grid">
-            <article class="sound-card" data-reveal>
-              <p class="mini-label">🎵 Sound Effects Library</p>
-              <h3>مكتبة مؤثرات صوتية داخلية جاهزة</h3>
-              <p>
-                ضحك، صدمات، تصفيق، انتقالات صوتية، حماس، Cartoon Hits، وCinematic FX مع ترتيب واضح
-                داخل نفس الواجهة.
-              </p>
-            </article>
-
-            <article class="sound-card" data-reveal>
-              <p class="mini-label">😂 Meme Sound Board</p>
-              <h3>ميمز جاهزة للإضافة بضغطة واحدة</h3>
-              <p>
-                ردود فعل، أصوات ترند، ضحك، مؤثرات كوميدية، وأصوات إنترنت مشهورة يمكن إضافتها فورًا
-                للفيديو.
-              </p>
-            </article>
-
-            <article class="sound-card" data-reveal>
-              <p class="mini-label">🎚️ Sound Sync AI</p>
-              <h3>ربط المؤثرات بالحركة والقطع تلقائيًا</h3>
-              <p>
-                يربط المؤثرات الصوتية تلقائيًا بالحركة، القطع، الزووم، أو الانتقالات داخل الفيديو.
-              </p>
-            </article>
-
-            <article class="sound-card" data-reveal>
-              <p class="mini-label">🔎 Quick Search</p>
-              <h3>بحث سريع حسب الاسم أو النوع</h3>
-              <p>
-                ابحث عن الصوت التجاري، الانتقال، الميم، أو النبرة المناسبة بسرعة بدل التنقل بين ملفات
-                عشوائية.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section workflow-section">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Simple Usage</p>
-            <h2>احترافي لكن سهل جدًا</h2>
-            <p>واجهة واحدة للمبتدئ، مع اختصارات وقوالب ذكية تقلل الوقت من أول مشروع.</p>
-          </div>
-
-          <div class="workflow-grid">
-            <article class="workflow-card" data-reveal>
-              <strong>📱 One Screen Editing</strong>
-              <span>كل شيء في شاشة واحدة بدون تعقيد.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>🎞️ Drag & Magic</strong>
-              <span>اسحب المقاطع فقط، واترك الذكاء الاصطناعي يرتب المشاهد والباقي.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>⚡ Fast Mode</strong>
-              <span>وضع سريع لتجهيز فيديو جاهز للنشر خلال دقائق.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>🎬 Template System</strong>
-              <span>قوالب جاهزة لـ TikTok وYouTube وReels وAds.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>🧠 AI Explain Button</strong>
-              <span>زر شرح ذكي يوضّح أي أداة داخل التطبيق بطريقة بسيطة للمبتدئ.</span>
-            </article>
+            <a class="feature-link-card" href="pro-features.html" data-reveal>
+              <div class="feature-link-head">
+                <span class="card-icon">
+                  <svg class="line-icon"><use href="#i-timeline"></use></svg>
+                </span>
+                <div>
+                  <p class="mini-label">Stage 4</p>
+                  <h3>تحكم احترافي عند الحاجة</h3>
+                </div>
+              </div>
+              <p>Advanced Timeline وAudio Studio وCloud Sync وMulti Export لمن يريد عمقًا أكبر بدون التضحية بالسرعة.</p>
+              <span class="feature-link-meta">
+                انتقل لصفحة الأدوات الاحترافية
+                <svg class="line-icon"><use href="#i-arrow"></use></svg>
+              </span>
+            </a>
           </div>
         </section>
 
         <section class="section">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Pro Features</p>
-            <h2>أدوات احترافية لمن يريد تحكمًا كاملًا</h2>
-            <p>عندما تحتاج دقة أعلى أو إنتاجًا يوميًا مكثفًا، ينتقل Orphix معك إلى وضع Pro الكامل.</p>
+          <div class="cta-section cta-section-slim" data-reveal>
+            <div>
+              <p class="eyebrow">Quick CTA</p>
+              <h2>ابدأ من الشاشة الرئيسية، ثم تعمّق فقط عندما تحتاج</h2>
+              <p>هذا هو منطق Orphix: سهولة أولًا للمستخدم الجديد، وتحكم احترافي جاهز عندما يكبر المشروع.</p>
+            </div>
+            <div class="cta-actions">
+              <a class="button primary large" href="editor-experience.html">شاهد تجربة المحرر</a>
+              <a class="button secondary large" href="ai-features.html">استكشف ميزات AI</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section sound-section" id="sound-preview">
+          <div class="neon-section" data-reveal>
+            <div class="section-heading section-heading-tight">
+              <p class="eyebrow">Sound &amp; Meme Highlight</p>
+              <h2>أضف ميم بضغطة واحدة بدل البحث في الإنترنت</h2>
+              <p>هذه الميزة يجب أن تظهر بوضوح لأنها من أكثر العناصر التي تميز Orphix عن أدوات المونتاج التقليدية.</p>
+            </div>
+
+            <div class="preview-grid">
+              <article class="preview-card neon-preview">
+                <span class="card-icon icon-blue">
+                  <svg class="line-icon"><use href="#i-sound"></use></svg>
+                </span>
+                <strong>صوت إعلان خاطف</strong>
+                <span>مناسب للكشف عن منتج أو عرض سريع داخل الريلز والإعلانات.</span>
+                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">
+                  تشغيل المعاينة
+                </button>
+              </article>
+
+              <article class="preview-card neon-preview">
+                <span class="card-icon icon-violet">
+                  <svg class="line-icon"><use href="#i-film"></use></svg>
+                </span>
+                <strong>Whoosh انتقال نظيف</strong>
+                <span>انتقال سريع يركب مباشرة مع الحركة والقطع والزووم.</span>
+                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">
+                  تشغيل المعاينة
+                </button>
+              </article>
+
+              <article class="preview-card neon-preview">
+                <span class="card-icon">
+                  <svg class="line-icon"><use href="#i-chat"></use></svg>
+                </span>
+                <strong>ردة فعل ميم جاهزة</strong>
+                <span>لمسة كوميدية أو ترندية تضيفها فورًا بدون تحميل خارجي.</span>
+                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">
+                  تشغيل المعاينة
+                </button>
+              </article>
+            </div>
+
+            <div class="cta-actions section-actions">
+              <a class="button primary" href="sound-meme.html">افتح مكتبة الصوت والميمز</a>
+              <a class="button ghost" href="sound-meme.html">شاهد Sound Sync AI</a>
+            </div>
           </div>
 
-          <div class="workflow-grid">
-            <article class="workflow-card" data-reveal>
-              <strong>🎬 Advanced Timeline Mode</strong>
-              <span>تحكم احترافي مثل برامج المونتاج المتقدمة.</span>
+          <audio id="globalPreviewAudio" preload="none"></audio>
+        </section>
+
+        <section class="section">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">Social Proof</p>
+            <h2>مصمم لصناع المحتوى الذين يحتاجون سرعة إنتاج يومية</h2>
+            <p>حتى قبل الإطلاق الكامل، تم ترتيب تجربة Orphix لتخاطب الريلز والإعلانات والمشاريع السريعة التي تحتاج قرارًا واضحًا وسرعة نشر.</p>
+          </div>
+
+          <div class="comparison-grid comparison-grid-3">
+            <article class="comparison-card" data-reveal>
+              <span class="card-icon">
+                <svg class="line-icon"><use href="#i-film"></use></svg>
+              </span>
+              <strong>جاهز لصفحة بيع فعلية</strong>
+              <p>الصفحة الرئيسية أصبحت Funnel أقصر وأوضح، والصفحات الفرعية تتكفل بالتفاصيل.</p>
             </article>
-            <article class="workflow-card" data-reveal>
-              <strong>🎧 Audio Studio</strong>
-              <span>لوحة متكاملة لإدارة الصوت، الموسيقى، المؤثرات، والميمز.</span>
+
+            <article class="comparison-card" data-reveal>
+              <span class="card-icon icon-violet">
+                <svg class="line-icon"><use href="#i-magic"></use></svg>
+              </span>
+              <strong>مناسب للريلز والإعلانات</strong>
+              <p>الخطاب التسويقي والـ UX الآن يركزان على السرعة، النتيجة، وسهولة الوصول لأول نسخة قابلة للنشر.</p>
             </article>
-            <article class="workflow-card" data-reveal>
-              <strong>☁️ Cloud Sync</strong>
-              <span>مزامنة بين الجوال والكمبيوتر حتى تكمل مشروعك من أي جهاز.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>📦 Multi Export</strong>
-              <span>تصدير متعدد للجودات: HD و4K وSocial Formats.</span>
+
+            <article class="comparison-card" data-reveal>
+              <span class="card-icon icon-blue">
+                <svg class="line-icon"><use href="#i-cloud"></use></svg>
+              </span>
+              <strong>جاهز للنمو لاحقًا</strong>
+              <p>يمكنك إبراز Cloud Sync وTimeline وميزات Pro بدون إثقال الصفحة الأولى على المستخدم الجديد.</p>
             </article>
           </div>
         </section>
 
-        <section class="section pricing-section" id="pricing">
+        <section class="section pricing-section" id="pricing-preview">
           <div class="section-heading" data-reveal>
-            <p class="eyebrow">Pricing</p>
-            <h2>اختر الخطة المناسبة لك</h2>
-            <p>
-              باقات Orphix Pro مصممة لصناع المحتوى بمستويات مختلفة، من التجربة السريعة إلى الاستخدام
-              الاحترافي طويل المدى.
-            </p>
+            <p class="eyebrow">Pricing Preview</p>
+            <h2>التطبيق مجاني، وأدوات الذكاء الاصطناعي داخل Orphix Pro</h2>
+            <p>ابدأ مجانًا، ثم فعّل طبقة الـ AI حسب مدة الاستخدام التي تناسبك. صفحة الأسعار الكاملة تعرض كل الباقات والتفاصيل.</p>
           </div>
 
-          <div class="pricing-grid">
-            <article class="price-card" data-reveal>
-              <span class="plan-tag">🟢 شهر</span>
+          <div class="pricing-grid pricing-preview-grid">
+            <article class="price-card compact-preview" data-reveal>
+              <span class="plan-tag">شهر</span>
               <h3>Monthly Pro</h3>
-              <strong>$5.99 – $9.99</strong>
+              <strong>$5.99 - $9.99</strong>
               <p>مثالية للتجربة أو لصناع المحتوى النشطين شهريًا.</p>
-              <ul class="price-list">
-                <li>وصول سريع للميزات الأساسية</li>
-                <li>مناسب للتجربة والمشاريع القصيرة</li>
-              </ul>
             </article>
 
-            <article class="price-card" data-reveal>
-              <span class="plan-tag">🟡 3 شهور</span>
-              <h3>Quarter Plan</h3>
-              <strong>$15 – $27</strong>
-              <p>أفضل قيمة للمشاريع القصيرة والمتوسطة.</p>
-              <ul class="price-list">
-                <li>توازن ممتاز بين السعر والمرونة</li>
-                <li>مناسب لسلاسل المحتوى الموسمية</li>
-              </ul>
-            </article>
-
-            <article class="price-card" data-reveal>
-              <span class="plan-tag">🔵 6 شهور</span>
-              <h3>Half-Year Pro</h3>
-              <strong>$28 – $45</strong>
-              <p>مناسبة للمستخدمين المستمرين وصناع المحتوى المحترفين.</p>
-              <ul class="price-list">
-                <li>أقل تكلفة شهرية من الباقات القصيرة</li>
-                <li>أنسب لإيقاع إنتاج مستمر</li>
-              </ul>
-            </article>
-
-            <article class="price-card featured" data-reveal>
-              <span class="plan-tag">🟣 سنة</span>
+            <article class="price-card compact-preview featured" data-reveal>
+              <span class="popular-badge">Most Popular</span>
+              <span class="plan-tag">سنة</span>
               <h3>Annual Pro</h3>
-              <strong>$49 – $79</strong>
-              <p>الخيار الأفضل لمن يريد توفير أكبر على المدى الطويل.</p>
-              <ul class="price-list">
-                <li>أفضل قيمة لمعظم صناع المحتوى</li>
-                <li>مناسب للاستخدام الجاد طوال العام</li>
-              </ul>
+              <strong>$49 - $79</strong>
+              <p>الخيار الأفضل للتوفير مع استخدام جاد ومستمر طوال العام.</p>
             </article>
 
-            <article class="price-card" data-reveal>
-              <span class="plan-tag">🔴 سنتين</span>
-              <h3>2-Year Pro</h3>
-              <strong>$89 – $129</strong>
-              <p>للاستخدام الاحترافي طويل المدى.</p>
-              <ul class="price-list">
-                <li>تكلفة شهرية أقل بشكل واضح</li>
-                <li>خيار قوي للفرق والمستخدمين المحترفين</li>
-              </ul>
-            </article>
-
-            <article class="price-card" data-reveal>
-              <span class="plan-tag">⚫ 3 سنوات</span>
+            <article class="price-card compact-preview" data-reveal>
+              <span class="plan-tag">3 سنوات</span>
               <h3>3-Year Pro</h3>
-              <strong>$119 – $169</strong>
-              <p>أعلى قيمة وأقل تكلفة شهرية.</p>
-              <ul class="price-list">
-                <li>الخطة الأوفر للاستخدام الطويل</li>
-                <li>مصممة للالتزام والإنتاج المكثف</li>
-              </ul>
+              <strong>$119 - $169</strong>
+              <p>أعلى قيمة وأقل تكلفة شهرية للمشاريع طويلة المدى.</p>
             </article>
           </div>
 
           <p class="pricing-note" data-reveal">ابدأ بالخطة التي تناسبك، وارتقِ بإنتاجك في أي وقت.</p>
-        </section>
-
-        <section class="section">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Why We Are Different</p>
-            <h2>لماذا Astrix Video Pro أفضل من الأدوات التقليدية؟</h2>
-          </div>
-
-          <div class="workflow-grid">
-            <article class="workflow-card" data-reveal>
-              <strong>لا تحتاج مواقع خارجية</strong>
-              <span>المؤثرات، الميمز، والترجمة والصوت داخل التطبيق نفسه.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>الذكاء الاصطناعي يساعد العمل</strong>
-              <span>يقترح ويختصر الوقت بدل أن يضيف طبقات جديدة من التعقيد.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>مناسب للمبتدئ والمحترف</strong>
-              <span>واجهة سهلة أولًا، مع وضع Pro لمن يريد تحكمًا أدق.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>واجهة واحدة بدل أدوات كثيرة</strong>
-              <span>من القص إلى الصوت والميمز والتصدير، كل شيء في مكان واحد.</span>
-            </article>
-            <article class="workflow-card" data-reveal>
-              <strong>سريع للنشر اليومي</strong>
-              <span>مصمم لمن يحتاج إنتاج محتوى يومي بسرعة وبدون تعطيل.</span>
-            </article>
-          </div>
-        </section>
-
-        <section class="section faq-section" id="faq">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">FAQ</p>
-            <h2>أسئلة شائعة</h2>
-          </div>
-
-          <div class="faq-grid">
-            <article class="faq-card" data-reveal>
-              <h3>هل التطبيق سهل للمبتدئين؟</h3>
-              <p>نعم، التطبيق مصمم ليكون بسيطًا جدًا مع أدوات شرح ذكية وقوالب جاهزة.</p>
-            </article>
-            <article class="faq-card" data-reveal>
-              <h3>هل توجد مكتبة أصوات وميمز داخلية؟</h3>
-              <p>نعم، وهذه من أقوى مزايا Astrix Video Pro داخل Orphix.</p>
-            </article>
-            <article class="faq-card" data-reveal>
-              <h3>هل أحتاج برامج خارجية؟</h3>
-              <p>لا، كل أدوات المونتاج والصوت والميمز والترجمة داخل التطبيق.</p>
-            </article>
-            <article class="faq-card" data-reveal>
-              <h3>هل يدعم التصدير بجودة عالية؟</h3>
-              <p>نعم، يمكنك التصدير بجودات متعددة حتى 4K حسب الخطة.</p>
-            </article>
-            <article class="faq-card" data-reveal>
-              <h3>هل يمكن استخدامه على الجوال والكمبيوتر؟</h3>
-              <p>نعم، بفضل Cloud Sync يمكن متابعة العمل بين الأجهزة.</p>
-            </article>
-          </div>
         </section>
 
         <section class="cta-section" data-reveal>
@@ -680,14 +555,13 @@
             <p class="eyebrow">Final CTA</p>
             <h2>ابدأ الآن في صناعة فيديوهات احترافية أسرع من أي وقت</h2>
             <p>
-              Astrix Video Pro يمنحك المونتاج، الذكاء الاصطناعي، الصوت، والميمز في تجربة واحدة متكاملة
-              داخل Orphix.
+              Astrix Video Pro يمنحك المونتاج والذكاء الاصطناعي والصوت والميمز في تجربة واحدة متكاملة داخل Orphix، مع صفحة رئيسية أوضح وتحويل أقوى نحو الاشتراك.
             </p>
           </div>
           <div class="cta-actions">
-            <a class="button primary large" href="#pricing">ابدأ الآن</a>
-            <a class="button secondary large" href="#pricing">اختر خطتك</a>
-            <a class="button ghost large" href="#features">شاهد الميزات</a>
+            <a class="button primary large" href="pricing.html">ابدأ الآن</a>
+            <a class="button secondary large" href="pricing.html">اختر خطتك</a>
+            <a class="button ghost large" href="ai-features.html">شاهد الميزات</a>
           </div>
         </section>
       </main>
@@ -695,11 +569,11 @@
       <footer class="site-footer">
         <p>Orphix</p>
         <span>Astrix Video Pro sales experience</span>
-        <small>Copyright © <span id="year">2026</span></small>
+        <small>Copyright &copy; <span id="year">2026</span></small>
       </footer>
     </div>
 
-    <a class="floating-cta" href="pricing.html">Try Pro</a>
+    <a class="floating-cta" href="pricing.html">ابدأ الآن</a>
     <script src="script.js"></script>
   </body>
 </html>
