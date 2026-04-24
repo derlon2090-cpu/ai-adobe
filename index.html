@@ -160,6 +160,7 @@
                 <button class="sidebar-link sidebar-button" type="button" data-processing-label="Updates center is being prepared.">
                   <svg class="line-icon"><use href="#i-update"></use></svg>
                   <span>Updates</span>
+                  <span class="sidebar-link-badge">3</span>
                 </button>
                 <button class="sidebar-link sidebar-button" type="button" data-processing-label="Settings will be available soon.">
                   <svg class="line-icon"><use href="#i-settings"></use></svg>
@@ -199,16 +200,22 @@
               </div>
 
               <article class="dashboard-hero-art">
-                <span class="dashboard-chip">Dark UI + Blue / Purple Glow</span>
-                <strong>A professional dashboard feel inside the website.</strong>
-                <p>
-                  منصة أدوات احترافية بإحساس Dashboard حقيقي، مع Glow ناعم، تنظيم واضح، وتجربة أنظف من صفحة تعريف عادية.
-                </p>
-                <a class="button ghost compact" href="#dashboardTools">Explore Tools</a>
+                <div class="dashboard-art-top">
+                  <span class="dashboard-chip">Dashboard Preview</span>
+                  <a class="art-explore" href="#dashboardTools">
+                    <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                    <span>Explore Tools</span>
+                  </a>
+                </div>
+
+                <div class="dashboard-art-copy">
+                  <strong>Dark UI + Blue / Purple Glow</strong>
+                  <p>A polished control center for AI editing, sound, and meme tools in one place.</p>
+                </div>
               </article>
             </section>
 
-            <section class="dashboard-section" id="dashboardTools">
+            <section class="dashboard-section dashboard-tools-section" id="dashboardTools">
               <div class="dashboard-section-head">
                 <div>
                   <p class="eyebrow">My Tools</p>
@@ -228,14 +235,15 @@
                   data-search="ai editor auto editing video"
                   data-processing-label="AI Editor is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon icon-violet">
                     <svg class="line-icon"><use href="#i-spark"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>AI Editor</strong>
-                    <span class="tool-badge">Coming Soon</span>
+                    <small>Automatic first-cut generation</small>
                   </div>
-                  <p>Automatic structure, pacing, and first-cut generation for faster editing.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
@@ -245,14 +253,15 @@
                   data-search="smart cut silence cleanup short clips"
                   data-processing-label="Smart Cut is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon">
                     <svg class="line-icon"><use href="#i-cut"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>Smart Cut</strong>
-                    <span class="tool-badge">Available Soon</span>
+                    <small>Silence cleanup and sharper pacing</small>
                   </div>
-                  <p>Silence removal, cleanup, and tighter cuts for cleaner short-form content.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
@@ -262,14 +271,15 @@
                   data-search="director motion zoom transitions"
                   data-processing-label="AI Director is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon icon-violet">
                     <svg class="line-icon"><use href="#i-director"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>AI Director</strong>
-                    <span class="tool-badge">Coming Soon</span>
+                    <small>Zoom, timing, and motion guidance</small>
                   </div>
-                  <p>Suggested zooms, transitions, and motion timing to make clips feel more polished.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
@@ -279,14 +289,15 @@
                   data-search="voice cleaner audio cleanup noise"
                   data-processing-label="Voice Cleaner is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon icon-blue">
                     <svg class="line-icon"><use href="#i-voice"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>Voice Cleaner</strong>
-                    <span class="tool-badge">Coming Soon</span>
+                    <small>Noise removal and cleaner dialogue</small>
                   </div>
-                  <p>Noise cleanup and vocal clarity tuned for reels, tutorials, and creator workflows.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
@@ -296,14 +307,15 @@
                   data-search="video enhancer quality 4k upscale"
                   data-processing-label="Video Enhancer is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon icon-blue">
                     <svg class="line-icon"><use href="#i-enhance"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>Video Enhancer</strong>
-                    <span class="tool-badge">Available Soon</span>
+                    <small>Sharper image feel and cleaner finish</small>
                   </div>
-                  <p>Sharper output, cleaner color feel, and better export-ready presentation.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
 
                 <button
@@ -313,119 +325,137 @@
                   data-search="meme sound library sync audio system"
                   data-processing-label="Meme & Sound system is processing..."
                 >
+                  <span class="tool-card-menu" aria-hidden="true">...</span>
                   <span class="tool-icon icon-violet">
                     <svg class="line-icon"><use href="#i-sound"></use></svg>
                   </span>
-                  <div class="tool-card-head">
+                  <div class="tool-card-copy">
                     <strong>Meme &amp; Sound</strong>
-                    <span class="tool-badge">Coming Soon</span>
+                    <small>Internal hits, memes, and smart sync</small>
                   </div>
-                  <p>Built-in library, meme hits, and sync suggestions without external websites.</p>
+                  <span class="tool-badge">Coming Soon</span>
                 </button>
               </div>
 
               <div class="dashboard-empty" id="dashboardEmptyState">
                 <strong id="dashboardEmptyTitle">Tools are being prepared. Stay tuned.</strong>
-                <span id="dashboardEmptyText">Every tool here is intentionally shown as in-progress to keep the dashboard clean and honest.</span>
+                <span id="dashboardEmptyText">Every tool shown here is intentionally marked as in progress to keep the dashboard clean and honest.</span>
               </div>
             </section>
 
-            <section class="dashboard-section" id="dashboardUpdates">
-              <div class="dashboard-section-head">
-                <div>
-                  <p class="eyebrow">Latest Updates</p>
-                  <h3>What is coming next</h3>
+            <div class="dashboard-bottom-grid">
+              <section class="dashboard-section" id="dashboardUpdates">
+                <div class="dashboard-section-head">
+                  <div>
+                    <p class="eyebrow">Latest Updates</p>
+                    <h3>What is coming next</h3>
+                  </div>
+                  <button class="dashboard-link dashboard-link-button" type="button" data-processing-label="Opening update feed...">
+                    <span>View All</span>
+                    <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                  </button>
                 </div>
-              </div>
 
-              <div class="update-list">
-                <article class="update-row">
-                  <div class="update-meta">
-                    <span class="tool-icon icon-violet">
-                      <svg class="line-icon"><use href="#i-bolt"></use></svg>
-                    </span>
-                    <div>
-                      <strong>New AI Features Coming</strong>
-                      <p>More automation layers are being prepared for faster first-cut workflows.</p>
+                <div class="update-list">
+                  <article class="update-row">
+                    <div class="update-meta">
+                      <span class="tool-icon icon-violet">
+                        <svg class="line-icon"><use href="#i-bolt"></use></svg>
+                      </span>
+                      <div>
+                        <strong>New AI Features Coming</strong>
+                        <p>More automation layers are being prepared for faster first-cut workflows.</p>
+                      </div>
                     </div>
-                  </div>
-                  <button class="button tertiary mini" type="button" data-processing-label="Opening AI feature notes...">Learn More</button>
-                </article>
-
-                <article class="update-row">
-                  <div class="update-meta">
-                    <span class="tool-icon icon-blue">
-                      <svg class="line-icon"><use href="#i-sound"></use></svg>
-                    </span>
-                    <div>
-                      <strong>Sound Library Expansion</strong>
-                      <p>Commercial hits, transitions, cinematic FX, and quicker browsing are expanding.</p>
+                    <div class="update-actions">
+                      <span class="update-tag">What's new</span>
+                      <button class="button tertiary mini" type="button" data-processing-label="Opening AI feature notes...">Learn More</button>
                     </div>
-                  </div>
-                  <button class="button tertiary mini" type="button" data-processing-label="Opening sound system notes...">Learn More</button>
-                </article>
+                  </article>
 
-                <article class="update-row">
-                  <div class="update-meta">
-                    <span class="tool-icon">
-                      <svg class="line-icon"><use href="#i-bell"></use></svg>
-                    </span>
-                    <div>
-                      <strong>Meme System Update</strong>
-                      <p>Better meme browsing, instant placement, and cleaner sync logic are on the way.</p>
+                  <article class="update-row">
+                    <div class="update-meta">
+                      <span class="tool-icon icon-blue">
+                        <svg class="line-icon"><use href="#i-sound"></use></svg>
+                      </span>
+                      <div>
+                        <strong>Sound Library Expansion</strong>
+                        <p>Commercial hits, transitions, cinematic FX, and quicker browsing are expanding.</p>
+                      </div>
                     </div>
-                  </div>
-                  <button class="button tertiary mini" type="button" data-processing-label="Opening meme system notes...">Learn More</button>
-                </article>
-              </div>
-            </section>
+                    <div class="update-actions">
+                      <span class="update-tag">What's new</span>
+                      <button class="button tertiary mini" type="button" data-processing-label="Opening sound system notes...">Learn More</button>
+                    </div>
+                  </article>
 
-            <section class="dashboard-section">
-              <div class="dashboard-section-head">
-                <div>
-                  <p class="eyebrow">Sound &amp; Meme System</p>
-                  <h3>One of the strongest parts of the platform</h3>
+                  <article class="update-row">
+                    <div class="update-meta">
+                      <span class="tool-icon">
+                        <svg class="line-icon"><use href="#i-bell"></use></svg>
+                      </span>
+                      <div>
+                        <strong>Meme System Update</strong>
+                        <p>Better meme browsing, instant placement, and cleaner sync logic are on the way.</p>
+                      </div>
+                    </div>
+                    <div class="update-actions">
+                      <span class="update-tag">What's new</span>
+                      <button class="button tertiary mini" type="button" data-processing-label="Opening meme system notes...">Learn More</button>
+                    </div>
+                  </article>
                 </div>
-                <a class="dashboard-link" href="sound-meme.html">
-                  <span>Open System</span>
-                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                </a>
-              </div>
+              </section>
 
-              <div class="sound-system-grid">
-                <article class="sound-system-card">
-                  <span class="tool-icon icon-blue">
-                    <svg class="line-icon"><use href="#i-sound"></use></svg>
-                  </span>
-                  <strong>Sound Effects Library</strong>
-                  <p>Organized commercial hits, transitions, cinematic FX, and quick search behavior.</p>
-                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">Play</button>
-                </article>
+              <aside class="dashboard-section dashboard-side-panel">
+                <div class="dashboard-section-head">
+                  <div>
+                    <p class="eyebrow">Sound &amp; Meme System</p>
+                    <h3>Built inside the platform</h3>
+                  </div>
+                </div>
 
-                <article class="sound-system-card">
-                  <span class="tool-icon icon-violet">
-                    <svg class="line-icon"><use href="#i-play"></use></svg>
-                  </span>
-                  <strong>Meme Board</strong>
-                  <p>Ready meme reactions with one-click placement and a more fun neon dashboard feel.</p>
-                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">Play</button>
-                </article>
+                <div class="sound-system-stack">
+                  <article class="sound-system-card">
+                    <div class="sound-card-head">
+                      <span class="tool-icon icon-blue">
+                        <svg class="line-icon"><use href="#i-sound"></use></svg>
+                      </span>
+                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">Play</button>
+                    </div>
+                    <strong>Sound Effects Library</strong>
+                    <p>Organized commercial hits, transitions, and cinematic FX with quick search.</p>
+                  </article>
 
-                <article class="sound-system-card">
-                  <span class="tool-icon">
-                    <svg class="line-icon"><use href="#i-bolt"></use></svg>
-                  </span>
-                  <strong>Auto Sync AI</strong>
-                  <p>Suggests timing for cuts, zooms, and sound hits so the edit feels tighter and faster.</p>
-                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">Play</button>
-                </article>
-              </div>
+                  <article class="sound-system-card">
+                    <div class="sound-card-head">
+                      <span class="tool-icon icon-violet">
+                        <svg class="line-icon"><use href="#i-play"></use></svg>
+                      </span>
+                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">Play</button>
+                    </div>
+                    <strong>Meme Board</strong>
+                    <p>Ready meme reactions with one-click placement and a stronger neon personality.</p>
+                  </article>
 
-              <div class="dashboard-cta-row">
-                <a class="button primary large" href="pricing.html">Start Editing</a>
-                <a class="button secondary large" href="pricing.html">Try Astrix Pro</a>
-              </div>
-            </section>
+                  <article class="sound-system-card">
+                    <div class="sound-card-head">
+                      <span class="tool-icon">
+                        <svg class="line-icon"><use href="#i-bolt"></use></svg>
+                      </span>
+                      <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">Play</button>
+                    </div>
+                    <strong>Auto Sync AI</strong>
+                    <p>Suggests hit points for cuts, zooms, and transitions so edits feel tighter.</p>
+                  </article>
+                </div>
+
+                <div class="dashboard-mini-cta">
+                  <a class="button primary" href="pricing.html">Start Editing</a>
+                  <a class="button secondary" href="pricing.html">Try Astrix Pro</a>
+                </div>
+              </aside>
+            </div>
           </div>
         </section>
       </main>
