@@ -3016,6 +3016,171 @@ img {
   background: linear-gradient(135deg, rgba(18, 22, 34, 0.96), rgba(34, 18, 61, 0.96));
 }
 
+.image-editor-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 18px;
+}
+
+.image-editor-panel,
+.image-control-panel {
+  min-height: 100%;
+}
+
+.editor-preview-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 480px;
+  padding: 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(7, 10, 16, 0.98), rgba(8, 11, 18, 0.98)),
+    radial-gradient(circle at 22% 18%, rgba(37, 99, 235, 0.14), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(124, 58, 237, 0.18), transparent 28%);
+  overflow: hidden;
+}
+
+.editor-preview-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent);
+  pointer-events: none;
+}
+
+.editor-preview-image {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  transition: filter 180ms ease, transform 180ms ease;
+  will-change: filter, transform;
+}
+
+.editor-meta-strip,
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.editor-meta-strip .page-stat {
+  flex: 1 1 220px;
+}
+
+.editor-toolbar .button {
+  flex: 0 0 auto;
+}
+
+.editor-upload-input {
+  display: none;
+}
+
+.editor-status-box {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  background: rgba(124, 58, 237, 0.06);
+}
+
+.editor-status-box strong {
+  font-weight: 700;
+}
+
+.editor-status-box span {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.preset-button {
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.preset-button:hover,
+.preset-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+}
+
+.preset-button.is-active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.24));
+  border-color: rgba(124, 58, 237, 0.26);
+  box-shadow: 0 18px 36px rgba(39, 17, 74, 0.28);
+}
+
+.control-group {
+  display: grid;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.control-group:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.slider-group {
+  display: grid;
+  gap: 12px;
+}
+
+.slider-field {
+  display: grid;
+  gap: 8px;
+}
+
+.slider-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.slider-head strong,
+.slider-head output {
+  font-size: 0.95rem;
+}
+
+.slider-head output {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.slider-field input[type="range"] {
+  width: 100%;
+  accent-color: #7c3aed;
+}
+
+.editor-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .processing-modal {
   position: fixed;
   inset: 0;
@@ -3302,6 +3467,7 @@ img {
     padding-top: 4px;
   }
 
+  .image-editor-shell,
   .page-summary-grid,
   .dashboard-page-grid,
   .audio-preview-grid,
@@ -3309,6 +3475,10 @@ img {
   .settings-grid,
   .account-layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .image-editor-shell {
+    grid-template-columns: 1fr;
   }
 
   .masthead-lockup {
@@ -3400,6 +3570,11 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .preset-grid,
+  .editor-action-grid {
+    grid-template-columns: 1fr;
+  }
+
   .dashboard-main {
     padding: 16px;
   }
@@ -3439,9 +3614,20 @@ img {
   .audio-preview-item,
   .profile-header,
   .page-banner-header,
-  .page-cta-strip {
+  .page-cta-strip,
+  .editor-toolbar,
+  .editor-meta-strip {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .editor-toolbar .button {
+    width: 100%;
+  }
+
+  .editor-preview-frame {
+    min-height: 320px;
+    padding: 16px;
   }
 
   .dashboard-home .button,

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Orphex dashboard UI with dark purple-blue gradients, app cards, updates, and a polished creative tools experience."
+      content="Orphex Photo is a dark, professional image editing workspace with live adjustments, presets, transform tools, and export controls."
     />
-    <title>Orphex</title>
+    <title>Orphex | Edit Image</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,109 +17,6 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="dashboard-home">
-    <svg class="icon-sprite" aria-hidden="true" focusable="false">
-      <symbol id="i-home" viewBox="0 0 24 24">
-        <path d="M4 10.5L12 4l8 6.5" />
-        <path d="M6.5 9.5V20h11V9.5" />
-        <path d="M10 20v-5h4v5" />
-      </symbol>
-      <symbol id="i-spark" viewBox="0 0 24 24">
-        <path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3Z" />
-        <path d="M19 4v4" />
-        <path d="M21 6h-4" />
-      </symbol>
-      <symbol id="i-cut" viewBox="0 0 24 24">
-        <circle cx="6" cy="7" r="2.5" />
-        <circle cx="6" cy="17" r="2.5" />
-        <path d="M20 5L8 15" />
-        <path d="M20 19L10 11" />
-      </symbol>
-      <symbol id="i-director" viewBox="0 0 24 24">
-        <rect x="4" y="6" width="16" height="12" rx="2.5" />
-        <path d="M9 10.5l3 1.5-3 1.5v-3Z" />
-        <path d="M8 4l1 2" />
-        <path d="M12 3v2" />
-        <path d="M16 4l-1 2" />
-      </symbol>
-      <symbol id="i-voice" viewBox="0 0 24 24">
-        <path d="M12 4a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V7a3 3 0 0 1 3-3Z" />
-        <path d="M18 11a6 6 0 0 1-12 0" />
-        <path d="M12 17v3" />
-        <path d="M8 20h8" />
-      </symbol>
-      <symbol id="i-enhance" viewBox="0 0 24 24">
-        <rect x="4" y="5" width="16" height="14" rx="2.5" />
-        <path d="M9 12l2 2 4-4" />
-        <path d="M16.5 7.5l1 1" />
-      </symbol>
-      <symbol id="i-sound" viewBox="0 0 24 24">
-        <path d="M5 14h3l4 4V6L8 10H5v4Z" />
-        <path d="M16 9a4 4 0 0 1 0 6" />
-        <path d="M18.5 6.5a7 7 0 0 1 0 11" />
-      </symbol>
-      <symbol id="i-template" viewBox="0 0 24 24">
-        <rect x="4" y="5" width="7" height="6" rx="1.5" />
-        <rect x="13" y="5" width="7" height="6" rx="1.5" />
-        <rect x="4" y="13" width="7" height="6" rx="1.5" />
-        <rect x="13" y="13" width="7" height="6" rx="1.5" />
-      </symbol>
-      <symbol id="i-update" viewBox="0 0 24 24">
-        <path d="M20 12a8 8 0 1 1-2.34-5.66" />
-        <path d="M20 5v5h-5" />
-      </symbol>
-      <symbol id="i-settings" viewBox="0 0 24 24">
-        <path d="M12 8.5A3.5 3.5 0 1 1 8.5 12 3.5 3.5 0 0 1 12 8.5Z" />
-        <path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V20a2 2 0 1 1-4 0v-.2a1 1 0 0 0-.6-.9 1 1 0 0 0-1.1.2l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H4a2 2 0 1 1 0-4h.2a1 1 0 0 0 .9-.6 1 1 0 0 0-.2-1.1l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V4a2 2 0 1 1 4 0v.2a1 1 0 0 0 .6.9 1 1 0 0 0 1.1-.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6H20a2 2 0 1 1 0 4h-.2a1 1 0 0 0-.9.6Z" />
-      </symbol>
-      <symbol id="i-user" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4" />
-        <path d="M5 20a7 7 0 0 1 14 0" />
-      </symbol>
-      <symbol id="i-search" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="6" />
-        <path d="M20 20l-4.2-4.2" />
-      </symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24">
-        <path d="M5 12h14" />
-        <path d="M13 6l6 6-6 6" />
-      </symbol>
-      <symbol id="i-play" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M10 8.8l5.4 3.2L10 15.2V8.8Z" />
-      </symbol>
-      <symbol id="i-bolt" viewBox="0 0 24 24">
-        <path d="M13 2L5 13h5l-1 9 8-11h-5l1-9Z" />
-      </symbol>
-      <symbol id="i-bell" viewBox="0 0 24 24">
-        <path d="M15 18H9a2 2 0 0 1-2-2v-4a5 5 0 1 1 10 0v4a2 2 0 0 1-2 2Z" />
-        <path d="M10 20a2 2 0 0 0 4 0" />
-      </symbol>
-      <symbol id="i-grid" viewBox="0 0 24 24">
-        <rect x="4" y="4" width="6" height="6" rx="1.5" />
-        <rect x="14" y="4" width="6" height="6" rx="1.5" />
-        <rect x="4" y="14" width="6" height="6" rx="1.5" />
-        <rect x="14" y="14" width="6" height="6" rx="1.5" />
-      </symbol>
-      <symbol id="i-folder" viewBox="0 0 24 24">
-        <path d="M4 8.5A2.5 2.5 0 0 1 6.5 6H10l2 2h5.5A2.5 2.5 0 0 1 20 10.5v7A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-9Z" />
-      </symbol>
-      <symbol id="i-plugin" viewBox="0 0 24 24">
-        <path d="M14.5 7a2.5 2.5 0 1 0-4.9-.8L7 8.8V12h3.2l2.6-2.6A2.5 2.5 0 0 0 14.5 7Z" />
-        <path d="M12 12l6 6" />
-        <path d="M8 14l-2 2" />
-        <path d="M5 17l2 2" />
-      </symbol>
-      <symbol id="i-menu" viewBox="0 0 24 24">
-        <path d="M4 7h16" />
-        <path d="M4 12h16" />
-        <path d="M4 17h16" />
-      </symbol>
-      <symbol id="i-close" viewBox="0 0 24 24">
-        <path d="M6 6l12 12" />
-        <path d="M18 6L6 18" />
-      </symbol>
-    </svg>
-
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
     <div class="bg-grid" aria-hidden="true"></div>
@@ -143,34 +40,34 @@
                 <img class="sidebar-brand-logo" src="assets/orphex-logo.jpg" alt="Orphex logo" />
                 <span>
                   <strong>Orphex</strong>
-                  <small>Astrix Video Pro</small>
+                  <small>Edit Image Workspace</small>
                 </span>
               </a>
 
               <nav class="sidebar-nav" aria-label="Dashboard Navigation">
-                <a class="sidebar-link is-active" href="index.html">
-                  <svg class="line-icon"><use href="#i-home"></use></svg>
+                <a class="sidebar-link" href="index.html">
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-home"></use></svg>
                   <span>Home</span>
                 </a>
                 <a class="sidebar-link" href="apps.html">
-                  <svg class="line-icon"><use href="#i-grid"></use></svg>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-grid"></use></svg>
                   <span>Apps</span>
                 </a>
                 <a class="sidebar-link" href="updates.html">
-                  <svg class="line-icon"><use href="#i-update"></use></svg>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-update"></use></svg>
                   <span>Updates</span>
                   <span class="sidebar-link-badge">3</span>
                 </a>
                 <a class="sidebar-link" href="assets.html">
-                  <svg class="line-icon"><use href="#i-folder"></use></svg>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-folder"></use></svg>
                   <span>Assets</span>
                 </a>
                 <a class="sidebar-link" href="plugins.html">
-                  <svg class="line-icon"><use href="#i-plugin"></use></svg>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-plugin"></use></svg>
                   <span>Plugins</span>
                 </a>
                 <a class="sidebar-link" href="settings.html">
-                  <svg class="line-icon"><use href="#i-settings"></use></svg>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-settings"></use></svg>
                   <span>Settings</span>
                 </a>
               </nav>
@@ -180,17 +77,17 @@
               <img class="account-avatar-image" src="assets/orphex-logo.jpg" alt="" />
               <div class="account-meta">
                 <strong>Orphex Studio</strong>
-                <span>Pro Plan</span>
+                <span>Photo Pro Access</span>
               </div>
             </a>
           </aside>
 
           <button class="dashboard-sidebar-backdrop" id="dashboardSidebarBackdrop" type="button" aria-label="Close sidebar"></button>
 
-          <div class="dashboard-main">
+          <div class="dashboard-main dashboard-page-main">
             <div class="dashboard-main-top">
               <button class="dashboard-menu-toggle" id="dashboardMenuToggle" type="button" aria-label="Open sidebar">
-                <svg class="line-icon"><use href="#i-menu"></use></svg>
+                <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-menu"></use></svg>
               </button>
 
               <div class="dashboard-window-controls" aria-hidden="true">
@@ -202,168 +99,253 @@
 
             <section class="dashboard-hero-panel">
               <div class="dashboard-intro">
-                <h2>Welcome to Orphex</h2>
-                <p>Astrix Video Pro and all your creative tools. One place.</p>
+                <h2>Edit Image in Orphex</h2>
+                <p>Upload a photo, adjust color and light, rotate or flip it, compare the result, and export the edited image directly from the main Orphex workspace.</p>
 
                 <label class="dashboard-search">
-                  <svg class="line-icon"><use href="#i-search"></use></svg>
-                  <input id="dashboardSearch" type="search" placeholder="Search apps, plugins, and assets..." />
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-search"></use></svg>
+                  <input id="dashboardSearch" type="search" placeholder="Search image tools, presets, export, and adjustments..." />
                 </label>
               </div>
 
               <article class="dashboard-hero-art">
-                <a class="art-explore" href="apps.html">
-                  <span>Explore Store</span>
-                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                </a>
+                <div class="page-hero-stats">
+                  <div class="page-stat">
+                    <strong>Live preview</strong>
+                    <span>Adjust before export</span>
+                  </div>
+                  <div class="page-stat">
+                    <strong>Upload your image</strong>
+                    <span>Works in the browser</span>
+                  </div>
+                  <div class="page-stat">
+                    <strong>Presets + sliders</strong>
+                    <span>Fast or manual workflow</span>
+                  </div>
+                  <div class="page-stat">
+                    <strong>Export ready</strong>
+                    <span>PNG or JPG download</span>
+                  </div>
+                </div>
               </article>
             </section>
 
-            <section class="dashboard-section dashboard-tools-section" id="dashboardApps">
+            <section class="dashboard-section">
               <div class="dashboard-section-head">
                 <div>
-                  <h3>My Apps</h3>
+                  <h3>Edit Image Workspace</h3>
                 </div>
-                <a class="dashboard-link" href="apps.html">
-                  <span>View All</span>
-                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
-                </a>
+                <div class="page-inline-actions">
+                  <button class="button tertiary mini" type="button" id="editorUploadButton">Upload Image</button>
+                  <button class="button primary mini" type="button" id="editorAutoEnhanceButton">Auto Enhance</button>
+                </div>
               </div>
 
-              <div class="dashboard-card-grid">
-                <a
-                  class="tool-card app-card theme-photo"
-                  data-tool-card
-                  data-search="orphex photo photo editing image design"
-                  href="apps.html#photo"
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="app-card-tile">
-                    <img src="assets/orphex-logo.jpg" alt="" />
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Orphex Photo</strong>
-                    <small>Photo Editing</small>
-                  </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </a>
+              <div class="image-editor-shell" id="imageEditorShell">
+                <article class="page-banner image-editor-panel">
+                  <div class="page-banner-header">
+                    <div class="page-banner-copy">
+                      <h3>Live canvas-style preview for Orphex Photo.</h3>
+                      <p>The image below updates instantly while you tune brightness, contrast, saturation, warmth, blur, and orientation.</p>
+                    </div>
 
-                <a
-                  class="tool-card app-card theme-design"
-                  data-tool-card
-                  data-search="orphex design vector design"
-                  href="apps.html#design"
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="app-card-tile">
-                    <span>A</span>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Orphex Design</strong>
-                    <small>Vector Design</small>
+                    <div class="page-banner-badges">
+                      <span class="status-pill">Edit Image</span>
+                      <span class="status-pill soft" id="editorPresetStatus">Custom Preset</span>
+                    </div>
                   </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </a>
 
-                <a
-                  class="tool-card app-card theme-motion"
-                  data-tool-card
-                  data-search="orphex motion motion graphics"
-                  href="apps.html#motion"
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="app-card-tile">
-                    <span>M</span>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Orphex Motion</strong>
-                    <small>Motion Graphics</small>
+                  <div class="editor-preview-frame" id="editorPreviewFrame">
+                    <img
+                      class="editor-preview-image"
+                      id="editorPreviewImage"
+                      src="assets/orphex-logo.jpg"
+                      alt="Image editing preview"
+                    />
                   </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </a>
 
-                <a
-                  class="tool-card app-card theme-audio"
-                  data-tool-card
-                  data-search="orphex audio audio editing"
-                  href="apps.html#audio"
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="app-card-tile">
-                    <svg class="line-icon"><use href="#i-sound"></use></svg>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Orphex Audio</strong>
-                    <small>Audio Editing</small>
+                  <div class="editor-meta-strip">
+                    <div class="page-stat">
+                      <strong id="editorFileName">orphex-logo.jpg</strong>
+                      <span id="editorImageMeta">Preview image loaded</span>
+                    </div>
+                    <div class="page-stat">
+                      <strong id="editorSizeMeta">Ready to export</strong>
+                      <span id="editorTransformMeta">Rotation 0° • Normal</span>
+                    </div>
                   </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </a>
 
-                <a
-                  class="tool-card app-card theme-3d"
-                  data-tool-card
-                  data-search="orphex 3d 3d modeling"
-                  href="apps.html#three-d"
-                >
-                  <span class="tool-card-menu" aria-hidden="true">...</span>
-                  <span class="app-card-tile">
-                    <span>3D</span>
-                  </span>
-                  <div class="tool-card-copy">
-                    <strong>Orphex 3D</strong>
-                    <small>3D Modeling</small>
+                  <div class="editor-toolbar">
+                    <input class="editor-upload-input" id="editorUploadInput" type="file" accept="image/*" />
+                    <button class="button tertiary mini" type="button" id="editorSampleButton">Use Sample</button>
+                    <button class="button tertiary mini" type="button" id="editorCompareButton" aria-pressed="false">Before / After</button>
+                    <button class="button tertiary mini" type="button" id="editorResetButton">Reset</button>
+                    <button class="button tertiary mini" type="button" id="editorDownloadPngButton">Download PNG</button>
+                    <button class="button tertiary mini" type="button" id="editorDownloadJpgButton">Download JPG</button>
                   </div>
-                  <span class="tool-badge">Coming Soon</span>
-                </a>
-              </div>
 
-              <div class="dashboard-empty" id="dashboardEmptyState">
-                <strong id="dashboardEmptyTitle">Apps are being prepared. Stay tuned.</strong>
-                <span id="dashboardEmptyText">Search only filters the first five apps shown on the dashboard home.</span>
+                  <div class="editor-status-box" id="editorStatusBox">
+                    <strong>Workspace ready.</strong>
+                    <span id="editorStatusText">Upload any image to start editing, or use the sample to test the full toolset right away.</span>
+                  </div>
+                </article>
+
+                <aside class="page-card image-control-panel">
+                  <div class="page-card-title">
+                    <h4>Presets</h4>
+                    <p>Apply a fast look, then fine-tune manually.</p>
+                  </div>
+
+                  <div class="preset-grid">
+                    <button class="preset-button is-active" type="button" data-preset="custom">Custom</button>
+                    <button class="preset-button" type="button" data-preset="clean">Clean</button>
+                    <button class="preset-button" type="button" data-preset="portrait">Portrait</button>
+                    <button class="preset-button" type="button" data-preset="product">Product</button>
+                    <button class="preset-button" type="button" data-preset="noir">Noir</button>
+                    <button class="preset-button" type="button" data-preset="glow">Social Glow</button>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="page-card-title">
+                      <h4>Adjustments</h4>
+                      <p>Real-time controls for color and clarity.</p>
+                    </div>
+
+                    <div class="slider-group">
+                      <label class="slider-field">
+                        <span class="slider-head"><strong>Brightness</strong><output id="brightnessValue">100%</output></span>
+                        <input id="brightnessRange" type="range" min="50" max="150" value="100" />
+                      </label>
+
+                      <label class="slider-field">
+                        <span class="slider-head"><strong>Contrast</strong><output id="contrastValue">100%</output></span>
+                        <input id="contrastRange" type="range" min="50" max="160" value="100" />
+                      </label>
+
+                      <label class="slider-field">
+                        <span class="slider-head"><strong>Saturation</strong><output id="saturationValue">100%</output></span>
+                        <input id="saturationRange" type="range" min="0" max="180" value="100" />
+                      </label>
+
+                      <label class="slider-field">
+                        <span class="slider-head"><strong>Warmth</strong><output id="warmthValue">0%</output></span>
+                        <input id="warmthRange" type="range" min="0" max="60" value="0" />
+                      </label>
+
+                      <label class="slider-field">
+                        <span class="slider-head"><strong>Blur</strong><output id="blurValue">0px</output></span>
+                        <input id="blurRange" type="range" min="0" max="8" value="0" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="page-card-title">
+                      <h4>Transform</h4>
+                      <p>Rotate and flip without leaving the page.</p>
+                    </div>
+
+                    <div class="editor-action-grid">
+                      <button class="button tertiary mini" type="button" data-transform="rotate-left">Rotate Left</button>
+                      <button class="button tertiary mini" type="button" data-transform="rotate-right">Rotate Right</button>
+                      <button class="button tertiary mini" type="button" data-transform="flip-x">Flip Horizontal</button>
+                      <button class="button tertiary mini" type="button" data-transform="flip-y">Flip Vertical</button>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="page-card-title">
+                      <h4>Export</h4>
+                      <p>Download the current result in the format you need.</p>
+                    </div>
+                    <ul class="mini-list">
+                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>PNG for clean graphics, thumbnails, and transparent-style workflows.</span></li>
+                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>JPG for smaller image size and quick sharing.</span></li>
+                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>The exported file keeps your current filters and transforms.</span></li>
+                    </ul>
+                  </div>
+                </aside>
               </div>
             </section>
 
-            <section class="dashboard-section" id="dashboardUpdates">
+            <section class="dashboard-section">
               <div class="dashboard-section-head">
                 <div>
-                  <h3>Latest Updates</h3>
+                  <h3>Working Tools Inside This Page</h3>
                 </div>
-                <a class="dashboard-link" href="updates.html">
-                  <span>View All</span>
-                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                <a class="dashboard-link" href="apps.html">
+                  <span>Open All Orphex Apps</span>
+                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-arrow"></use></svg>
                 </a>
               </div>
 
-              <div class="update-list">
-                <article class="update-row">
-                  <div class="update-meta">
-                    <span class="app-update-tile">
-                      <img src="assets/orphex-logo.jpg" alt="" />
+              <div class="dashboard-page-grid">
+                <article class="page-card" data-tool-card data-search="upload image preview before after sample image">
+                  <div class="page-card-header">
+                    <span class="page-card-icon">
+                      <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-folder"></use></svg>
                     </span>
-                    <div>
-                      <strong>Orphex Photo</strong>
-                      <p>Version 2.1.0</p>
-                    </div>
+                    <span class="tool-badge">Live</span>
                   </div>
-                  <div class="update-actions">
-                    <a class="button tertiary mini" href="updates.html#photo-update">Update</a>
+                  <div class="page-card-title">
+                    <h4>Upload &amp; Preview</h4>
+                    <p>Load your own image, inspect it live, and compare before and after without refreshing the page.</p>
                   </div>
+                  <ul class="page-card-list">
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Supports local image upload directly from the browser.</span></li>
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Before / After toggle helps check your edits quickly.</span></li>
+                  </ul>
                 </article>
 
-                <article class="update-row">
-                  <div class="update-meta">
-                    <span class="app-update-tile motion">
-                      <span>M</span>
+                <article class="page-card" data-tool-card data-search="brightness contrast saturation warmth blur auto enhance presets">
+                  <div class="page-card-header">
+                    <span class="page-card-icon">
+                      <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-enhance"></use></svg>
                     </span>
-                    <div>
-                      <strong>Orphex Motion</strong>
-                      <p>Version 1.4.2</p>
-                    </div>
+                    <span class="tool-badge">Live</span>
                   </div>
-                  <div class="update-actions">
-                    <a class="button tertiary mini" href="updates.html#motion-update">Update</a>
+                  <div class="page-card-title">
+                    <h4>Color &amp; Light Controls</h4>
+                    <p>Use working sliders and presets to clean up, stylize, or strengthen the image with immediate feedback.</p>
                   </div>
+                  <ul class="page-card-list">
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Brightness, contrast, saturation, warmth, and blur are active now.</span></li>
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Clean, Portrait, Product, Noir, and Social Glow presets are included.</span></li>
+                  </ul>
                 </article>
+
+                <article class="page-card" data-tool-card data-search="rotate flip export png jpg image transform">
+                  <div class="page-card-header">
+                    <span class="page-card-icon">
+                      <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-export"></use></svg>
+                    </span>
+                    <span class="tool-badge">Live</span>
+                  </div>
+                  <div class="page-card-title">
+                    <h4>Transform &amp; Export</h4>
+                    <p>Rotate, mirror, reset, and export the adjusted image as a finished PNG or JPG file.</p>
+                  </div>
+                  <ul class="page-card-list">
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Rotation and flip actions are applied to both preview and export.</span></li>
+                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Download the exact edited result from the current state.</span></li>
+                  </ul>
+                </article>
+              </div>
+
+              <div class="dashboard-empty" id="dashboardEmptyState" hidden>
+                <strong id="dashboardEmptyTitle" data-default-title="All working image tools are shown here.">All working image tools are shown here.</strong>
+                <span id="dashboardEmptyText" data-default-text="Search by adjustment, export, upload, preset, or transform.">Search by adjustment, export, upload, preset, or transform.</span>
+              </div>
+            </section>
+
+            <section class="page-cta-strip">
+              <div class="page-cta-copy">
+                <h3>Need more than image editing?</h3>
+                <p>From here you can move into the wider Orphex ecosystem: the apps catalog, updates, asset library, AI modules, and account plans all stay available from the same sidebar.</p>
+              </div>
+              <div class="page-inline-actions">
+                <a class="button tertiary mini" href="apps.html">All Apps</a>
+                <a class="button primary mini" href="account.html">Plans &amp; Account</a>
               </div>
             </section>
           </div>
@@ -379,7 +361,7 @@
       </div>
     </div>
 
-    <audio id="globalPreviewAudio" preload="none"></audio>
     <script src="script.js"></script>
+    <script src="image-editor.js"></script>
   </body>
 </html>
