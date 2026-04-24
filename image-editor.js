@@ -6,14 +6,18 @@
     previewFrame: document.getElementById("editorPreviewFrame"),
     previewCanvas: document.getElementById("editorPreviewCanvas"),
     sourceImage: document.getElementById("editorSourceImage"),
+    overlayImage: document.getElementById("editorOverlayImage"),
     uploadInput: document.getElementById("editorUploadInput"),
+    overlayUploadInput: document.getElementById("editorOverlayUploadInput"),
     uploadButton: document.getElementById("editorUploadButton"),
+    insertImageButton: document.getElementById("editorInsertImageButton"),
     sampleButton: document.getElementById("editorSampleButton"),
     compareButton: document.getElementById("editorCompareButton"),
     resetButton: document.getElementById("editorResetButton"),
     autoEnhanceButton: document.getElementById("editorAutoEnhanceButton"),
     downloadPngButton: document.getElementById("editorDownloadPngButton"),
     downloadJpgButton: document.getElementById("editorDownloadJpgButton"),
+    removeOverlayButton: document.getElementById("editorRemoveOverlayButton"),
     proxyButtons: Array.from(document.querySelectorAll("[data-editor-proxy]")),
     previewState: document.getElementById("editorPreviewState"),
     imageState: document.getElementById("editorImageState"),
@@ -26,6 +30,8 @@
     featureMeta: document.getElementById("editorFeatureMeta"),
     cutoutMeta: document.getElementById("editorCutoutMeta"),
     textMeta: document.getElementById("editorTextMeta"),
+    overlayMeta: document.getElementById("editorOverlayMeta"),
+    overlayInfo: document.getElementById("editorOverlayInfo"),
     frameMeta: document.getElementById("editorFrameMeta"),
     statusBox: document.getElementById("editorStatusBox"),
     statusText: document.getElementById("editorStatusText"),
@@ -42,6 +48,10 @@
     textSizeRange: document.getElementById("textSizeRange"),
     textXRange: document.getElementById("textXRange"),
     textYRange: document.getElementById("textYRange"),
+    overlayScaleRange: document.getElementById("overlayScaleRange"),
+    overlayXRange: document.getElementById("overlayXRange"),
+    overlayYRange: document.getElementById("overlayYRange"),
+    overlayOpacityRange: document.getElementById("overlayOpacityRange"),
     textColorInput: document.getElementById("editorTextColor"),
     exportSizeSelect: document.getElementById("exportSizeSelect"),
     cutoutButton: document.getElementById("editorCutoutButton"),
@@ -59,6 +69,10 @@
     textSizeValue: document.getElementById("textSizeValue"),
     textXValue: document.getElementById("textXValue"),
     textYValue: document.getElementById("textYValue"),
+    overlayScaleValue: document.getElementById("overlayScaleValue"),
+    overlayXValue: document.getElementById("overlayXValue"),
+    overlayYValue: document.getElementById("overlayYValue"),
+    overlayOpacityValue: document.getElementById("overlayOpacityValue"),
     textColorValue: document.getElementById("textColorValue"),
     textLengthValue: document.getElementById("textLengthValue"),
     exportSizeValue: document.getElementById("exportSizeValue"),
@@ -72,7 +86,7 @@
   const previewContext = refs.previewCanvas.getContext("2d");
   if (!previewContext) return;
 
-  const sampleSrc = refs.sourceImage.getAttribute("src") || "assets/orphex-logo.jpg";
+  const sampleSrc = "assets/orphex-logo.jpg";
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
   const presets = {
@@ -100,8 +114,8 @@
   };
 
   const state = {
-    source: sampleSrc,
-    fileName: "orphex-logo",
+    source: "",
+    fileName: "untitled-image",
     extension: "png",
     brightness: 100,
     contrast: 100,
@@ -125,6 +139,12 @@
     textX: 0,
     textY: 28,
     textColor: "#ffffff",
+    overlaySource: "",
+    overlayFileName: "",
+    overlayScale: 36,
+    overlayX: 0,
+    overlayY: 0,
+    overlayOpacity: 100,
     dragging: false,
     dragStartX: 0,
     dragStartY: 0,
@@ -143,10 +163,13 @@
     updateMeta();
   });
 
-  if (refs.sourceImage.complete) {
+  refs.overlayImage?.addEventListener("load", () => {
     renderPreview();
     updateMeta();
-  }
+  });
+
+  renderPreview();
+  updateMeta();
 
   function bindEvents() {
     refs.uploadButton?.addEventListener("click", () => refs.uploadInput?.click());
@@ -159,6 +182,8 @@
     refs.cutoutButton?.addEventListener("click", enableCutout);
     refs.restoreBgButton?.addEventListener("click", disableCutout);
     refs.clearTextButton?.addEventListener("click", clearTextOverlay);
+    refs.insertImageButton?.addEventListener("click", () => refs.overlayUploadInput?.click());
+    refs.removeOverlayButton?.addEventListener("click", clearOverlayLayer);
 
     refs.proxyButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -169,11 +194,14 @@
           refs.downloadJpgButton?.click();
         } else if (action === "auto-enhance") {
           refs.autoEnhanceButton?.click();
+        } else if (action === "insert-image") {
+          refs.overlayUploadInput?.click();
         }
       });
     });
 
     refs.uploadInput?.addEventListener("change", handleUpload);
+    refs.overlayUploadInput?.addEventListener("change", handleOverlayUpload);
 
     [
       ["brightness", refs.brightnessRange],
@@ -187,7 +215,11 @@
       ["cutoutThreshold", refs.cutoutRange],
       ["textSize", refs.textSizeRange],
       ["textX", refs.textXRange],
-      ["textY", refs.textYRange]
+      ["textY", refs.textYRange],
+      ["overlayScale", refs.overlayScaleRange],
+      ["overlayX", refs.overlayXRange],
+      ["overlayY", refs.overlayYRange],
+      ["overlayOpacity", refs.overlayOpacityRange]
     ].forEach(([key, input]) => {
       input?.addEventListener("input", () => {
         ensureEditedView();
@@ -294,6 +326,24 @@
     reader.readAsDataURL(file);
   }
 
+  function handleOverlayUpload(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      ensureEditedView();
+      state.overlaySource = String(reader.result || "");
+      state.overlayFileName = file.name.replace(/\.[^.]+$/, "") || "inserted-layer";
+      refs.overlayImage.src = state.overlaySource;
+      refs.overlayUploadInput.value = "";
+      renderPreview();
+      updateMeta();
+      setStatus("Inserted image added.", "The new image layer is now sitting above the main canvas and can be moved, scaled, or faded.");
+    };
+    reader.readAsDataURL(file);
+  }
+
   function useSample() {
     ensureEditedView();
     state.source = sampleSrc;
@@ -308,6 +358,11 @@
   }
 
   function toggleCompare() {
+    if (!hasBaseImage()) {
+      setStatus("Upload a base image first.", "Before / After becomes useful after you add a main image to the canvas.");
+      return;
+    }
+
     state.compare = !state.compare;
     refs.compareButton?.setAttribute("aria-pressed", state.compare ? "true" : "false");
     if (refs.compareButton) {
@@ -346,16 +401,27 @@
     state.textX = 0;
     state.textY = 28;
     state.textColor = "#ffffff";
+    state.overlaySource = "";
+    state.overlayFileName = "";
+    state.overlayScale = 36;
+    state.overlayX = 0;
+    state.overlayY = 0;
+    state.overlayOpacity = 100;
+    refs.overlayImage.removeAttribute("src");
     invalidateCutoutCache();
     syncControls();
     renderPreview();
     updateMeta();
-    setStatus("Editor reset.", "All adjustments, crop settings, cutout changes, text, and transforms were cleared.");
+    setStatus("Editor reset.", "All adjustments, crop settings, cutout changes, inserted layers, text, and transforms were cleared.");
   }
 
   function applyPreset(presetName, markAsAuto) {
     const preset = presets[presetName];
     if (!preset) return;
+    if (!hasBaseImage()) {
+      setStatus("Upload a base image first.", "Presets are applied to the main image after you load one into the workspace.");
+      return;
+    }
 
     state.preset = presetName;
     state.brightness = preset.brightness;
@@ -376,6 +442,11 @@
   }
 
   function enableCutout() {
+    if (!hasBaseImage()) {
+      setStatus("Upload a base image first.", "Background removal works on the main image after you load it.");
+      return;
+    }
+
     ensureEditedView();
     state.cutoutEnabled = true;
     invalidateCutoutCache();
@@ -401,6 +472,21 @@
     renderPreview();
     updateMeta();
     setStatus("Text removed.", "The overlay text was cleared from the current design.");
+  }
+
+  function clearOverlayLayer() {
+    ensureEditedView();
+    state.overlaySource = "";
+    state.overlayFileName = "";
+    state.overlayScale = 36;
+    state.overlayX = 0;
+    state.overlayY = 0;
+    state.overlayOpacity = 100;
+    refs.overlayImage.removeAttribute("src");
+    syncControls();
+    renderPreview();
+    updateMeta();
+    setStatus("Inserted image removed.", "The extra image layer was removed and the canvas is back to the base artwork only.");
   }
 
   function handlePointerDown(event) {
@@ -452,6 +538,10 @@
     setInputValue(refs.textSizeRange, state.textSize);
     setInputValue(refs.textXRange, state.textX);
     setInputValue(refs.textYRange, state.textY);
+    setInputValue(refs.overlayScaleRange, state.overlayScale);
+    setInputValue(refs.overlayXRange, state.overlayX);
+    setInputValue(refs.overlayYRange, state.overlayY);
+    setInputValue(refs.overlayOpacityRange, state.overlayOpacity);
     setInputValue(refs.textColorInput, state.textColor);
     setInputValue(refs.exportSizeSelect, state.exportSize);
 
@@ -467,6 +557,10 @@
     setText(refs.textSizeValue, `${state.textSize}px`);
     setText(refs.textXValue, `${state.textX}%`);
     setText(refs.textYValue, `${state.textY}%`);
+    setText(refs.overlayScaleValue, `${state.overlayScale}%`);
+    setText(refs.overlayXValue, `${state.overlayX}%`);
+    setText(refs.overlayYValue, `${state.overlayY}%`);
+    setText(refs.overlayOpacityValue, `${state.overlayOpacity}%`);
     setText(refs.textColorValue, state.textColor.toLowerCase());
     setText(refs.textLengthValue, `${state.text.trim().length} chars`);
     setText(refs.exportSizeValue, exportSizes[state.exportSize]?.label || "Source Fit");
@@ -494,6 +588,9 @@
       refs.cutoutButton.classList.toggle("is-active", state.cutoutEnabled);
       refs.cutoutButton.textContent = state.cutoutEnabled ? "Cutout Active" : "Remove Background";
     }
+    if (refs.removeOverlayButton) {
+      refs.removeOverlayButton.classList.toggle("is-active", hasOverlayImage());
+    }
     if (refs.previewCanvas) {
       refs.previewCanvas.style.cursor = state.dragging ? "grabbing" : "grab";
     }
@@ -515,27 +612,36 @@
       context.fillRect(0, 0, width, height);
     }
 
-    const source = getRenderableSource();
-    const sourceWidth = getSourceWidth(source);
-    const sourceHeight = getSourceHeight(source);
-    if (!sourceWidth || !sourceHeight) return;
+    if (hasBaseImage()) {
+      const source = getRenderableSource();
+      const sourceWidth = getSourceWidth(source);
+      const sourceHeight = getSourceHeight(source);
 
-    const rotation = normalizeDisplayRotation();
-    const radians = (rotation * Math.PI) / 180;
-    const rotatedBaseWidth = rotation === 90 || rotation === 270 ? sourceHeight : sourceWidth;
-    const rotatedBaseHeight = rotation === 90 || rotation === 270 ? sourceWidth : sourceHeight;
-    const coverScale = Math.max(width / rotatedBaseWidth, height / rotatedBaseHeight) * (state.zoom / 100);
-    const offsetX = (state.panX / 100) * width * 0.55;
-    const offsetY = (state.panY / 100) * height * 0.55;
+      if (sourceWidth && sourceHeight) {
+        const rotation = normalizeDisplayRotation();
+        const radians = (rotation * Math.PI) / 180;
+        const rotatedBaseWidth = rotation === 90 || rotation === 270 ? sourceHeight : sourceWidth;
+        const rotatedBaseHeight = rotation === 90 || rotation === 270 ? sourceWidth : sourceHeight;
+        const coverScale = Math.max(width / rotatedBaseWidth, height / rotatedBaseHeight) * (state.zoom / 100);
+        const offsetX = (state.panX / 100) * width * 0.55;
+        const offsetY = (state.panY / 100) * height * 0.55;
 
-    context.save();
-    context.translate(width / 2 + offsetX, height / 2 + offsetY);
-    context.scale(state.flipX * coverScale, state.flipY * coverScale);
-    context.rotate(radians);
-    context.filter = state.compare ? "none" : buildFilter();
-    context.drawImage(source, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
-    context.restore();
-    context.filter = "none";
+        context.save();
+        context.translate(width / 2 + offsetX, height / 2 + offsetY);
+        context.scale(state.flipX * coverScale, state.flipY * coverScale);
+        context.rotate(radians);
+        context.filter = state.compare ? "none" : buildFilter();
+        context.drawImage(source, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
+        context.restore();
+        context.filter = "none";
+      }
+    } else {
+      drawEmptyState(context, width, height);
+    }
+
+    if (!state.compare && hasOverlayImage()) {
+      drawOverlayImage(context, width, height);
+    }
 
     if (!state.compare && state.text.trim()) {
       drawTextOverlay(context, width, height);
@@ -573,6 +679,11 @@
   }
 
   function exportImage(type) {
+    if (!hasBaseImage() && !hasOverlayImage()) {
+      setStatus("Nothing to export yet.", "Upload a main image or insert an image layer first, then export the result.");
+      return;
+    }
+
     const dimensions = getRenderDimensions("export");
     const canvas = document.createElement("canvas");
     canvas.width = dimensions.width;
@@ -593,9 +704,9 @@
   }
 
   function getRenderDimensions(mode) {
-    const source = getRenderableSource();
-    const sourceWidth = getSourceWidth(source) || refs.sourceImage.naturalWidth || 1200;
-    const sourceHeight = getSourceHeight(source) || refs.sourceImage.naturalHeight || 1200;
+    const source = hasBaseImage() ? getRenderableSource() : hasOverlayImage() ? refs.overlayImage : null;
+    const sourceWidth = (source && getSourceWidth(source)) || refs.sourceImage.naturalWidth || refs.overlayImage?.naturalWidth || 1200;
+    const sourceHeight = (source && getSourceHeight(source)) || refs.sourceImage.naturalHeight || refs.overlayImage?.naturalHeight || 1200;
     const rotation = normalizeDisplayRotation();
     const rotatedWidth = rotation === 90 || rotation === 270 ? sourceHeight : sourceWidth;
     const rotatedHeight = rotation === 90 || rotation === 270 ? sourceWidth : sourceHeight;
@@ -632,6 +743,10 @@
   }
 
   function getRenderableSource() {
+    if (!hasBaseImage()) {
+      return null;
+    }
+
     if (!state.cutoutEnabled || state.compare) {
       return refs.sourceImage;
     }
@@ -732,22 +847,25 @@
     const height = refs.sourceImage.naturalHeight || 0;
     const exportDimensions = getRenderDimensions("export");
     const previewState = state.compare ? "Before View" : "Preview Ready";
-    const imageState = width && height ? "Image Loaded" : "Preview Ready";
+    const imageState = width && height ? "Image Loaded" : "Fresh Canvas";
     const cutoutState = state.cutoutEnabled ? "Cutout On" : "Cutout Off";
     const textState = state.text.trim() ? "Text On" : "Text Off";
+    const overlayState = hasOverlayImage() ? "Layer On" : "Layer Off";
     const featureSummary = state.text.trim() ? `${state.text.trim().length} chars overlay` : "No overlay text yet.";
     const orientation = `${state.flipX === -1 ? "Flip X" : "Normal X"} | ${state.flipY === -1 ? "Flip Y" : "Normal Y"}`;
 
-    setText(refs.fileName, `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}`);
+    setText(refs.fileName, hasBaseImage() ? `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}` : "No image selected");
     setText(refs.previewState, previewState);
     setText(refs.imageState, imageState);
-    setText(refs.imageMeta, width && height ? `${width} x ${height} px source` : "Preview image loaded");
-    setText(refs.sizeMeta, `${exportDimensions.width} x ${exportDimensions.height} export`);
+    setText(refs.imageMeta, width && height ? `${width} x ${height} px source` : "No base image loaded yet");
+    setText(refs.sizeMeta, hasBaseImage() || hasOverlayImage() ? `${exportDimensions.width} x ${exportDimensions.height} export` : "Ready after upload");
     setText(refs.transformMeta, `Rotation ${normalizeDisplayRotation()} deg | ${orientation}`);
     setText(refs.cutoutMeta, cutoutState);
     setText(refs.textMeta, textState);
     setText(refs.featureMeta, featureSummary);
-    setText(refs.frameMeta, `${frameModes[state.frame]?.label || "Original Frame"} | ${exportSizes[state.exportSize]?.label || "Source Fit"}`);
+    setText(refs.overlayMeta, overlayState);
+    setText(refs.overlayInfo, hasOverlayImage() ? `${state.overlayFileName || "Inserted layer"} | ${state.overlayOpacity}% opacity` : "No inserted image layer yet.");
+    setText(refs.frameMeta, hasBaseImage() || hasOverlayImage() ? `${frameModes[state.frame]?.label || "Original Frame"} | ${exportSizes[state.exportSize]?.label || "Source Fit"}` : "Upload an image or use the sample to begin.");
   }
 
   function setStatus(title, text) {
@@ -821,5 +939,51 @@
       .toLowerCase()
       .replace(/[^a-z0-9-_]+/g, "-")
       .replace(/^-+|-+$/g, "") || "edited-image";
+  }
+
+  function hasBaseImage() {
+    return Boolean(state.source) && Boolean(refs.sourceImage?.naturalWidth);
+  }
+
+  function hasOverlayImage() {
+    return Boolean(state.overlaySource) && Boolean(refs.overlayImage?.naturalWidth);
+  }
+
+  function drawEmptyState(context, width, height) {
+    context.save();
+    context.fillStyle = "rgba(255,255,255,0.02)";
+    context.fillRect(0, 0, width, height);
+    context.strokeStyle = "rgba(124, 58, 237, 0.22)";
+    context.lineWidth = Math.max(2, width * 0.004);
+    context.setLineDash([18, 18]);
+    context.strokeRect(width * 0.08, height * 0.08, width * 0.84, height * 0.84);
+    context.setLineDash([]);
+
+    context.fillStyle = "rgba(255,255,255,0.92)";
+    context.font = `700 ${Math.max(28, width * 0.04)}px Inter, Arial, sans-serif`;
+    context.textAlign = "center";
+    context.fillText("Fresh Orphex Canvas", width / 2, height / 2 - 20);
+
+    context.fillStyle = "rgba(157, 169, 188, 0.92)";
+    context.font = `500 ${Math.max(16, width * 0.018)}px Inter, Arial, sans-serif`;
+    context.fillText("Upload a main image or insert a new image layer to begin editing.", width / 2, height / 2 + 26);
+    context.restore();
+  }
+
+  function drawOverlayImage(context, width, height) {
+    const sourceWidth = refs.overlayImage.naturalWidth || 0;
+    const sourceHeight = refs.overlayImage.naturalHeight || 0;
+    if (!sourceWidth || !sourceHeight) return;
+
+    const scale = Math.min(width, height) * (state.overlayScale / 100) / Math.max(sourceWidth, sourceHeight);
+    const drawWidth = sourceWidth * scale;
+    const drawHeight = sourceHeight * scale;
+    const offsetX = (state.overlayX / 100) * width * 0.45;
+    const offsetY = (state.overlayY / 100) * height * 0.45;
+
+    context.save();
+    context.globalAlpha = clamp(state.overlayOpacity / 100, 0.1, 1);
+    context.drawImage(refs.overlayImage, width / 2 - drawWidth / 2 + offsetX, height / 2 - drawHeight / 2 + offsetY, drawWidth, drawHeight);
+    context.restore();
   }
 })();

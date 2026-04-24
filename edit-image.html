@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Edit Image in Orphex with a live preview canvas, crop controls, presets, quick cutout, text overlay, transform tools, and PNG or JPG export."
+      content="Edit Image in Orphex with a fresh live canvas, crop controls, inserted image layers, presets, quick cutout, text overlay, transform tools, and PNG or JPG export."
     />
     <title>Orphex | Edit Image</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -113,13 +113,14 @@
 
               <div class="editor-page-actions">
                 <button class="button tertiary mini" type="button" id="editorUploadButton">Upload Image</button>
+                <button class="button tertiary mini" type="button" data-editor-proxy="insert-image">Insert Image</button>
                 <button class="button tertiary mini" type="button" id="editorSampleButton">Use Sample</button>
                 <button class="button primary mini" type="button" data-editor-proxy="download-png">Download PNG</button>
               </div>
 
               <label class="dashboard-search editor-page-search">
                 <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-search"></use></svg>
-                <input id="dashboardSearch" type="search" placeholder="Search presets, crop tools, cutout, text, transform, and export..." />
+                <input id="dashboardSearch" type="search" placeholder="Search presets, crop, insert image, cutout, text, transform, and export..." />
               </label>
             </section>
 
@@ -128,8 +129,8 @@
                 <div class="editor-preview-head">
                   <div class="editor-preview-copy">
                     <span class="editor-surface-label">Preview Canvas</span>
-                    <h3 id="editorFileName">orphex-logo.png</h3>
-                    <p id="editorFrameMeta">Original frame</p>
+                    <h3 id="editorFileName">No image selected</h3>
+                    <p id="editorFrameMeta">Upload an image or use the sample to begin.</p>
                   </div>
 
                   <div class="page-banner-badges">
@@ -141,8 +142,10 @@
 
                 <div class="editor-preview-frame" id="editorPreviewFrame">
                   <canvas class="editor-preview-canvas" id="editorPreviewCanvas" width="1200" height="1200"></canvas>
-                  <img id="editorSourceImage" src="assets/orphex-logo.jpg" alt="" hidden />
+                  <img id="editorSourceImage" alt="" hidden />
+                  <img id="editorOverlayImage" alt="" hidden />
                   <input class="editor-upload-input" id="editorUploadInput" type="file" accept="image/*" />
+                  <input class="editor-upload-input" id="editorOverlayUploadInput" type="file" accept="image/*" />
                 </div>
 
                 <div class="editor-preview-actions">
@@ -153,13 +156,13 @@
                 <div class="editor-status-grid">
                   <article class="editor-status-card">
                     <span>Image Status</span>
-                    <strong id="editorImageState">Preview Ready</strong>
-                    <small id="editorImageMeta">Preview image loaded</small>
+                    <strong id="editorImageState">Fresh Canvas</strong>
+                    <small id="editorImageMeta">No base image loaded yet</small>
                   </article>
 
                   <article class="editor-status-card">
                     <span>Export Size</span>
-                    <strong id="editorSizeMeta">Export size ready</strong>
+                    <strong id="editorSizeMeta">Ready after upload</strong>
                     <small id="editorTransformMeta">Rotation 0 deg | Normal</small>
                   </article>
 
@@ -174,11 +177,17 @@
                     <strong id="editorTextMeta">Text Off</strong>
                     <small id="editorFeatureMeta">No overlay text yet.</small>
                   </article>
+
+                  <article class="editor-status-card">
+                    <span>Inserted Image</span>
+                    <strong id="editorOverlayMeta">Layer Off</strong>
+                    <small id="editorOverlayInfo">No inserted image layer yet.</small>
+                  </article>
                 </div>
 
                 <div class="editor-status-box" id="editorStatusBox">
                   <strong>Workspace ready.</strong>
-                  <span id="editorStatusText">Upload any image to start editing, drag inside the preview to reposition it, or use the sample to test the full toolset right away.</span>
+                  <span id="editorStatusText">Start with a fresh canvas. Upload your main image, insert another image layer if needed, then adjust, crop, and export.</span>
                 </div>
               </article>
 
@@ -197,6 +206,7 @@
                   <button class="tab-button" type="button" data-tab-target="crop">Crop</button>
                   <button class="tab-button" type="button" data-tab-target="cutout">Cutout</button>
                   <button class="tab-button" type="button" data-tab-target="text">Text</button>
+                  <button class="tab-button" type="button" data-tab-target="insert">Insert</button>
                   <button class="tab-button" type="button" data-tab-target="transform">Transform</button>
                   <button class="tab-button" type="button" data-tab-target="export">Export</button>
                 </div>
@@ -349,6 +359,40 @@
                   <button class="button tertiary mini" type="button" id="editorClearTextButton">Clear Text</button>
                 </div>
 
+                <div class="editor-tab-panel" data-tab-panel="insert">
+                  <div class="page-card-title">
+                    <h4>Insert Image Layer</h4>
+                    <p>Add another image above the main photo for logos, stickers, product labels, or simple composites.</p>
+                  </div>
+
+                  <div class="editor-action-grid">
+                    <button class="button tertiary mini" type="button" id="editorInsertImageButton">Insert Image</button>
+                    <button class="button tertiary mini" type="button" id="editorRemoveOverlayButton">Remove Inserted Image</button>
+                  </div>
+
+                  <div class="slider-group">
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Layer Scale</strong><output id="overlayScaleValue">36%</output></span>
+                      <input id="overlayScaleRange" type="range" min="10" max="120" value="36" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Layer X</strong><output id="overlayXValue">0%</output></span>
+                      <input id="overlayXRange" type="range" min="-70" max="70" value="0" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Layer Y</strong><output id="overlayYValue">0%</output></span>
+                      <input id="overlayYRange" type="range" min="-70" max="70" value="0" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Layer Opacity</strong><output id="overlayOpacityValue">100%</output></span>
+                      <input id="overlayOpacityRange" type="range" min="10" max="100" value="100" />
+                    </label>
+                  </div>
+                </div>
+
                 <div class="editor-tab-panel" data-tab-panel="transform">
                   <div class="page-card-title">
                     <h4>Transform</h4>
@@ -435,7 +479,7 @@
                   </div>
                 </article>
 
-                <article class="page-card" data-tool-card data-search="cutout background remove text overlay title label">
+                <article class="page-card" data-tool-card data-search="cutout background remove text overlay title label insert image layer logo sticker">
                   <div class="page-card-header">
                     <span class="page-card-icon">
                       <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-spark"></use></svg>
@@ -443,8 +487,8 @@
                     <span class="tool-badge">Live</span>
                   </div>
                   <div class="page-card-title">
-                    <h4>Cutout &amp; Text</h4>
-                    <p>Remove simple backgrounds, add overlay text, and tune the final look without leaving the page.</p>
+                    <h4>Cutout, Text &amp; Insert</h4>
+                    <p>Remove simple backgrounds, add text, and insert another image layer for stickers, marks, or branding.</p>
                   </div>
                 </article>
 
@@ -464,7 +508,7 @@
 
               <div class="dashboard-empty" id="dashboardEmptyState" hidden>
                 <strong id="dashboardEmptyTitle" data-default-title="All working image tools are shown here.">All working image tools are shown here.</strong>
-                <span id="dashboardEmptyText" data-default-text="Search by crop, cutout, text, export, upload, preset, or transform.">Search by crop, cutout, text, export, upload, preset, or transform.</span>
+                <span id="dashboardEmptyText" data-default-text="Search by crop, insert image, cutout, text, export, upload, preset, or transform.">Search by crop, insert image, cutout, text, export, upload, preset, or transform.</span>
               </div>
             </section>
           </div>
