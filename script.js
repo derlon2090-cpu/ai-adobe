@@ -606,9 +606,6 @@ const refs = {
   dashboardEmptyState: document.getElementById("dashboardEmptyState"),
   dashboardEmptyTitle: document.getElementById("dashboardEmptyTitle"),
   dashboardEmptyText: document.getElementById("dashboardEmptyText"),
-  appsModal: document.getElementById("appsModal"),
-  appsModalClose: document.getElementById("appsModalClose"),
-  appsModalBackdrop: document.getElementById("appsModalBackdrop"),
   processingModal: document.getElementById("processingModal"),
   processingTitle: document.getElementById("processingTitle"),
   processingText: document.getElementById("processingText"),
@@ -690,7 +687,7 @@ function init() {
   initPricingModes();
   initDemoProgress();
   initHeroDemo();
-  initDashboardHome();
+  initDashboardShell();
 
   if (refs.editorShell && refs.libraryList && refs.detailTitle) {
     syncMode();
@@ -789,17 +786,22 @@ function bindEvents() {
 }
 
 function setActiveNav() {
-  const links = document.querySelectorAll(".site-nav a[href]");
+  const links = document.querySelectorAll(".site-nav a[href], .sidebar-link[href], .sidebar-account[href]");
   if (!links.length) return;
 
   const current = window.location.pathname.split("/").pop() || "index.html";
 
   links.forEach((link) => {
-    const href = link.getAttribute("href") || "";
+    const href = (link.getAttribute("href") || "").split("#")[0].split("?")[0];
     const target = href.split("/").pop();
     const isMatch =
       target === current ||
       (current === "index.html" && (href === "#top" || target === "" || target === "index.html"));
+
+    if (link.classList.contains("sidebar-link") || link.classList.contains("sidebar-account")) {
+      link.classList.toggle("is-active", isMatch);
+      return;
+    }
 
     link.classList.toggle("is-current", isMatch);
   });
@@ -986,19 +988,32 @@ function initHeroDemo() {
   }, 3200);
 }
 
-function initDashboardHome() {
+function initDashboardShell() {
   if (!refs.dashboardShell) return;
 
   const toolCards = Array.from(document.querySelectorAll("[data-tool-card]"));
   const processingNodes = Array.from(document.querySelectorAll("[data-processing-label]"));
-  const appsNodes = Array.from(document.querySelectorAll("[data-open-apps]"));
-  const sidebarLinks = Array.from(document.querySelectorAll(".sidebar-link"));
+  const sidebarLinks = Array.from(document.querySelectorAll(".sidebar-link, .sidebar-account"));
+  const defaultEmptyTitle =
+    refs.dashboardEmptyTitle?.dataset.defaultTitle ||
+    refs.dashboardEmptyTitle?.textContent ||
+    "Tools are being prepared. Stay tuned.";
+  const defaultEmptyText =
+    refs.dashboardEmptyText?.dataset.defaultText ||
+    refs.dashboardEmptyText?.textContent ||
+    "Use search to find the right tools faster.";
 
   hideProcessingModal();
-  closeAppsModal();
   closeDashboardSidebar();
 
   const applyFilter = () => {
+    if (!toolCards.length) {
+      if (refs.dashboardEmptyState) {
+        refs.dashboardEmptyState.hidden = true;
+      }
+      return;
+    }
+
     const query = (refs.dashboardSearch?.value || "").trim().toLowerCase();
     let visibleCount = 0;
 
@@ -1011,34 +1026,24 @@ function initDashboardHome() {
 
     if (refs.dashboardEmptyState) {
       refs.dashboardEmptyState.hidden = visibleCount > 0;
-      if (!visibleCount) {
-        if (refs.dashboardEmptyTitle) {
-          refs.dashboardEmptyTitle.textContent = "Apps are being prepared. Stay tuned.";
-        }
-        if (refs.dashboardEmptyText) {
-          refs.dashboardEmptyText.textContent = query
-            ? `No apps matched "${query}" yet.`
-            : "Every app shown here is still under preparation.";
-        }
+      if (refs.dashboardEmptyTitle) {
+        refs.dashboardEmptyTitle.textContent = visibleCount ? defaultEmptyTitle : query ? `Nothing matched "${query}".` : defaultEmptyTitle;
+      }
+      if (refs.dashboardEmptyText) {
+        refs.dashboardEmptyText.textContent = visibleCount
+          ? defaultEmptyText
+          : query
+            ? "Try a broader keyword like video, AI, sound, or export."
+            : defaultEmptyText;
       }
     }
   };
 
   refs.dashboardSearch?.addEventListener("input", applyFilter);
 
-  appsNodes.forEach((node) => {
-    node.addEventListener("click", (event) => {
-      event.preventDefault();
-      openAppsModal();
-      closeDashboardSidebar();
-    });
-  });
-
   processingNodes.forEach((node) => {
     node.addEventListener("click", (event) => {
-      if (node.classList.contains("sidebar-link") || node.classList.contains("button")) {
-        event.preventDefault();
-      }
+      event.preventDefault();
       showProcessingModal(node.dataset.processingLabel || "AI is processing...");
     });
   });
@@ -1049,14 +1054,12 @@ function initDashboardHome() {
     }
   });
 
-  refs.appsModalClose?.addEventListener("click", closeAppsModal);
-  refs.appsModalBackdrop?.addEventListener("click", closeAppsModal);
   refs.dashboardMenuToggle?.addEventListener("click", toggleDashboardSidebar);
   refs.dashboardSidebarBackdrop?.addEventListener("click", closeDashboardSidebar);
 
   sidebarLinks.forEach((node) => {
     node.addEventListener("click", () => {
-      if (window.innerWidth <= 860 && !node.hasAttribute("data-open-apps")) {
+      if (window.innerWidth <= 860) {
         closeDashboardSidebar();
       }
     });
@@ -1065,22 +1068,6 @@ function initDashboardHome() {
   document.addEventListener("keydown", handleDashboardKeydown);
 
   applyFilter();
-}
-
-function openAppsModal() {
-  if (!refs.appsModal) return;
-
-  refs.appsModal.classList.add("is-open");
-  refs.appsModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("apps-modal-open");
-}
-
-function closeAppsModal() {
-  if (!refs.appsModal) return;
-
-  refs.appsModal.classList.remove("is-open");
-  refs.appsModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("apps-modal-open");
 }
 
 function toggleDashboardSidebar() {
@@ -1096,8 +1083,8 @@ function closeDashboardSidebar() {
 function handleDashboardKeydown(event) {
   if (event.key !== "Escape") return;
 
-  if (refs.appsModal?.classList.contains("is-open")) {
-    closeAppsModal();
+  if (refs.processingModal && !refs.processingModal.hidden) {
+    hideProcessingModal();
     return;
   }
 
