@@ -574,6 +574,8 @@ const templates = {
   }
 };
 
+const HOME_THEME_STORAGE_KEY = "orphex-home-theme";
+
 const explainQueue = [
   {
     title: "AI Explain Button",
@@ -602,6 +604,9 @@ const refs = {
   dashboardSidebar: document.getElementById("dashboardSidebar"),
   dashboardSidebarBackdrop: document.getElementById("dashboardSidebarBackdrop"),
   dashboardMenuToggle: document.getElementById("dashboardMenuToggle"),
+  homeThemeToggle: document.getElementById("homeThemeToggle"),
+  homeThemeLabel: document.getElementById("homeThemeLabel"),
+  homeThemeGlyph: document.getElementById("homeThemeGlyph"),
   dashboardSearch: document.getElementById("dashboardSearch"),
   dashboardEmptyState: document.getElementById("dashboardEmptyState"),
   dashboardEmptyTitle: document.getElementById("dashboardEmptyTitle"),
@@ -668,7 +673,8 @@ const state = {
   heroSceneIndex: 0,
   heroDemoPaused: false,
   heroDemoTimer: null,
-  processingTimer: null
+  processingTimer: null,
+  homeTheme: "night"
 };
 
 init();
@@ -678,6 +684,7 @@ function init() {
     refs.year.textContent = String(new Date().getFullYear());
   }
 
+  initHomeTheme();
   setActiveNav();
   setupRevealObserver();
   updateSoundCount();
@@ -783,6 +790,54 @@ function bindEvents() {
       label.textContent = state.heroDemoPaused ? "استئناف الديمو" : "إيقاف الديمو";
     }
   });
+}
+
+function initHomeTheme() {
+  if (!refs.homeThemeToggle || !document.body.classList.contains("dashboard-home-root")) return;
+
+  let initialTheme = "night";
+
+  try {
+    const savedTheme = window.localStorage.getItem(HOME_THEME_STORAGE_KEY);
+    if (savedTheme === "day" || savedTheme === "night") {
+      initialTheme = savedTheme;
+    }
+  } catch (error) {
+    initialTheme = "night";
+  }
+
+  applyHomeTheme(initialTheme);
+
+  refs.homeThemeToggle.addEventListener("click", () => {
+    const nextTheme = state.homeTheme === "day" ? "night" : "day";
+    applyHomeTheme(nextTheme);
+
+    try {
+      window.localStorage.setItem(HOME_THEME_STORAGE_KEY, nextTheme);
+    } catch (error) {
+      // Ignore storage failures and keep the in-memory theme only.
+    }
+  });
+}
+
+function applyHomeTheme(theme) {
+  const normalizedTheme = theme === "day" ? "day" : "night";
+  const isDay = normalizedTheme === "day";
+
+  state.homeTheme = normalizedTheme;
+  document.body.dataset.homeTheme = normalizedTheme;
+
+  refs.homeThemeToggle?.classList.toggle("is-day", isDay);
+  refs.homeThemeToggle?.setAttribute("aria-pressed", String(isDay));
+  refs.homeThemeToggle?.setAttribute("aria-label", isDay ? "Switch to night mode" : "Switch to day mode");
+
+  if (refs.homeThemeLabel) {
+    refs.homeThemeLabel.textContent = isDay ? "Day Mode" : "Night Mode";
+  }
+
+  if (refs.homeThemeGlyph) {
+    refs.homeThemeGlyph.textContent = isDay ? "☀" : "☾";
+  }
 }
 
 function setActiveNav() {

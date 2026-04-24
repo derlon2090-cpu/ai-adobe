@@ -16,7 +16,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="dashboard-home">
+  <body class="dashboard-home dashboard-home-root" data-home-theme="night">
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
     <div class="bg-grid" aria-hidden="true"></div>
@@ -94,10 +94,19 @@
                 <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-menu"></use></svg>
               </button>
 
-              <div class="dashboard-window-controls" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
+              <div class="dashboard-top-actions">
+                <button class="home-theme-toggle" id="homeThemeToggle" type="button" aria-label="Switch to day mode" aria-pressed="false">
+                  <span class="home-theme-thumb" aria-hidden="true">
+                    <span class="home-theme-glyph" id="homeThemeGlyph">☾</span>
+                  </span>
+                  <span class="home-theme-label" id="homeThemeLabel">Night Mode</span>
+                </button>
+
+                <div class="dashboard-window-controls" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
               </div>
             </div>
 
