@@ -986,6 +986,8 @@ function initDashboardHome() {
   const toolCards = Array.from(document.querySelectorAll("[data-tool-card]"));
   const processingNodes = Array.from(document.querySelectorAll("[data-processing-label]"));
 
+  hideProcessingModal();
+
   const applyFilter = () => {
     const query = (refs.dashboardSearch?.value || "").trim().toLowerCase();
     let visibleCount = 0;
