@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Orphex Photo is a dark professional image editor with live canvas rendering, crop tools, quick cutout, text overlay, and export controls."
+      content="Edit Image in Orphex with a live preview canvas, crop controls, presets, quick cutout, text overlay, transform tools, and PNG or JPG export."
     />
     <title>Orphex | Edit Image</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -88,7 +88,7 @@
 
           <button class="dashboard-sidebar-backdrop" id="dashboardSidebarBackdrop" type="button" aria-label="Close sidebar"></button>
 
-          <div class="dashboard-main dashboard-page-main">
+          <div class="dashboard-main dashboard-page-main image-editor-page">
             <div class="dashboard-main-top">
               <button class="dashboard-menu-toggle" id="dashboardMenuToggle" type="button" aria-label="Open sidebar">
                 <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-menu"></use></svg>
@@ -101,107 +101,116 @@
               </div>
             </div>
 
-            <section class="dashboard-hero-panel">
-              <div class="dashboard-intro">
+            <section class="editor-page-header page-card">
+              <div class="editor-page-headline">
+                <span class="editor-eyebrow">Orphex Photo</span>
                 <h2>Edit Image in Orphex</h2>
-                <p>Upload a photo, crop it for any format, improve color and light, remove a simple background, add text, then export the final image directly from the main Orphex workspace.</p>
-
-                <label class="dashboard-search">
-                  <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-search"></use></svg>
-                  <input id="dashboardSearch" type="search" placeholder="Search crop, cutout, text, export, and image tools..." />
-                </label>
+                <p>
+                  حرّر صورك بسهولة داخل Orphex: ارفع الصورة، قصّها، حسّن الإضاءة والألوان، أضف نص،
+                  واحفظ النتيجة بصيغة PNG أو JPG.
+                </p>
               </div>
 
-              <article class="dashboard-hero-art">
-                <div class="page-hero-stats">
-                  <div class="page-stat">
-                    <strong>Live canvas</strong>
-                    <span>Preview matches export</span>
-                  </div>
-                  <div class="page-stat">
-                    <strong>Crop ratios</strong>
-                    <span>Square, portrait, story, landscape</span>
-                  </div>
-                  <div class="page-stat">
-                    <strong>Quick cutout</strong>
-                    <span>Works best on clean backgrounds</span>
-                  </div>
-                  <div class="page-stat">
-                    <strong>Text overlay</strong>
-                    <span>Add titles and promo labels</span>
-                  </div>
-                </div>
-              </article>
+              <div class="editor-page-actions">
+                <button class="button tertiary mini" type="button" id="editorUploadButton">Upload Image</button>
+                <button class="button tertiary mini" type="button" id="editorSampleButton">Use Sample</button>
+                <button class="button primary mini" type="button" data-editor-proxy="download-png">Download PNG</button>
+              </div>
+
+              <label class="dashboard-search editor-page-search">
+                <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-search"></use></svg>
+                <input id="dashboardSearch" type="search" placeholder="Search presets, crop tools, cutout, text, transform, and export..." />
+              </label>
             </section>
 
-            <section class="dashboard-section">
-              <div class="dashboard-section-head">
-                <div>
-                  <h3>Edit Image Workspace</h3>
+            <section class="editor-workspace-grid" id="imageEditorShell">
+              <article class="page-card editor-preview-panel">
+                <div class="editor-preview-head">
+                  <div class="editor-preview-copy">
+                    <span class="editor-surface-label">Preview Canvas</span>
+                    <h3 id="editorFileName">orphex-logo.png</h3>
+                    <p id="editorFrameMeta">Original frame</p>
+                  </div>
+
+                  <div class="page-banner-badges">
+                    <span class="status-pill" id="editorPreviewState">Preview Ready</span>
+                    <span class="status-pill soft" id="editorPresetStatus">Custom Preset</span>
+                    <span class="status-pill soft" id="editorFrameStatus">Original Frame</span>
+                  </div>
                 </div>
-                <div class="page-inline-actions">
-                  <button class="button tertiary mini" type="button" id="editorUploadButton">Upload Image</button>
-                  <button class="button primary mini" type="button" id="editorAutoEnhanceButton">Auto Enhance</button>
+
+                <div class="editor-preview-frame" id="editorPreviewFrame">
+                  <canvas class="editor-preview-canvas" id="editorPreviewCanvas" width="1200" height="1200"></canvas>
+                  <img id="editorSourceImage" src="assets/orphex-logo.jpg" alt="" hidden />
+                  <input class="editor-upload-input" id="editorUploadInput" type="file" accept="image/*" />
                 </div>
-              </div>
 
-              <div class="image-editor-shell" id="imageEditorShell">
-                <article class="page-banner image-editor-panel">
-                  <div class="page-banner-header">
-                    <div class="page-banner-copy">
-                      <h3>Live image editing with export-ready framing.</h3>
-                      <p>The preview below is rendered from the same canvas used for export, so crop, filters, cutout, text, and transforms stay consistent.</p>
+                <div class="editor-preview-actions">
+                  <button class="button tertiary mini" type="button" id="editorCompareButton" aria-pressed="false">Before / After</button>
+                  <button class="button tertiary mini" type="button" id="editorAutoEnhanceButton">Auto Enhance</button>
+                </div>
+
+                <div class="editor-status-grid">
+                  <article class="editor-status-card">
+                    <span>Image Status</span>
+                    <strong id="editorImageState">Preview Ready</strong>
+                    <small id="editorImageMeta">Preview image loaded</small>
+                  </article>
+
+                  <article class="editor-status-card">
+                    <span>Export Size</span>
+                    <strong id="editorSizeMeta">Export size ready</strong>
+                    <small id="editorTransformMeta">Rotation 0 deg | Normal</small>
+                  </article>
+
+                  <article class="editor-status-card">
+                    <span>Cutout</span>
+                    <strong id="editorCutoutMeta">Cutout Off</strong>
+                    <small>Works best on clean backgrounds.</small>
+                  </article>
+
+                  <article class="editor-status-card">
+                    <span>Text Overlay</span>
+                    <strong id="editorTextMeta">Text Off</strong>
+                    <small id="editorFeatureMeta">No overlay text yet.</small>
+                  </article>
+                </div>
+
+                <div class="editor-status-box" id="editorStatusBox">
+                  <strong>Workspace ready.</strong>
+                  <span id="editorStatusText">Upload any image to start editing, drag inside the preview to reposition it, or use the sample to test the full toolset right away.</span>
+                </div>
+              </article>
+
+              <aside class="page-card editor-tools-panel" data-tab-group>
+                <div class="editor-tools-head">
+                  <div class="editor-tools-copy">
+                    <span class="editor-surface-label">Tools Panel</span>
+                    <h3>Working Tools</h3>
+                    <p>Switch tabs to keep the workspace clean while still having every editing control in one place.</p>
+                  </div>
+                </div>
+
+                <div class="tab-buttons editor-tab-buttons" role="tablist" aria-label="Edit Image Tools">
+                  <button class="tab-button is-active" type="button" data-tab-target="presets">Presets</button>
+                  <button class="tab-button" type="button" data-tab-target="adjustments">Adjustments</button>
+                  <button class="tab-button" type="button" data-tab-target="crop">Crop</button>
+                  <button class="tab-button" type="button" data-tab-target="cutout">Cutout</button>
+                  <button class="tab-button" type="button" data-tab-target="text">Text</button>
+                  <button class="tab-button" type="button" data-tab-target="transform">Transform</button>
+                  <button class="tab-button" type="button" data-tab-target="export">Export</button>
+                </div>
+
+                <div class="editor-tab-panel is-active" data-tab-panel="presets">
+                  <div class="editor-panel-head">
+                    <div class="page-card-title">
+                      <h4>Presets</h4>
+                      <p>Start with a ready-made look, then fine-tune the result.</p>
                     </div>
-
-                    <div class="page-banner-badges">
-                      <span class="status-pill">Edit Image</span>
-                      <span class="status-pill soft" id="editorPresetStatus">Custom Preset</span>
-                      <span class="status-pill soft" id="editorFrameStatus">Original Frame</span>
-                    </div>
+                    <button class="button tertiary mini" type="button" id="editorAutoEnhanceButtonDuplicate" data-editor-proxy="auto-enhance">Auto Enhance</button>
                   </div>
 
-                  <div class="editor-preview-frame" id="editorPreviewFrame">
-                    <canvas class="editor-preview-canvas" id="editorPreviewCanvas" width="1200" height="1200"></canvas>
-                    <img id="editorSourceImage" src="assets/orphex-logo.jpg" alt="" hidden />
-                  </div>
-
-                  <div class="editor-meta-strip">
-                    <div class="page-stat">
-                      <strong id="editorFileName">orphex-logo.jpg</strong>
-                      <span id="editorImageMeta">Preview image loaded</span>
-                    </div>
-                    <div class="page-stat">
-                      <strong id="editorSizeMeta">Export size ready</strong>
-                      <span id="editorTransformMeta">Rotation 0 deg | Normal</span>
-                    </div>
-                    <div class="page-stat">
-                      <strong id="editorFeatureMeta">Cutout off | Text off</strong>
-                      <span id="editorFrameMeta">Original frame</span>
-                    </div>
-                  </div>
-
-                  <div class="editor-toolbar">
-                    <input class="editor-upload-input" id="editorUploadInput" type="file" accept="image/*" />
-                    <button class="button tertiary mini" type="button" id="editorSampleButton">Use Sample</button>
-                    <button class="button tertiary mini" type="button" id="editorCompareButton" aria-pressed="false">Before / After</button>
-                    <button class="button tertiary mini" type="button" id="editorResetButton">Reset</button>
-                    <button class="button tertiary mini" type="button" id="editorDownloadPngButton">Download PNG</button>
-                    <button class="button tertiary mini" type="button" id="editorDownloadJpgButton">Download JPG</button>
-                  </div>
-
-                  <div class="editor-status-box" id="editorStatusBox">
-                    <strong>Workspace ready.</strong>
-                    <span id="editorStatusText">Upload any image to start editing, drag inside the preview to reposition it, or use the sample to test the full toolset right away.</span>
-                  </div>
-                </article>
-
-                <aside class="page-card image-control-panel">
-                  <div class="page-card-title">
-                    <h4>Presets</h4>
-                    <p>Apply a quick style, then refine everything manually.</p>
-                  </div>
-
-                  <div class="preset-grid">
+                  <div class="preset-grid editor-preset-grid">
                     <button class="preset-button is-active" type="button" data-preset="custom">Custom</button>
                     <button class="preset-button" type="button" data-preset="clean">Clean</button>
                     <button class="preset-button" type="button" data-preset="portrait">Portrait</button>
@@ -209,169 +218,189 @@
                     <button class="preset-button" type="button" data-preset="noir">Noir</button>
                     <button class="preset-button" type="button" data-preset="glow">Social Glow</button>
                   </div>
+                </div>
 
-                  <div class="control-group">
-                    <div class="page-card-title">
-                      <h4>Adjustments</h4>
-                      <p>Real-time controls for light, color, and softness.</p>
-                    </div>
-
-                    <div class="slider-group">
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Brightness</strong><output id="brightnessValue">100%</output></span>
-                        <input id="brightnessRange" type="range" min="50" max="150" value="100" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Contrast</strong><output id="contrastValue">100%</output></span>
-                        <input id="contrastRange" type="range" min="50" max="160" value="100" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Saturation</strong><output id="saturationValue">100%</output></span>
-                        <input id="saturationRange" type="range" min="0" max="180" value="100" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Warmth</strong><output id="warmthValue">0%</output></span>
-                        <input id="warmthRange" type="range" min="0" max="60" value="0" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Blur</strong><output id="blurValue">0px</output></span>
-                        <input id="blurRange" type="range" min="0" max="8" value="0" />
-                      </label>
-                    </div>
+                <div class="editor-tab-panel" data-tab-panel="adjustments">
+                  <div class="page-card-title">
+                    <h4>Adjustments</h4>
+                    <p>Control light, color, and softness with live feedback on the canvas.</p>
                   </div>
 
-                  <div class="control-group">
-                    <div class="page-card-title">
-                      <h4>Crop &amp; Frame</h4>
-                      <p>Choose a format, zoom in, and reposition the image for the final frame.</p>
-                    </div>
-
-                    <div class="preset-grid frame-preset-grid">
-                      <button class="preset-button is-active" type="button" data-frame="original">Original</button>
-                      <button class="preset-button" type="button" data-frame="square">Square</button>
-                      <button class="preset-button" type="button" data-frame="portrait">4:5</button>
-                      <button class="preset-button" type="button" data-frame="story">9:16</button>
-                      <button class="preset-button" type="button" data-frame="landscape">16:9</button>
-                    </div>
-
-                    <div class="slider-group">
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Zoom</strong><output id="zoomValue">100%</output></span>
-                        <input id="zoomRange" type="range" min="60" max="220" value="100" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Horizontal Position</strong><output id="panXValue">0%</output></span>
-                        <input id="panXRange" type="range" min="-60" max="60" value="0" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Vertical Position</strong><output id="panYValue">0%</output></span>
-                        <input id="panYRange" type="range" min="-60" max="60" value="0" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Export Size</strong><output id="exportSizeValue">Source Fit</output></span>
-                        <select id="exportSizeSelect" class="editor-select">
-                          <option value="source">Source Fit</option>
-                          <option value="1080">1080 px</option>
-                          <option value="1600">1600 px</option>
-                          <option value="2048">2048 px</option>
-                        </select>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="control-group">
-                    <div class="page-card-title">
-                      <h4>Quick Cutout</h4>
-                      <p>Best for simple or clean backgrounds. Use PNG export to keep transparency.</p>
-                    </div>
-
-                    <div class="editor-action-grid">
-                      <button class="button tertiary mini" type="button" id="editorCutoutButton">Remove Background</button>
-                      <button class="button tertiary mini" type="button" id="editorRestoreBgButton">Restore Background</button>
-                    </div>
+                  <div class="slider-group">
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Brightness</strong><output id="brightnessValue">100%</output></span>
+                      <input id="brightnessRange" type="range" min="50" max="150" value="100" />
+                    </label>
 
                     <label class="slider-field">
-                      <span class="slider-head"><strong>Cutout Strength</strong><output id="cutoutValue">44</output></span>
-                      <input id="cutoutRange" type="range" min="12" max="120" value="44" />
+                      <span class="slider-head"><strong>Contrast</strong><output id="contrastValue">100%</output></span>
+                      <input id="contrastRange" type="range" min="50" max="160" value="100" />
                     </label>
-                  </div>
-
-                  <div class="control-group">
-                    <div class="page-card-title">
-                      <h4>Text Overlay</h4>
-                      <p>Add a title, promo label, or thumbnail headline on top of the image.</p>
-                    </div>
 
                     <label class="slider-field">
-                      <span class="slider-head"><strong>Text</strong><output id="textLengthValue">0 chars</output></span>
-                      <input id="editorTextInput" class="editor-text-input" type="text" placeholder="Type your overlay text..." />
+                      <span class="slider-head"><strong>Saturation</strong><output id="saturationValue">100%</output></span>
+                      <input id="saturationRange" type="range" min="0" max="180" value="100" />
                     </label>
 
-                    <div class="slider-group">
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Text Size</strong><output id="textSizeValue">72px</output></span>
-                        <input id="textSizeRange" type="range" min="24" max="180" value="72" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Text X</strong><output id="textXValue">0%</output></span>
-                        <input id="textXRange" type="range" min="-70" max="70" value="0" />
-                      </label>
-
-                      <label class="slider-field">
-                        <span class="slider-head"><strong>Text Y</strong><output id="textYValue">28%</output></span>
-                        <input id="textYRange" type="range" min="-70" max="70" value="28" />
-                      </label>
-                    </div>
-
-                    <label class="slider-field color-field">
-                      <span class="slider-head"><strong>Text Color</strong><output id="textColorValue">#ffffff</output></span>
-                      <input id="editorTextColor" type="color" value="#ffffff" />
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Warmth</strong><output id="warmthValue">0%</output></span>
+                      <input id="warmthRange" type="range" min="0" max="60" value="0" />
                     </label>
 
-                    <button class="button tertiary mini" type="button" id="editorClearTextButton">Clear Text</button>
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Blur</strong><output id="blurValue">0px</output></span>
+                      <input id="blurRange" type="range" min="0" max="8" value="0" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="editor-tab-panel" data-tab-panel="crop">
+                  <div class="page-card-title">
+                    <h4>Crop &amp; Frame</h4>
+                    <p>Choose the right ratio, reposition the image, and set export size before download.</p>
                   </div>
 
-                  <div class="control-group">
+                  <div class="preset-grid frame-preset-grid">
+                    <button class="preset-button is-active" type="button" data-frame="original">Original</button>
+                    <button class="preset-button" type="button" data-frame="square">Square</button>
+                    <button class="preset-button" type="button" data-frame="portrait">4:5</button>
+                    <button class="preset-button" type="button" data-frame="story">9:16</button>
+                    <button class="preset-button" type="button" data-frame="landscape">16:9</button>
+                  </div>
+
+                  <div class="slider-group">
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Zoom</strong><output id="zoomValue">100%</output></span>
+                      <input id="zoomRange" type="range" min="60" max="220" value="100" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Horizontal Position</strong><output id="panXValue">0%</output></span>
+                      <input id="panXRange" type="range" min="-60" max="60" value="0" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Vertical Position</strong><output id="panYValue">0%</output></span>
+                      <input id="panYRange" type="range" min="-60" max="60" value="0" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Export Size</strong><output id="exportSizeValue">Source Fit</output></span>
+                      <select id="exportSizeSelect" class="editor-select">
+                        <option value="source">Source Fit</option>
+                        <option value="1080">1080 px</option>
+                        <option value="1600">1600 px</option>
+                        <option value="2048">2048 px</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="editor-tab-panel" data-tab-panel="cutout">
+                  <div class="page-card-title">
+                    <h4>Remove Background</h4>
+                    <p>Works best on clean backgrounds.</p>
+                  </div>
+
+                  <div class="editor-action-grid">
+                    <button class="button tertiary mini" type="button" id="editorCutoutButton">Remove Background</button>
+                    <button class="button tertiary mini" type="button" id="editorRestoreBgButton">Restore Background</button>
+                  </div>
+
+                  <label class="slider-field">
+                    <span class="slider-head"><strong>Cutout Strength</strong><output id="cutoutValue">44</output></span>
+                    <input id="cutoutRange" type="range" min="12" max="120" value="44" />
+                  </label>
+                </div>
+
+                <div class="editor-tab-panel" data-tab-panel="text">
+                  <div class="page-card-title">
+                    <h4>Text Overlay</h4>
+                    <p>Add a headline, label, or promo text directly on top of the image.</p>
+                  </div>
+
+                  <label class="slider-field">
+                    <span class="slider-head"><strong>Text Input</strong><output id="textLengthValue">0 chars</output></span>
+                    <input id="editorTextInput" class="editor-text-input" type="text" placeholder="Type your overlay text..." />
+                  </label>
+
+                  <div class="slider-group">
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Text Size</strong><output id="textSizeValue">72px</output></span>
+                      <input id="textSizeRange" type="range" min="24" max="180" value="72" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Text X</strong><output id="textXValue">0%</output></span>
+                      <input id="textXRange" type="range" min="-70" max="70" value="0" />
+                    </label>
+
+                    <label class="slider-field">
+                      <span class="slider-head"><strong>Text Y</strong><output id="textYValue">28%</output></span>
+                      <input id="textYRange" type="range" min="-70" max="70" value="28" />
+                    </label>
+                  </div>
+
+                  <label class="slider-field color-field">
+                    <span class="slider-head"><strong>Text Color</strong><output id="textColorValue">#ffffff</output></span>
+                    <input id="editorTextColor" type="color" value="#ffffff" />
+                  </label>
+
+                  <button class="button tertiary mini" type="button" id="editorClearTextButton">Clear Text</button>
+                </div>
+
+                <div class="editor-tab-panel" data-tab-panel="transform">
+                  <div class="page-card-title">
+                    <h4>Transform</h4>
+                    <p>Rotate, mirror, and reset the current image without leaving the workspace.</p>
+                  </div>
+
+                  <div class="editor-transform-grid">
+                    <button class="editor-transform-button" type="button" data-transform="rotate-left">
+                      <span class="editor-transform-icon">↶</span>
+                      <span>Rotate Left</span>
+                    </button>
+                    <button class="editor-transform-button" type="button" data-transform="rotate-right">
+                      <span class="editor-transform-icon">↷</span>
+                      <span>Rotate Right</span>
+                    </button>
+                    <button class="editor-transform-button" type="button" data-transform="flip-x">
+                      <span class="editor-transform-icon">⇋</span>
+                      <span>Flip Horizontal</span>
+                    </button>
+                    <button class="editor-transform-button" type="button" data-transform="flip-y">
+                      <span class="editor-transform-icon">⇅</span>
+                      <span>Flip Vertical</span>
+                    </button>
+                    <button class="editor-transform-button reset" type="button" id="editorResetButton">
+                      <span class="editor-transform-icon">⟲</span>
+                      <span>Reset</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="editor-tab-panel" data-tab-panel="export">
+                  <div class="editor-export-card">
                     <div class="page-card-title">
-                      <h4>Transform</h4>
-                      <p>Rotate and flip without leaving the page.</p>
+                      <h4>Export Your Image</h4>
+                      <p>Download the final result exactly as shown in the preview canvas.</p>
                     </div>
 
-                    <div class="editor-action-grid">
-                      <button class="button tertiary mini" type="button" data-transform="rotate-left">Rotate Left</button>
-                      <button class="button tertiary mini" type="button" data-transform="rotate-right">Rotate Right</button>
-                      <button class="button tertiary mini" type="button" data-transform="flip-x">Flip Horizontal</button>
-                      <button class="button tertiary mini" type="button" data-transform="flip-y">Flip Vertical</button>
+                    <div class="editor-export-actions">
+                      <button class="button primary mini" type="button" id="editorDownloadPngButton">Download PNG</button>
+                      <button class="button tertiary mini" type="button" id="editorDownloadJpgButton">Download JPG</button>
                     </div>
-                  </div>
 
-                  <div class="control-group">
-                    <div class="page-card-title">
-                      <h4>Export</h4>
-                      <p>Download the current result in the format you need.</p>
-                    </div>
-                    <ul class="mini-list">
-                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>PNG keeps transparency when quick cutout is active.</span></li>
-                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>JPG creates a lighter file for fast sharing and social posts.</span></li>
-                      <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>The downloaded image matches the live crop, filters, transform, and text overlay.</span></li>
-                    </ul>
+                    <p class="editor-export-note">PNG is best for transparency, while JPG is better for fast sharing and lightweight delivery.</p>
                   </div>
-                </aside>
-              </div>
+                </div>
+              </aside>
             </section>
 
             <section class="dashboard-section">
               <div class="dashboard-section-head">
                 <div>
-                  <h3>Working Tools Inside This Page</h3>
+                  <h3>Working Tools</h3>
                 </div>
                 <a class="dashboard-link" href="apps.html">
                   <span>Open All Orphex Apps</span>
@@ -379,8 +408,8 @@
                 </a>
               </div>
 
-              <div class="dashboard-page-grid">
-                <article class="page-card" data-tool-card data-search="upload image preview before after drag reposition">
+              <div class="dashboard-page-grid dashboard-page-grid two-up editor-working-tools-grid">
+                <article class="page-card" data-tool-card data-search="upload image preview live before after canvas reposition">
                   <div class="page-card-header">
                     <span class="page-card-icon">
                       <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-folder"></use></svg>
@@ -389,15 +418,11 @@
                   </div>
                   <div class="page-card-title">
                     <h4>Upload &amp; Preview</h4>
-                    <p>Load your own image, compare before and after, and drag the preview to reposition it inside the frame.</p>
+                    <p>Import your own image, compare before and after, and preview the final result on a live canvas.</p>
                   </div>
-                  <ul class="page-card-list">
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Supports local image upload directly from the browser.</span></li>
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Before / After and live canvas rendering are active now.</span></li>
-                  </ul>
                 </article>
 
-                <article class="page-card" data-tool-card data-search="crop frame zoom square portrait story landscape">
+                <article class="page-card" data-tool-card data-search="crop frame zoom horizontal vertical export size ratio">
                   <div class="page-card-header">
                     <span class="page-card-icon">
                       <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-template"></use></svg>
@@ -405,16 +430,12 @@
                     <span class="tool-badge">Live</span>
                   </div>
                   <div class="page-card-title">
-                    <h4>Crop &amp; Frame Controls</h4>
-                    <p>Switch between original, square, 4:5, 9:16, and 16:9 while controlling zoom and framing.</p>
+                    <h4>Crop &amp; Frame</h4>
+                    <p>Switch between original, square, 4:5, 9:16, and 16:9 while controlling zoom and position.</p>
                   </div>
-                  <ul class="page-card-list">
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Preview and export keep the same crop logic.</span></li>
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Output size can be changed before downloading.</span></li>
-                  </ul>
                 </article>
 
-                <article class="page-card" data-tool-card data-search="background remove cutout text overlay title thumbnail">
+                <article class="page-card" data-tool-card data-search="cutout background remove text overlay title label">
                   <div class="page-card-header">
                     <span class="page-card-icon">
                       <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-spark"></use></svg>
@@ -422,16 +443,12 @@
                     <span class="tool-badge">Live</span>
                   </div>
                   <div class="page-card-title">
-                    <h4>Cutout &amp; Text Overlay</h4>
-                    <p>Clean simple backgrounds and add a headline or label directly inside the same editor.</p>
+                    <h4>Cutout &amp; Text</h4>
+                    <p>Remove simple backgrounds, add overlay text, and tune the final look without leaving the page.</p>
                   </div>
-                  <ul class="page-card-list">
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Quick cutout helps on plain or clean backgrounds.</span></li>
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Text size, color, and position are editable before export.</span></li>
-                  </ul>
                 </article>
 
-                <article class="page-card" data-tool-card data-search="rotate flip png jpg export image transform">
+                <article class="page-card" data-tool-card data-search="transform rotate flip reset export png jpg">
                   <div class="page-card-header">
                     <span class="page-card-icon">
                       <svg class="line-icon"><use href="assets/dashboard-icons.svg#i-export"></use></svg>
@@ -440,29 +457,14 @@
                   </div>
                   <div class="page-card-title">
                     <h4>Transform &amp; Export</h4>
-                    <p>Rotate, mirror, reset, and export the adjusted result as PNG or JPG from the current workspace.</p>
+                    <p>Rotate, flip, reset, and export your image as PNG or JPG using the exact preview output.</p>
                   </div>
-                  <ul class="page-card-list">
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>Transform and frame state stay applied in the final download.</span></li>
-                    <li><svg class="line-icon"><use href="assets/dashboard-icons.svg#i-check"></use></svg><span>PNG is ideal for cleaner promos and transparent cutout workflows.</span></li>
-                  </ul>
                 </article>
               </div>
 
               <div class="dashboard-empty" id="dashboardEmptyState" hidden>
                 <strong id="dashboardEmptyTitle" data-default-title="All working image tools are shown here.">All working image tools are shown here.</strong>
                 <span id="dashboardEmptyText" data-default-text="Search by crop, cutout, text, export, upload, preset, or transform.">Search by crop, cutout, text, export, upload, preset, or transform.</span>
-              </div>
-            </section>
-
-            <section class="page-cta-strip">
-              <div class="page-cta-copy">
-                <h3>Need more than image editing?</h3>
-                <p>From here you can move into the wider Orphex ecosystem: the apps catalog, updates, asset library, AI modules, and account plans all stay available from the same sidebar.</p>
-              </div>
-              <div class="page-inline-actions">
-                <a class="button tertiary mini" href="apps.html">All Apps</a>
-                <a class="button primary mini" href="account.html">Plans &amp; Account</a>
               </div>
             </section>
           </div>

@@ -14,6 +14,9 @@
     autoEnhanceButton: document.getElementById("editorAutoEnhanceButton"),
     downloadPngButton: document.getElementById("editorDownloadPngButton"),
     downloadJpgButton: document.getElementById("editorDownloadJpgButton"),
+    proxyButtons: Array.from(document.querySelectorAll("[data-editor-proxy]")),
+    previewState: document.getElementById("editorPreviewState"),
+    imageState: document.getElementById("editorImageState"),
     presetStatus: document.getElementById("editorPresetStatus"),
     frameStatus: document.getElementById("editorFrameStatus"),
     fileName: document.getElementById("editorFileName"),
@@ -21,6 +24,8 @@
     sizeMeta: document.getElementById("editorSizeMeta"),
     transformMeta: document.getElementById("editorTransformMeta"),
     featureMeta: document.getElementById("editorFeatureMeta"),
+    cutoutMeta: document.getElementById("editorCutoutMeta"),
+    textMeta: document.getElementById("editorTextMeta"),
     frameMeta: document.getElementById("editorFrameMeta"),
     statusBox: document.getElementById("editorStatusBox"),
     statusText: document.getElementById("editorStatusText"),
@@ -154,6 +159,19 @@
     refs.cutoutButton?.addEventListener("click", enableCutout);
     refs.restoreBgButton?.addEventListener("click", disableCutout);
     refs.clearTextButton?.addEventListener("click", clearTextOverlay);
+
+    refs.proxyButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.editorProxy;
+        if (action === "download-png") {
+          refs.downloadPngButton?.click();
+        } else if (action === "download-jpg") {
+          refs.downloadJpgButton?.click();
+        } else if (action === "auto-enhance") {
+          refs.autoEnhanceButton?.click();
+        }
+      });
+    });
 
     refs.uploadInput?.addEventListener("change", handleUpload);
 
@@ -713,13 +731,21 @@
     const width = refs.sourceImage.naturalWidth || 0;
     const height = refs.sourceImage.naturalHeight || 0;
     const exportDimensions = getRenderDimensions("export");
-    const featureSummary = `${state.cutoutEnabled ? "Cutout on" : "Cutout off"} | ${state.text.trim() ? "Text on" : "Text off"}`;
+    const previewState = state.compare ? "Before View" : "Preview Ready";
+    const imageState = width && height ? "Image Loaded" : "Preview Ready";
+    const cutoutState = state.cutoutEnabled ? "Cutout On" : "Cutout Off";
+    const textState = state.text.trim() ? "Text On" : "Text Off";
+    const featureSummary = state.text.trim() ? `${state.text.trim().length} chars overlay` : "No overlay text yet.";
     const orientation = `${state.flipX === -1 ? "Flip X" : "Normal X"} | ${state.flipY === -1 ? "Flip Y" : "Normal Y"}`;
 
     setText(refs.fileName, `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}`);
+    setText(refs.previewState, previewState);
+    setText(refs.imageState, imageState);
     setText(refs.imageMeta, width && height ? `${width} x ${height} px source` : "Preview image loaded");
     setText(refs.sizeMeta, `${exportDimensions.width} x ${exportDimensions.height} export`);
     setText(refs.transformMeta, `Rotation ${normalizeDisplayRotation()} deg | ${orientation}`);
+    setText(refs.cutoutMeta, cutoutState);
+    setText(refs.textMeta, textState);
     setText(refs.featureMeta, featureSummary);
     setText(refs.frameMeta, `${frameModes[state.frame]?.label || "Original Frame"} | ${exportSizes[state.exportSize]?.label || "Source Fit"}`);
   }
