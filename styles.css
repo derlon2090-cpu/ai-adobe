@@ -4162,6 +4162,23 @@ body.dashboard-home-root[data-home-theme="day"] .dashboard-sidebar-backdrop {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 24px 54px rgba(0, 0, 0, 0.34);
 }
 
+.editor-preview-frame.is-empty,
+.canvas-box.is-empty {
+  cursor: pointer;
+}
+
+.editor-preview-frame.is-drag-over,
+.canvas-box.is-drag-over {
+  border-color: rgba(124, 58, 237, 0.62);
+  box-shadow:
+    inset 0 0 0 1px rgba(124, 58, 237, 0.22),
+    0 0 0 6px rgba(124, 58, 237, 0.08),
+    0 28px 60px rgba(26, 18, 48, 0.4);
+  background:
+    linear-gradient(180deg, rgba(12, 15, 24, 0.98), rgba(11, 14, 22, 0.98)),
+    radial-gradient(circle at center, rgba(124, 58, 237, 0.12), transparent 56%);
+}
+
 .editor-preview-canvas {
   width: auto;
   height: auto;

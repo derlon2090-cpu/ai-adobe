@@ -291,6 +291,11 @@
     refs.clearTextButton?.addEventListener("click", clearTextOverlay);
     refs.insertImageButton?.addEventListener("click", () => refs.overlayUploadInput?.click());
     refs.removeOverlayButton?.addEventListener("click", clearOverlayLayer);
+    refs.previewFrame?.addEventListener("click", handlePreviewFrameClick);
+    refs.previewFrame?.addEventListener("dragenter", handlePreviewDragEnter);
+    refs.previewFrame?.addEventListener("dragover", handlePreviewDragOver);
+    refs.previewFrame?.addEventListener("dragleave", handlePreviewDragLeave);
+    refs.previewFrame?.addEventListener("drop", handlePreviewDrop);
 
     refs.proxyButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -417,6 +422,15 @@
     const file = event.target.files?.[0];
     if (!file) return;
 
+    loadBaseFile(file);
+  }
+
+  function loadBaseFile(file) {
+    if (!file || !file.type.startsWith("image/")) {
+      setStatus("Upload a base image first.", state.locale === "ar" ? "اختر ملف صورة صالحًا حتى يبدأ التحرير." : "Choose a valid image file to begin editing.");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
       const rawName = file.name.replace(/\.[^.]+$/, "") || "edited-image";
@@ -427,10 +441,45 @@
       state.extension = extension === "jpg" ? "jpeg" : extension;
       refs.sourceImage.src = state.source;
       invalidateCutoutCache();
-      refs.uploadInput.value = "";
+      if (refs.uploadInput) {
+        refs.uploadInput.value = "";
+      }
       setStatus("Image uploaded.", "Your image is ready for live editing inside Orphex.");
     };
     reader.readAsDataURL(file);
+  }
+
+  function handlePreviewFrameClick(event) {
+    if (hasBaseImage()) return;
+    if (event.target.closest("button, input, select, a")) return;
+    refs.uploadInput?.click();
+  }
+
+  function handlePreviewDragEnter(event) {
+    if (!event.dataTransfer?.types?.includes("Files")) return;
+    event.preventDefault();
+    refs.previewFrame?.classList.add("is-drag-over");
+  }
+
+  function handlePreviewDragOver(event) {
+    if (!event.dataTransfer?.types?.includes("Files")) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+    refs.previewFrame?.classList.add("is-drag-over");
+  }
+
+  function handlePreviewDragLeave(event) {
+    if (!refs.previewFrame) return;
+    if (event.currentTarget !== event.target && refs.previewFrame.contains(event.relatedTarget)) return;
+    refs.previewFrame.classList.remove("is-drag-over");
+  }
+
+  function handlePreviewDrop(event) {
+    event.preventDefault();
+    refs.previewFrame?.classList.remove("is-drag-over");
+    const file = event.dataTransfer?.files?.[0];
+    if (!file) return;
+    loadBaseFile(file);
   }
 
   function handleOverlayUpload(event) {
@@ -598,6 +647,7 @@
 
   function handlePointerDown(event) {
     if (!refs.previewFrame.contains(event.target)) return;
+    if (!hasBaseImage()) return;
     state.dragging = true;
     state.dragStartX = event.clientX;
     state.dragStartY = event.clientY;
@@ -994,6 +1044,7 @@
         ? `${translateEditorText(frameModes[state.frame]?.label || "Original Frame")} | ${translateEditorText(exportSizes[state.exportSize]?.label || "Source Fit")}`
         : translateEditorText("Upload an image or use the sample to begin.")
     );
+    refs.previewFrame?.classList.toggle("is-empty", !hasBaseImage() && !hasOverlayImage());
   }
 
   function setStatus(title, text) {
@@ -1096,11 +1147,17 @@
     context.fillStyle = "rgba(255,255,255,0.92)";
     context.font = `700 ${Math.max(28, width * 0.04)}px Inter, Arial, sans-serif`;
     context.textAlign = "center";
-    context.fillText("Fresh Orphex Canvas", width / 2, height / 2 - 20);
+    context.fillText(state.locale === "ar" ? "ارفع صورتك هنا" : "Upload Your Image Here", width / 2, height / 2 - 20);
 
     context.fillStyle = "rgba(157, 169, 188, 0.92)";
     context.font = `500 ${Math.max(16, width * 0.018)}px Inter, Arial, sans-serif`;
-    context.fillText("Upload a main image or insert a new image layer to begin editing.", width / 2, height / 2 + 26);
+    context.fillText(
+      state.locale === "ar"
+        ? "انقر هنا أو اسحب الصورة وأفلتها للبدء."
+        : "Click here or drag and drop an image to begin editing.",
+      width / 2,
+      height / 2 + 26
+    );
     context.restore();
   }
 
