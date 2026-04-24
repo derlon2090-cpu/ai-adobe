@@ -124,8 +124,8 @@
               </label>
             </section>
 
-            <section class="editor-workspace-grid" id="imageEditorShell">
-              <article class="page-card editor-preview-panel">
+            <section class="editor-workspace-grid main-layout" id="imageEditorShell">
+              <article class="page-card editor-preview-panel canvas-section">
                 <div class="editor-preview-head">
                   <div class="editor-preview-copy">
                     <span class="editor-surface-label">Preview Canvas</span>
@@ -140,7 +140,7 @@
                   </div>
                 </div>
 
-                <div class="editor-preview-frame" id="editorPreviewFrame">
+                <div class="editor-preview-frame canvas-box" id="editorPreviewFrame">
                   <canvas class="editor-preview-canvas" id="editorPreviewCanvas" width="1200" height="1200"></canvas>
                   <img id="editorSourceImage" alt="" hidden />
                   <img id="editorOverlayImage" alt="" hidden />
@@ -191,7 +191,7 @@
                 </div>
               </article>
 
-              <aside class="page-card editor-tools-panel" data-tab-group>
+              <aside class="page-card editor-tools-panel tools-panel" data-tab-group>
                 <div class="editor-tools-head">
                   <div class="editor-tools-copy">
                     <span class="editor-surface-label">Tools Panel</span>
@@ -200,7 +200,7 @@
                   </div>
                 </div>
 
-                <div class="tab-buttons editor-tab-buttons" role="tablist" aria-label="Edit Image Tools">
+                <div class="tab-buttons editor-tab-buttons tools-grid" role="tablist" aria-label="Edit Image Tools">
                   <button class="tab-button is-active" type="button" data-tab-target="presets">Presets</button>
                   <button class="tab-button" type="button" data-tab-target="adjustments">Adjustments</button>
                   <button class="tab-button" type="button" data-tab-target="crop">Crop</button>
