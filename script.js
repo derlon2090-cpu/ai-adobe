@@ -598,6 +598,14 @@ const refs = {
   heroDemoTitle: document.getElementById("heroDemoTitle"),
   heroDemoSubtitle: document.getElementById("heroDemoSubtitle"),
   heroProgressLabel: document.getElementById("heroProgressLabel"),
+  dashboardShell: document.getElementById("dashboardShell"),
+  dashboardSearch: document.getElementById("dashboardSearch"),
+  dashboardEmptyState: document.getElementById("dashboardEmptyState"),
+  dashboardEmptyTitle: document.getElementById("dashboardEmptyTitle"),
+  dashboardEmptyText: document.getElementById("dashboardEmptyText"),
+  processingModal: document.getElementById("processingModal"),
+  processingTitle: document.getElementById("processingTitle"),
+  processingText: document.getElementById("processingText"),
   editorShell: document.getElementById("editorShell"),
   modeSwitch: document.getElementById("modeSwitch"),
   templateGroup: document.getElementById("templateGroup"),
@@ -656,7 +664,8 @@ const state = {
   activeUtterance: null,
   heroSceneIndex: 0,
   heroDemoPaused: false,
-  heroDemoTimer: null
+  heroDemoTimer: null,
+  processingTimer: null
 };
 
 init();
@@ -675,6 +684,7 @@ function init() {
   initPricingModes();
   initDemoProgress();
   initHeroDemo();
+  initDashboardHome();
 
   if (refs.editorShell && refs.libraryList && refs.detailTitle) {
     syncMode();
@@ -968,6 +978,85 @@ function initHeroDemo() {
     state.heroSceneIndex = (state.heroSceneIndex + 1) % scenes.length;
     applyScene();
   }, 3200);
+}
+
+function initDashboardHome() {
+  if (!refs.dashboardShell) return;
+
+  const toolCards = Array.from(document.querySelectorAll("[data-tool-card]"));
+  const processingNodes = Array.from(document.querySelectorAll("[data-processing-label]"));
+
+  const applyFilter = () => {
+    const query = (refs.dashboardSearch?.value || "").trim().toLowerCase();
+    let visibleCount = 0;
+
+    toolCards.forEach((card) => {
+      const haystack = (card.dataset.search || card.textContent || "").toLowerCase();
+      const visible = !query || haystack.includes(query);
+      card.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    if (refs.dashboardEmptyState) {
+      refs.dashboardEmptyState.hidden = visibleCount > 0;
+      if (!visibleCount) {
+        if (refs.dashboardEmptyTitle) {
+          refs.dashboardEmptyTitle.textContent = "Tools are being prepared. Stay tuned.";
+        }
+        if (refs.dashboardEmptyText) {
+          refs.dashboardEmptyText.textContent = query
+            ? `No tools matched "${query}" yet.`
+            : "Every tool shown here is still under preparation.";
+        }
+      }
+    }
+  };
+
+  refs.dashboardSearch?.addEventListener("input", applyFilter);
+
+  processingNodes.forEach((node) => {
+    node.addEventListener("click", (event) => {
+      if (node.classList.contains("sidebar-link") || node.classList.contains("button")) {
+        event.preventDefault();
+      }
+      showProcessingModal(node.dataset.processingLabel || "AI is processing...");
+    });
+  });
+
+  refs.processingModal?.addEventListener("click", (event) => {
+    if (event.target === refs.processingModal) {
+      hideProcessingModal();
+    }
+  });
+
+  applyFilter();
+}
+
+function showProcessingModal(title) {
+  if (!refs.processingModal || !refs.processingTitle || !refs.processingText) return;
+
+  refs.processingTitle.textContent = title;
+  refs.processingText.textContent = "Tools are being prepared. Stay tuned.";
+  refs.processingModal.hidden = false;
+
+  if (state.processingTimer) {
+    window.clearTimeout(state.processingTimer);
+  }
+
+  state.processingTimer = window.setTimeout(() => {
+    hideProcessingModal();
+  }, 1700);
+}
+
+function hideProcessingModal() {
+  if (!refs.processingModal) return;
+
+  refs.processingModal.hidden = true;
+
+  if (state.processingTimer) {
+    window.clearTimeout(state.processingTimer);
+    state.processingTimer = null;
+  }
 }
 
 function syncMode() {

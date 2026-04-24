@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Orphix يقدم Astrix Video Pro: مونتاج فيديو احترافي بالذكاء الاصطناعي مع الصوت والميمز والترجمة والتحسين والتصدير السريع في مكان واحد."
+      content="Astrix Studio by Orphix: dark dashboard UI for AI video tools with sound, memes, updates, and coming soon cards."
     />
-    <title>Orphix | Astrix Video Pro</title>
+    <title>Astrix Studio | Orphix</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,81 +16,83 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="dashboard-home">
     <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path d="M4 10.5L12 4l8 6.5" />
+        <path d="M6.5 9.5V20h11V9.5" />
+        <path d="M10 20v-5h4v5" />
+      </symbol>
       <symbol id="i-spark" viewBox="0 0 24 24">
         <path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3Z" />
         <path d="M19 4v4" />
         <path d="M21 6h-4" />
       </symbol>
-      <symbol id="i-film" viewBox="0 0 24 24">
-        <rect x="3" y="5" width="18" height="14" rx="2.5" />
-        <path d="M8.5 10.5L14.5 12l-6 1.5v-3Z" />
-        <path d="M7 5v14" />
-        <path d="M17 5v14" />
+      <symbol id="i-cut" viewBox="0 0 24 24">
+        <circle cx="6" cy="7" r="2.5" />
+        <circle cx="6" cy="17" r="2.5" />
+        <path d="M20 5L8 15" />
+        <path d="M20 19L10 11" />
       </symbol>
-      <symbol id="i-audio" viewBox="0 0 24 24">
-        <path d="M5 15V9" />
-        <path d="M9 18V6" />
-        <path d="M13 14V10" />
-        <path d="M17 20V4" />
-        <path d="M21 13V11" />
+      <symbol id="i-director" viewBox="0 0 24 24">
+        <rect x="4" y="6" width="16" height="12" rx="2.5" />
+        <path d="M9 10.5l3 1.5-3 1.5v-3Z" />
+        <path d="M8 4l1 2" />
+        <path d="M12 3v2" />
+        <path d="M16 4l-1 2" />
       </symbol>
-      <symbol id="i-captions" viewBox="0 0 24 24">
-        <rect x="3" y="5" width="18" height="14" rx="3" />
-        <path d="M7 10h10" />
-        <path d="M7 14h6" />
+      <symbol id="i-voice" viewBox="0 0 24 24">
+        <path d="M12 4a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V7a3 3 0 0 1 3-3Z" />
+        <path d="M18 11a6 6 0 0 1-12 0" />
+        <path d="M12 17v3" />
+        <path d="M8 20h8" />
       </symbol>
-      <symbol id="i-export" viewBox="0 0 24 24">
-        <path d="M12 3v12" />
-        <path d="M7 8l5-5 5 5" />
-        <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" />
-      </symbol>
-      <symbol id="i-upload" viewBox="0 0 24 24">
-        <path d="M12 21V9" />
-        <path d="M7 14l5-5 5 5" />
-        <path d="M5 5h14" />
-      </symbol>
-      <symbol id="i-magic" viewBox="0 0 24 24">
-        <path d="M5 19L19 5" />
-        <path d="M4 20l4-1-3-3-1 4Z" />
-        <path d="M14 4l1 2" />
-        <path d="M18 8l2 1" />
-        <path d="M16 10l1 2" />
+      <symbol id="i-enhance" viewBox="0 0 24 24">
+        <rect x="4" y="5" width="16" height="14" rx="2.5" />
+        <path d="M9 12l2 2 4-4" />
+        <path d="M16.5 7.5l1 1" />
       </symbol>
       <symbol id="i-sound" viewBox="0 0 24 24">
         <path d="M5 14h3l4 4V6L8 10H5v4Z" />
         <path d="M16 9a4 4 0 0 1 0 6" />
         <path d="M18.5 6.5a7 7 0 0 1 0 11" />
       </symbol>
-      <symbol id="i-chat" viewBox="0 0 24 24">
-        <path d="M6 17l-2 3V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6Z" />
-        <path d="M8 10h8" />
-        <path d="M8 13h5" />
+      <symbol id="i-template" viewBox="0 0 24 24">
+        <rect x="4" y="5" width="7" height="6" rx="1.5" />
+        <rect x="13" y="5" width="7" height="6" rx="1.5" />
+        <rect x="4" y="13" width="7" height="6" rx="1.5" />
+        <rect x="13" y="13" width="7" height="6" rx="1.5" />
       </symbol>
-      <symbol id="i-timeline" viewBox="0 0 24 24">
-        <path d="M4 12h16" />
-        <rect x="5" y="9" width="4" height="6" rx="1.5" />
-        <rect x="11" y="7" width="4" height="10" rx="1.5" />
-        <rect x="17" y="10" width="2" height="4" rx="1" />
+      <symbol id="i-update" viewBox="0 0 24 24">
+        <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+        <path d="M20 5v5h-5" />
       </symbol>
-      <symbol id="i-cloud" viewBox="0 0 24 24">
-        <path d="M7 18a4 4 0 1 1 .7-7.94A5.5 5.5 0 0 1 18 11a3.5 3.5 0 1 1 0 7H7Z" />
+      <symbol id="i-settings" viewBox="0 0 24 24">
+        <path d="M12 8.5A3.5 3.5 0 1 1 8.5 12 3.5 3.5 0 0 1 12 8.5Z" />
+        <path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V20a2 2 0 1 1-4 0v-.2a1 1 0 0 0-.6-.9 1 1 0 0 0-1.1.2l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H4a2 2 0 1 1 0-4h.2a1 1 0 0 0 .9-.6 1 1 0 0 0-.2-1.1l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V4a2 2 0 1 1 4 0v.2a1 1 0 0 0 .6.9 1 1 0 0 0 1.1-.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6H20a2 2 0 1 1 0 4h-.2a1 1 0 0 0-.9.6Z" />
       </symbol>
-      <symbol id="i-unmix" viewBox="0 0 24 24">
-        <path d="M4 12h4" />
-        <path d="M16 12h4" />
-        <path d="M10 8v8" />
-        <path d="M14 5v14" />
-        <path d="M8 6v12" />
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M5 20a7 7 0 0 1 14 0" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6" />
+        <path d="M20 20l-4.2-4.2" />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="M13 6l6 6-6 6" />
       </symbol>
       <symbol id="i-play" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" />
         <path d="M10 8.8l5.4 3.2L10 15.2V8.8Z" />
       </symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24">
-        <path d="M5 12h14" />
-        <path d="M13 6l6 6-6 6" />
+      <symbol id="i-bolt" viewBox="0 0 24 24">
+        <path d="M13 2L5 13h5l-1 9 8-11h-5l1-9Z" />
+      </symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24">
+        <path d="M15 18H9a2 2 0 0 1-2-2v-4a5 5 0 1 1 10 0v4a2 2 0 0 1-2 2Z" />
+        <path d="M10 20a2 2 0 0 0 4 0" />
       </symbol>
     </svg>
 
@@ -99,481 +101,352 @@
     <div class="bg-grid" aria-hidden="true"></div>
 
     <div class="page-shell">
-      <header class="site-header">
-        <a class="brand" href="index.html" aria-label="Orphix">
-          <span class="brand-mark">O</span>
+      <header class="site-header dashboard-header">
+        <a class="brand dashboard-brand" href="index.html" aria-label="Astrix Studio">
+          <span class="brand-mark">A</span>
           <span class="brand-text">
-            <strong>Orphix</strong>
-            <small>Astrix Video Pro</small>
+            <strong>Astrix Studio</strong>
+            <small>by Orphix</small>
           </span>
         </a>
 
-        <nav class="site-nav" aria-label="Main Navigation">
-          <a href="index.html">Home</a>
-          <a href="ai-features.html">AI Features</a>
-          <a href="sound-meme.html">Sound &amp; Meme</a>
-          <a href="editor-experience.html">Editor Experience</a>
-          <a href="pro-features.html">Pro Features</a>
-          <a href="pricing.html">Pricing</a>
-        </nav>
-
-        <a class="button ghost compact" href="pricing.html">ابدأ الآن</a>
+        <div class="dashboard-header-actions">
+          <a class="button tertiary compact" href="pricing.html">Login</a>
+          <a class="button primary compact" href="pricing.html">Get Started</a>
+        </div>
       </header>
 
-      <main>
-        <section class="hero hero-sales" id="top">
-          <div class="hero-copy" data-reveal>
-            <div class="hero-badges">
-              <span class="pill accent">Orphix Pro</span>
-              <span class="pill soft">AI Editing Suite</span>
-              <span class="pill soft">Blue + Purple Workflow</span>
-            </div>
-
-            <p class="eyebrow">Orphix presents Astrix Video Pro</p>
-            <h1>اصنع فيديو احترافي بالذكاء الاصطناعي خلال دقائق</h1>
-            <p class="hero-lead">
-              مونتاج + صوت + ميمز + ترجمة + تحسين جودة في مكان واحد. أنشئ، حرّر، حسّن، وأصدر
-              فيديوهاتك بسرعة من شاشة واحدة فقط وبدون الحاجة إلى أدوات خارجية.
-            </p>
-
-            <div class="hero-actions">
-              <a class="button primary" href="pricing.html">ابدأ الآن</a>
-              <a class="button secondary" href="#core-features">شاهد المزايا</a>
-              <a class="button ghost" href="#pricing-preview">قارن الاشتراكات</a>
-            </div>
-
-            <div class="hero-trust">
-              <span>
-                <svg class="line-icon"><use href="#i-spark"></use></svg>
-                <span>مونتاج ذكي بالكامل</span>
-              </span>
-              <span>
-                <svg class="line-icon"><use href="#i-sound"></use></svg>
-                <span>مكتبة أصوات وميمز داخلية</span>
-              </span>
-              <span>
-                <svg class="line-icon"><use href="#i-captions"></use></svg>
-                <span>ترجمة وصوت وتحسين جودة</span>
-              </span>
-              <span>
-                <svg class="line-icon"><use href="#i-export"></use></svg>
-                <span>تصدير سريع HD / 4K / Social</span>
-              </span>
-            </div>
-
-            <div class="promise-strip home-promise">
-              <span>التطبيق مجاني</span>
-              <span>أدوات AI باشتراك شهري</span>
-              <span>جاهز للجوال والكمبيوتر</span>
-            </div>
-          </div>
-
-          <div class="hero-demo-card" data-reveal>
-            <div class="demo-card-head">
-              <div>
-                <p class="mini-label">Quick Demo</p>
-                <strong>واجهة بيع أقوى مع ديمو متحرك</strong>
-              </div>
-              <span class="live-label">Live Preview</span>
-            </div>
-
-            <div class="demo-stage">
-              <img src="assets/orphex-reference.jpg" alt="واجهة Astrix Video Pro من Orphix" />
-
-              <button class="demo-play" id="heroDemoToggle" type="button" aria-pressed="false">
-                <svg class="line-icon"><use href="#i-play"></use></svg>
-                <span>إيقاف الديمو</span>
-              </button>
-
-              <div class="demo-overlay">
-                <p class="demo-kicker" id="heroDemoStatus">AI Auto Editor - يعمل الآن</p>
-                <strong id="heroDemoTitle">Upload. Arrange. Publish.</strong>
-                <span id="heroDemoSubtitle">
-                  يقرأ المقاطع، يركب الترتيب، ويجهز أول نسخة قابلة للنشر في دقائق.
-                </span>
-
-                <div class="demo-progress">
-                  <div class="progress-track">
-                    <div class="progress-fill" data-auto-progress data-progress-target="82%"></div>
-                  </div>
-                  <small id="heroProgressLabel">AI يعالج مشروع Reel مدته 29 ثانية</small>
-                </div>
-              </div>
-
-              <div class="demo-controls" aria-hidden="true">
-                <span>00:00</span>
-                <div class="demo-scrub">
-                  <span></span>
-                </div>
-                <span>00:29</span>
-              </div>
-            </div>
-
-            <div class="demo-sidecards">
-              <article class="sales-card mini-card">
-                <span class="card-icon">
-                  <svg class="line-icon"><use href="#i-film"></use></svg>
-                </span>
-                <div>
-                  <strong>One Screen Editing</strong>
-                  <p>واجهة واحدة تجمع المشروع، الصوت، الميمز، والتصدير.</p>
-                </div>
-              </article>
-
-              <article class="sales-card mini-card">
-                <span class="card-icon icon-violet">
-                  <svg class="line-icon"><use href="#i-unmix"></use></svg>
-                </span>
-                <div>
-                  <strong>AI Music Unmix</strong>
-                  <p>ميزة نادرة لفصل الغناء عن الموسيقى داخل نفس المشروع.</p>
-                </div>
-              </article>
-
-              <article class="sales-card mini-card">
-                <span class="card-icon icon-blue">
-                  <svg class="line-icon"><use href="#i-export"></use></svg>
-                </span>
-                <div>
-                  <strong>Fast Render</strong>
-                  <p>تجهيز نسخ HD و4K وSocial من نفس التايم لاين.</p>
-                </div>
-              </article>
-            </div>
+      <main class="dashboard-home-main">
+        <section class="dashboard-masthead" data-reveal>
+          <div class="masthead-mark">A</div>
+          <div class="masthead-copy">
+            <h1>Astrix Studio</h1>
+            <p>CREATE WITHOUT LIMITS</p>
           </div>
         </section>
 
-        <section class="section section-compact">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Demo Flow</p>
-            <h2>من رفع الفيديو إلى التصدير في أربع خطوات واضحة</h2>
-            <p>هذا هو المسار الذي يراه المستخدم من أول دقيقة، وهو ما يجعل الصفحة تقنع بسرعة بدل أن تشرح كل شيء دفعة واحدة.</p>
-          </div>
+        <section class="dashboard-frame" id="dashboardShell" data-reveal>
+          <aside class="dashboard-sidebar">
+            <div class="sidebar-top">
+              <a class="sidebar-brand" href="index.html">
+                <span class="sidebar-brand-mark">A</span>
+                <span>
+                  <strong>Astrix</strong>
+                  <small>Studio</small>
+                </span>
+              </a>
 
-          <div class="flow-board">
-            <article class="flow-step" data-reveal>
-              <span class="card-icon">
-                <svg class="line-icon"><use href="#i-upload"></use></svg>
-              </span>
-              <strong>1. ارفع الفيديو</strong>
-              <span>اسحب المقاطع أو الملفات الصوتية واترك Orphix يقرأ المشروع فورًا.</span>
-            </article>
-
-            <article class="flow-step" data-reveal>
-              <span class="card-icon icon-violet">
-                <svg class="line-icon"><use href="#i-spark"></use></svg>
-              </span>
-              <strong>2. دع AI يرتب</strong>
-              <span>AI Auto Editor وSmart Cut يرتبان اللقطات ويحذفان السكتات والأخطاء.</span>
-            </article>
-
-            <article class="flow-step" data-reveal>
-              <span class="card-icon icon-blue">
-                <svg class="line-icon"><use href="#i-sound"></use></svg>
-              </span>
-              <strong>3. أضف الصوت والميمز</strong>
-              <span>مكتبة داخلية جاهزة مع Sound Sync AI وتعليق صوتي داخل نفس الواجهة.</span>
-            </article>
-
-            <article class="flow-step" data-reveal>
-              <span class="card-icon">
-                <svg class="line-icon"><use href="#i-export"></use></svg>
-              </span>
-              <strong>4. صدّر وانشر</strong>
-              <span>اختر HD أو 4K أو Social Formats وانهِ الفيديو بسرعة بدون تعقيد.</span>
-            </article>
-          </div>
-
-          <div class="progress-demo" data-reveal>
-            <div class="progress-head">
-              <strong>AI Pipeline Preview</strong>
-              <span>Upload → AI Edit → Sound → Export</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-fill" data-auto-progress data-progress-target="88%"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="why">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Why Astrix Video Pro</p>
-            <h2>كل أدوات صناعة الفيديو في تطبيق واحد</h2>
-            <p>
-              Astrix Video Pro ليس مجرد محرر فيديو، بل منصة إنتاج متكاملة تعتمد على الذكاء الاصطناعي لتسريع كل خطوة في صناعة المحتوى.
-            </p>
-          </div>
-
-          <div class="why-layout">
-            <article class="why-panel" data-reveal>
-              <p class="mini-label">بدل استخدام عدة تطبيقات من أجل:</p>
-              <div class="problem-list">
-                <span>المونتاج</span>
-                <span>تنظيف الصوت</span>
-                <span>الترجمة</span>
-                <span>المؤثرات</span>
-                <span>الميمز</span>
-                <span>تحسين الجودة</span>
-              </div>
-            </article>
-
-            <article class="why-panel emphasis" data-reveal>
-              <div class="panel-head-inline">
-                <div>
-                  <p class="mini-label">Orphix Difference</p>
-                  <h3>Astrix يجمعها كلها في مكان واحد.</h3>
-                </div>
-                <span class="rare-badge">AI Music Unmix</span>
-              </div>
-              <p>
-                افتح المشروع، اسحب المقاطع، وابدأ من نفس الواجهة في القص والترجمة والصوت والميمز والمؤثرات والتصدير، مع ميزة نادرة لإزالة الموسيقى أو عزل الصوت البشري من نفس الملف.
-              </p>
-              <div class="problem-list">
-                <span>واجهة واحدة</span>
-                <span>AI يساعد بدل أن يعقّد</span>
-                <span>مناسب للمبتدئ والمحترف</span>
-                <span>أسرع للنشر اليومي</span>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="section" id="core-features">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Top Features</p>
-            <h2>أهم أربع مسارات يحتاجها المستخدم من أول نظرة</h2>
-            <p>بدل تكديس كل الميزات مرة واحدة، الصفحة الرئيسية تعرض فقط ما يقنع المستخدم ثم تنقله للتفاصيل داخل الصفحات المتخصصة.</p>
-          </div>
-
-          <div class="feature-link-grid">
-            <a class="feature-link-card" href="ai-features.html" data-reveal>
-              <div class="feature-link-head">
-                <span class="card-icon">
+              <nav class="sidebar-nav" aria-label="Dashboard Navigation">
+                <a class="sidebar-link is-active" href="index.html">
+                  <svg class="line-icon"><use href="#i-home"></use></svg>
+                  <span>Home</span>
+                </a>
+                <a class="sidebar-link" href="ai-features.html">
                   <svg class="line-icon"><use href="#i-spark"></use></svg>
-                </span>
-                <div>
-                  <p class="mini-label">Stage 1</p>
-                  <h3>ابدأ أسرع</h3>
-                </div>
-              </div>
-              <p>AI Auto Editor وSmart Cut وTemplate System يجهزون أول نسخة بسرعة بدل البدء من الصفر.</p>
-              <span class="feature-link-meta">
-                شاهد صفحة الذكاء الاصطناعي
-                <svg class="line-icon"><use href="#i-arrow"></use></svg>
-              </span>
-            </a>
-
-            <a class="feature-link-card" href="ai-features.html" data-reveal>
-              <div class="feature-link-head">
-                <span class="card-icon icon-violet">
-                  <svg class="line-icon"><use href="#i-captions"></use></svg>
-                </span>
-                <div>
-                  <p class="mini-label">Stage 2</p>
-                  <h3>أنهِ الصوت والنص</h3>
-                </div>
-              </div>
-              <p>AI Voice Cleaner وAI Auto Subtitle وAI Voice Over تنهي الترجمة والتعليق الصوتي من نفس المشروع.</p>
-              <span class="feature-link-meta">
-                اكتشف أدوات الصوت والترجمة
-                <svg class="line-icon"><use href="#i-arrow"></use></svg>
-              </span>
-            </a>
-
-            <a class="feature-link-card neon-card" href="sound-meme.html" data-reveal>
-              <div class="feature-link-head">
-                <span class="card-icon icon-blue">
-                  <svg class="line-icon"><use href="#i-chat"></use></svg>
-                </span>
-                <div>
-                  <p class="mini-label">Stage 3</p>
-                  <h3>أضف لمسة مختلفة</h3>
-                </div>
-              </div>
-              <p>Sound Effects Library وMeme Sound Board وSound Sync AI تجعل المحتوى أسرع وأقوى بدون البحث في الإنترنت.</p>
-              <span class="feature-link-meta">
-                هذه أقوى ميزة تنافسية
-                <svg class="line-icon"><use href="#i-arrow"></use></svg>
-              </span>
-            </a>
-
-            <a class="feature-link-card" href="pro-features.html" data-reveal>
-              <div class="feature-link-head">
-                <span class="card-icon">
-                  <svg class="line-icon"><use href="#i-timeline"></use></svg>
-                </span>
-                <div>
-                  <p class="mini-label">Stage 4</p>
-                  <h3>تحكم احترافي عند الحاجة</h3>
-                </div>
-              </div>
-              <p>Advanced Timeline وAudio Studio وCloud Sync وMulti Export لمن يريد عمقًا أكبر بدون التضحية بالسرعة.</p>
-              <span class="feature-link-meta">
-                انتقل لصفحة الأدوات الاحترافية
-                <svg class="line-icon"><use href="#i-arrow"></use></svg>
-              </span>
-            </a>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="cta-section cta-section-slim" data-reveal>
-            <div>
-              <p class="eyebrow">Quick CTA</p>
-              <h2>ابدأ من الشاشة الرئيسية، ثم تعمّق فقط عندما تحتاج</h2>
-              <p>هذا هو منطق Orphix: سهولة أولًا للمستخدم الجديد، وتحكم احترافي جاهز عندما يكبر المشروع.</p>
-            </div>
-            <div class="cta-actions">
-              <a class="button primary large" href="editor-experience.html">شاهد تجربة المحرر</a>
-              <a class="button secondary large" href="ai-features.html">استكشف ميزات AI</a>
-            </div>
-          </div>
-        </section>
-
-        <section class="section sound-section" id="sound-preview">
-          <div class="neon-section" data-reveal>
-            <div class="section-heading section-heading-tight">
-              <p class="eyebrow">Sound &amp; Meme Highlight</p>
-              <h2>أضف ميم بضغطة واحدة بدل البحث في الإنترنت</h2>
-              <p>هذه الميزة يجب أن تظهر بوضوح لأنها من أكثر العناصر التي تميز Orphix عن أدوات المونتاج التقليدية.</p>
-            </div>
-
-            <div class="preview-grid">
-              <article class="preview-card neon-preview">
-                <span class="card-icon icon-blue">
+                  <span>AI Tools</span>
+                </a>
+                <a class="sidebar-link" href="editor-experience.html">
+                  <svg class="line-icon"><use href="#i-director"></use></svg>
+                  <span>Editor</span>
+                </a>
+                <a class="sidebar-link" href="sound-meme.html">
                   <svg class="line-icon"><use href="#i-sound"></use></svg>
-                </span>
-                <strong>صوت إعلان خاطف</strong>
-                <span>مناسب للكشف عن منتج أو عرض سريع داخل الريلز والإعلانات.</span>
-                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">
-                  تشغيل المعاينة
+                  <span>Sound &amp; Meme</span>
+                </a>
+                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Templates are being prepared.">
+                  <svg class="line-icon"><use href="#i-template"></use></svg>
+                  <span>Templates</span>
                 </button>
-              </article>
-
-              <article class="preview-card neon-preview">
-                <span class="card-icon icon-violet">
-                  <svg class="line-icon"><use href="#i-film"></use></svg>
-                </span>
-                <strong>Whoosh انتقال نظيف</strong>
-                <span>انتقال سريع يركب مباشرة مع الحركة والقطع والزووم.</span>
-                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">
-                  تشغيل المعاينة
+                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Updates center is being prepared.">
+                  <svg class="line-icon"><use href="#i-update"></use></svg>
+                  <span>Updates</span>
                 </button>
-              </article>
-
-              <article class="preview-card neon-preview">
-                <span class="card-icon">
-                  <svg class="line-icon"><use href="#i-chat"></use></svg>
-                </span>
-                <strong>ردة فعل ميم جاهزة</strong>
-                <span>لمسة كوميدية أو ترندية تضيفها فورًا بدون تحميل خارجي.</span>
-                <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">
-                  تشغيل المعاينة
+                <button class="sidebar-link sidebar-button" type="button" data-processing-label="Settings will be available soon.">
+                  <svg class="line-icon"><use href="#i-settings"></use></svg>
+                  <span>Settings</span>
                 </button>
-              </article>
+              </nav>
             </div>
 
-            <div class="cta-actions section-actions">
-              <a class="button primary" href="sound-meme.html">افتح مكتبة الصوت والميمز</a>
-              <a class="button ghost" href="sound-meme.html">شاهد Sound Sync AI</a>
+            <div class="sidebar-account">
+              <span class="account-avatar">A</span>
+              <div class="account-meta">
+                <strong>Astrix Studio</strong>
+                <span>Pro Plan</span>
+              </div>
             </div>
-          </div>
+          </aside>
 
-          <audio id="globalPreviewAudio" preload="none"></audio>
-        </section>
+          <div class="dashboard-main">
+            <div class="dashboard-main-top">
+              <div class="dashboard-window-controls" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
 
-        <section class="section">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Social Proof</p>
-            <h2>مصمم لصناع المحتوى الذين يحتاجون سرعة إنتاج يومية</h2>
-            <p>حتى قبل الإطلاق الكامل، تم ترتيب تجربة Orphix لتخاطب الريلز والإعلانات والمشاريع السريعة التي تحتاج قرارًا واضحًا وسرعة نشر.</p>
-          </div>
+            <section class="dashboard-hero-panel">
+              <div class="dashboard-intro">
+                <p class="eyebrow">Dashboard</p>
+                <h2>Welcome to Astrix</h2>
+                <p>All your AI video tools. One place.</p>
 
-          <div class="comparison-grid comparison-grid-3">
-            <article class="comparison-card" data-reveal>
-              <span class="card-icon">
-                <svg class="line-icon"><use href="#i-film"></use></svg>
-              </span>
-              <strong>جاهز لصفحة بيع فعلية</strong>
-              <p>الصفحة الرئيسية أصبحت Funnel أقصر وأوضح، والصفحات الفرعية تتكفل بالتفاصيل.</p>
-            </article>
+                <label class="dashboard-search">
+                  <svg class="line-icon"><use href="#i-search"></use></svg>
+                  <input id="dashboardSearch" type="search" placeholder="Search tools, features, sounds..." />
+                </label>
+              </div>
 
-            <article class="comparison-card" data-reveal>
-              <span class="card-icon icon-violet">
-                <svg class="line-icon"><use href="#i-magic"></use></svg>
-              </span>
-              <strong>مناسب للريلز والإعلانات</strong>
-              <p>الخطاب التسويقي والـ UX الآن يركزان على السرعة، النتيجة، وسهولة الوصول لأول نسخة قابلة للنشر.</p>
-            </article>
+              <article class="dashboard-hero-art">
+                <span class="dashboard-chip">Dark UI + Blue / Purple Glow</span>
+                <strong>A professional dashboard feel inside the website.</strong>
+                <p>
+                  منصة أدوات احترافية بإحساس Dashboard حقيقي، مع Glow ناعم، تنظيم واضح، وتجربة أنظف من صفحة تعريف عادية.
+                </p>
+                <a class="button ghost compact" href="#dashboardTools">Explore Tools</a>
+              </article>
+            </section>
 
-            <article class="comparison-card" data-reveal>
-              <span class="card-icon icon-blue">
-                <svg class="line-icon"><use href="#i-cloud"></use></svg>
-              </span>
-              <strong>جاهز للنمو لاحقًا</strong>
-              <p>يمكنك إبراز Cloud Sync وTimeline وميزات Pro بدون إثقال الصفحة الأولى على المستخدم الجديد.</p>
-            </article>
-          </div>
-        </section>
+            <section class="dashboard-section" id="dashboardTools">
+              <div class="dashboard-section-head">
+                <div>
+                  <p class="eyebrow">My Tools</p>
+                  <h3>Coming Soon Tools</h3>
+                </div>
+                <a class="dashboard-link" href="ai-features.html">
+                  <span>View All</span>
+                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                </a>
+              </div>
 
-        <section class="section pricing-section" id="pricing-preview">
-          <div class="section-heading" data-reveal>
-            <p class="eyebrow">Pricing Preview</p>
-            <h2>التطبيق مجاني، وأدوات الذكاء الاصطناعي داخل Orphix Pro</h2>
-            <p>ابدأ مجانًا، ثم فعّل طبقة الـ AI حسب مدة الاستخدام التي تناسبك. صفحة الأسعار الكاملة تعرض كل الباقات والتفاصيل.</p>
-          </div>
+              <div class="dashboard-card-grid">
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="ai editor auto editing video"
+                  data-processing-label="AI Editor is processing..."
+                >
+                  <span class="tool-icon icon-violet">
+                    <svg class="line-icon"><use href="#i-spark"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>AI Editor</strong>
+                    <span class="tool-badge">Coming Soon</span>
+                  </div>
+                  <p>Automatic structure, pacing, and first-cut generation for faster editing.</p>
+                </button>
 
-          <div class="pricing-grid pricing-preview-grid">
-            <article class="price-card compact-preview" data-reveal>
-              <span class="plan-tag">شهر</span>
-              <h3>Monthly Pro</h3>
-              <strong>$5.99 - $9.99</strong>
-              <p>مثالية للتجربة أو لصناع المحتوى النشطين شهريًا.</p>
-            </article>
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="smart cut silence cleanup short clips"
+                  data-processing-label="Smart Cut is processing..."
+                >
+                  <span class="tool-icon">
+                    <svg class="line-icon"><use href="#i-cut"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>Smart Cut</strong>
+                    <span class="tool-badge">Available Soon</span>
+                  </div>
+                  <p>Silence removal, cleanup, and tighter cuts for cleaner short-form content.</p>
+                </button>
 
-            <article class="price-card compact-preview featured" data-reveal>
-              <span class="popular-badge">Most Popular</span>
-              <span class="plan-tag">سنة</span>
-              <h3>Annual Pro</h3>
-              <strong>$49 - $79</strong>
-              <p>الخيار الأفضل للتوفير مع استخدام جاد ومستمر طوال العام.</p>
-            </article>
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="director motion zoom transitions"
+                  data-processing-label="AI Director is processing..."
+                >
+                  <span class="tool-icon icon-violet">
+                    <svg class="line-icon"><use href="#i-director"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>AI Director</strong>
+                    <span class="tool-badge">Coming Soon</span>
+                  </div>
+                  <p>Suggested zooms, transitions, and motion timing to make clips feel more polished.</p>
+                </button>
 
-            <article class="price-card compact-preview" data-reveal>
-              <span class="plan-tag">3 سنوات</span>
-              <h3>3-Year Pro</h3>
-              <strong>$119 - $169</strong>
-              <p>أعلى قيمة وأقل تكلفة شهرية للمشاريع طويلة المدى.</p>
-            </article>
-          </div>
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="voice cleaner audio cleanup noise"
+                  data-processing-label="Voice Cleaner is processing..."
+                >
+                  <span class="tool-icon icon-blue">
+                    <svg class="line-icon"><use href="#i-voice"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>Voice Cleaner</strong>
+                    <span class="tool-badge">Coming Soon</span>
+                  </div>
+                  <p>Noise cleanup and vocal clarity tuned for reels, tutorials, and creator workflows.</p>
+                </button>
 
-          <p class="pricing-note" data-reveal">ابدأ بالخطة التي تناسبك، وارتقِ بإنتاجك في أي وقت.</p>
-        </section>
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="video enhancer quality 4k upscale"
+                  data-processing-label="Video Enhancer is processing..."
+                >
+                  <span class="tool-icon icon-blue">
+                    <svg class="line-icon"><use href="#i-enhance"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>Video Enhancer</strong>
+                    <span class="tool-badge">Available Soon</span>
+                  </div>
+                  <p>Sharper output, cleaner color feel, and better export-ready presentation.</p>
+                </button>
 
-        <section class="cta-section" data-reveal>
-          <div>
-            <p class="eyebrow">Final CTA</p>
-            <h2>ابدأ الآن في صناعة فيديوهات احترافية أسرع من أي وقت</h2>
-            <p>
-              Astrix Video Pro يمنحك المونتاج والذكاء الاصطناعي والصوت والميمز في تجربة واحدة متكاملة داخل Orphix، مع صفحة رئيسية أوضح وتحويل أقوى نحو الاشتراك.
-            </p>
-          </div>
-          <div class="cta-actions">
-            <a class="button primary large" href="pricing.html">ابدأ الآن</a>
-            <a class="button secondary large" href="pricing.html">اختر خطتك</a>
-            <a class="button ghost large" href="ai-features.html">شاهد الميزات</a>
+                <button
+                  class="tool-card"
+                  type="button"
+                  data-tool-card
+                  data-search="meme sound library sync audio system"
+                  data-processing-label="Meme & Sound system is processing..."
+                >
+                  <span class="tool-icon icon-violet">
+                    <svg class="line-icon"><use href="#i-sound"></use></svg>
+                  </span>
+                  <div class="tool-card-head">
+                    <strong>Meme &amp; Sound</strong>
+                    <span class="tool-badge">Coming Soon</span>
+                  </div>
+                  <p>Built-in library, meme hits, and sync suggestions without external websites.</p>
+                </button>
+              </div>
+
+              <div class="dashboard-empty" id="dashboardEmptyState">
+                <strong id="dashboardEmptyTitle">Tools are being prepared. Stay tuned.</strong>
+                <span id="dashboardEmptyText">Every tool here is intentionally shown as in-progress to keep the dashboard clean and honest.</span>
+              </div>
+            </section>
+
+            <section class="dashboard-section" id="dashboardUpdates">
+              <div class="dashboard-section-head">
+                <div>
+                  <p class="eyebrow">Latest Updates</p>
+                  <h3>What is coming next</h3>
+                </div>
+              </div>
+
+              <div class="update-list">
+                <article class="update-row">
+                  <div class="update-meta">
+                    <span class="tool-icon icon-violet">
+                      <svg class="line-icon"><use href="#i-bolt"></use></svg>
+                    </span>
+                    <div>
+                      <strong>New AI Features Coming</strong>
+                      <p>More automation layers are being prepared for faster first-cut workflows.</p>
+                    </div>
+                  </div>
+                  <button class="button tertiary mini" type="button" data-processing-label="Opening AI feature notes...">Learn More</button>
+                </article>
+
+                <article class="update-row">
+                  <div class="update-meta">
+                    <span class="tool-icon icon-blue">
+                      <svg class="line-icon"><use href="#i-sound"></use></svg>
+                    </span>
+                    <div>
+                      <strong>Sound Library Expansion</strong>
+                      <p>Commercial hits, transitions, cinematic FX, and quicker browsing are expanding.</p>
+                    </div>
+                  </div>
+                  <button class="button tertiary mini" type="button" data-processing-label="Opening sound system notes...">Learn More</button>
+                </article>
+
+                <article class="update-row">
+                  <div class="update-meta">
+                    <span class="tool-icon">
+                      <svg class="line-icon"><use href="#i-bell"></use></svg>
+                    </span>
+                    <div>
+                      <strong>Meme System Update</strong>
+                      <p>Better meme browsing, instant placement, and cleaner sync logic are on the way.</p>
+                    </div>
+                  </div>
+                  <button class="button tertiary mini" type="button" data-processing-label="Opening meme system notes...">Learn More</button>
+                </article>
+              </div>
+            </section>
+
+            <section class="dashboard-section">
+              <div class="dashboard-section-head">
+                <div>
+                  <p class="eyebrow">Sound &amp; Meme System</p>
+                  <h3>One of the strongest parts of the platform</h3>
+                </div>
+                <a class="dashboard-link" href="sound-meme.html">
+                  <span>Open System</span>
+                  <svg class="line-icon"><use href="#i-arrow"></use></svg>
+                </a>
+              </div>
+
+              <div class="sound-system-grid">
+                <article class="sound-system-card">
+                  <span class="tool-icon icon-blue">
+                    <svg class="line-icon"><use href="#i-sound"></use></svg>
+                  </span>
+                  <strong>Sound Effects Library</strong>
+                  <p>Organized commercial hits, transitions, cinematic FX, and quick search behavior.</p>
+                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/commercial/ad-sting-pop.mp3">Play</button>
+                </article>
+
+                <article class="sound-system-card">
+                  <span class="tool-icon icon-violet">
+                    <svg class="line-icon"><use href="#i-play"></use></svg>
+                  </span>
+                  <strong>Meme Board</strong>
+                  <p>Ready meme reactions with one-click placement and a more fun neon dashboard feel.</p>
+                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/meme/xp-ping.mp3">Play</button>
+                </article>
+
+                <article class="sound-system-card">
+                  <span class="tool-icon">
+                    <svg class="line-icon"><use href="#i-bolt"></use></svg>
+                  </span>
+                  <strong>Auto Sync AI</strong>
+                  <p>Suggests timing for cuts, zooms, and sound hits so the edit feels tighter and faster.</p>
+                  <button class="preview-chip" type="button" data-audio-preview="assets/sound-effects/library/transitions/whoosh-clean-short.mp3">Play</button>
+                </article>
+              </div>
+
+              <div class="dashboard-cta-row">
+                <a class="button primary large" href="pricing.html">Start Editing</a>
+                <a class="button secondary large" href="pricing.html">Try Astrix Pro</a>
+              </div>
+            </section>
           </div>
         </section>
       </main>
 
       <footer class="site-footer">
-        <p>Orphix</p>
-        <span>Astrix Video Pro sales experience</span>
+        <p>Astrix Studio</p>
+        <span>Dashboard concept by Orphix</span>
         <small>Copyright &copy; <span id="year">2026</span></small>
       </footer>
     </div>
 
-    <a class="floating-cta" href="pricing.html">ابدأ الآن</a>
+    <div class="processing-modal" id="processingModal" hidden>
+      <div class="processing-panel">
+        <span class="processing-orb" aria-hidden="true"></span>
+        <strong id="processingTitle">AI is processing...</strong>
+        <p id="processingText">Tools are being prepared. Stay tuned.</p>
+      </div>
+    </div>
+
+    <a class="floating-cta" href="pricing.html">Get Started</a>
+    <audio id="globalPreviewAudio" preload="none"></audio>
     <script src="script.js"></script>
   </body>
 </html>
