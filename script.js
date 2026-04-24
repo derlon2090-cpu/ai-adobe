@@ -575,6 +575,332 @@ const templates = {
 };
 
 const HOME_THEME_STORAGE_KEY = "orphex-home-theme";
+const SITE_LOCALE_STORAGE_KEY = "orphex-site-locale";
+const localeDefaults = new WeakMap();
+
+const COMMON_AR_LOCALE_ENTRIES = [
+  { selector: ".masthead-copy p", ar: "ابتكر بلا حدود" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(1) > span:first-of-type", ar: "الرئيسية" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(2) > span:first-of-type", ar: "تحرير الصور" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(3) > span:first-of-type", ar: "أدوات الذكاء" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(4) > span:first-of-type", ar: "الصوت والميمز" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(5) > span:first-of-type", ar: "التطبيقات" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(6) > span:first-of-type", ar: "التحديثات" },
+  { selector: ".sidebar-nav .sidebar-link:nth-of-type(7) > span:first-of-type", ar: "الإعدادات" },
+  { selector: ".sidebar-account .account-meta strong", ar: "استوديو Orphex" },
+  { selector: ".dashboard-menu-toggle", type: "attr", attr: "aria-label", ar: "فتح الشريط الجانبي" },
+  { selector: ".dashboard-sidebar-backdrop", type: "attr", attr: "aria-label", ar: "إغلاق الشريط الجانبي" },
+  { selector: "#processingTitle", ar: "الذكاء الاصطناعي يعالج الآن..." },
+  { selector: "#processingText", ar: "يتم تجهيز الأدوات. يرجى الانتظار." }
+];
+
+const PAGE_AR_LOCALE_ENTRIES = {
+  "index.html": [
+    { selector: "title", ar: "أورفكس" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "لوحة Orphex الرئيسية تعرض الأدوات الإبداعية والصفحات المستقلة ومسارات العمل المباشرة داخل واجهة احترافية." },
+    { selector: ".sidebar-brand small", ar: "مركز التحكم الإبداعي" },
+    { selector: ".sidebar-account .account-meta span", ar: "خطة Pro" },
+    { selector: ".dashboard-intro h2", ar: "مرحبًا بك في Orphex" },
+    { selector: ".dashboard-intro p", ar: "كل أدواتك الإبداعية في مكان واحد. ابدأ بتحرير الصور، ثم انتقل إلى أدوات الذكاء والصوت والميمز والتطبيقات والتحديثات مباشرة من الشريط الجانبي." },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن الأدوات والصفحات والميزات ومساحات العمل..." },
+    { selector: ".art-explore span:first-of-type", ar: "ابدأ العمل" },
+    { selector: ".dashboard-tools-section .dashboard-section-head h3", ar: "تطبيقاتي" },
+    { selector: ".dashboard-tools-section .dashboard-link span:first-of-type", ar: "عرض الكل" },
+    { selector: ".dashboard-card-grid > a:nth-child(1) .tool-card-copy small", ar: "تحرير الصور" },
+    { selector: ".dashboard-card-grid > a:nth-child(1) .tool-badge", ar: "ابدأ العمل" },
+    { selector: ".dashboard-card-grid > a:nth-child(2) .tool-card-copy small", ar: "أدوات الذكاء" },
+    { selector: ".dashboard-card-grid > a:nth-child(2) .tool-badge", ar: "افتح الصفحة" },
+    { selector: ".dashboard-card-grid > a:nth-child(3) .tool-card-copy small", ar: "مكتبة الأصول" },
+    { selector: ".dashboard-card-grid > a:nth-child(3) .tool-badge", ar: "افتح الصفحة" },
+    { selector: ".dashboard-card-grid > a:nth-child(4) .tool-card-copy small", ar: "الحزمة الإبداعية" },
+    { selector: ".dashboard-card-grid > a:nth-child(4) .tool-badge", ar: "استكشف" },
+    { selector: ".dashboard-card-grid > a:nth-child(5) .tool-card-copy small", ar: "الخطط والفوترة" },
+    { selector: ".dashboard-card-grid > a:nth-child(5) .tool-badge", ar: "إدارة" },
+    { selector: "#dashboardEmptyTitle", ar: "كل شيء جاهز للبدء من هنا." },
+    { selector: "#dashboardEmptyTitle", type: "attr", attr: "data-default-title", ar: "كل شيء جاهز للبدء من هنا." },
+    { selector: "#dashboardEmptyText", ar: "استخدم البحث للوصول مباشرة إلى الصفحة أو مساحة العمل التي تحتاجها." },
+    { selector: "#dashboardEmptyText", type: "attr", attr: "data-default-text", ar: "استخدم البحث للوصول مباشرة إلى الصفحة أو مساحة العمل التي تحتاجها." },
+    { selector: ".dashboard-section:not(.dashboard-tools-section) .dashboard-section-head h3", ar: "أحدث التحديثات" },
+    { selector: ".dashboard-section:not(.dashboard-tools-section) .dashboard-link span:first-of-type", ar: "عرض الكل" },
+    { selector: ".update-list article:nth-child(1) .update-meta p", ar: "محرر الصور يعمل الآن كصفحة مستقلة" },
+    { selector: ".update-list article:nth-child(1) .button", ar: "ابدأ التحرير" },
+    { selector: ".update-list article:nth-child(2) .update-meta p", ar: "ميزات الشريط الجانبي أصبحت تفتح صفحات مستقلة" },
+    { selector: ".update-list article:nth-child(2) .button", ar: "استكشف الصفحات" }
+  ],
+  "edit-image.html": [
+    { selector: "title", ar: "أورفكس | تحرير الصور" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "حرّر الصور داخل Orphex عبر Canvas مباشر وأدوات قص وتحسين وإدراج صور إضافية وإزالة الخلفية وتصدير PNG أو JPG." },
+    { selector: ".sidebar-brand small", ar: "مساحة تحرير الصور" },
+    { selector: ".sidebar-account .account-meta span", ar: "وصول Photo Pro" },
+    { selector: ".editor-eyebrow", ar: "Orphex Photo" },
+    { selector: ".editor-page-headline h2", ar: "حرّر الصور داخل Orphex" },
+    { selector: ".editor-page-headline p", ar: "حرّر صورك بسهولة داخل Orphex: ارفع الصورة، قصّها، حسّن الإضاءة والألوان، أضف نصًا، وأدرج صورة إضافية، ثم احفظ النتيجة بصيغة PNG أو JPG." },
+    { selector: "#editorUploadButton", ar: "رفع صورة" },
+    { selector: '[data-editor-proxy="insert-image"]', ar: "إدراج صورة" },
+    { selector: "#editorSampleButton", ar: "استخدام العينة" },
+    { selector: '[data-editor-proxy="download-png"]', ar: "تنزيل PNG" },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن الأنماط والقص وإدراج الصور والخلفية والنص والتحويل والتصدير..." },
+    { selector: ".editor-surface-label", ar: ["معاينة التحرير", "لوحة الأدوات"] },
+    { selector: ".editor-preview-copy p", ar: "ارفع صورة أو استخدم العينة للبدء." },
+    { selector: "#editorPreviewState", ar: "المعاينة جاهزة" },
+    { selector: "#editorPresetStatus", ar: "نمط مخصص" },
+    { selector: "#editorFrameStatus", ar: "الإطار الأصلي" },
+    { selector: "#editorCompareButton", ar: "قبل / بعد" },
+    { selector: "#editorAutoEnhanceButton", ar: "تحسين تلقائي" },
+    { selector: ".editor-status-card:nth-child(1) span", ar: "حالة الصورة" },
+    { selector: ".editor-status-card:nth-child(2) span", ar: "حجم التصدير" },
+    { selector: ".editor-status-card:nth-child(3) span", ar: "إزالة الخلفية" },
+    { selector: ".editor-status-card:nth-child(4) span", ar: "النص" },
+    { selector: ".editor-status-card:nth-child(5) span", ar: "الصورة المدرجة" },
+    { selector: "#editorStatusBox strong", ar: "المساحة جاهزة." },
+    { selector: "#editorStatusText", ar: "ابدأ بمساحة جديدة. ارفع الصورة الأساسية، وأدرج صورة إضافية عند الحاجة، ثم عدّل واقصص وصدّر مباشرة." },
+    { selector: ".editor-tools-copy h3", ar: "أدوات العمل" },
+    { selector: ".editor-tools-copy p", ar: "بدّل بين التبويبات لتحافظ على واجهة مرتبة مع بقاء كل أدوات التحرير في نفس الصفحة." },
+    { selector: '.editor-tab-buttons [data-tab-target="presets"]', ar: "أنماط" },
+    { selector: '.editor-tab-buttons [data-tab-target="adjustments"]', ar: "تعديلات" },
+    { selector: '.editor-tab-buttons [data-tab-target="crop"]', ar: "قص" },
+    { selector: '.editor-tab-buttons [data-tab-target="cutout"]', ar: "الخلفية" },
+    { selector: '.editor-tab-buttons [data-tab-target="text"]', ar: "نص" },
+    { selector: '.editor-tab-buttons [data-tab-target="insert"]', ar: "إدراج" },
+    { selector: '.editor-tab-buttons [data-tab-target="transform"]', ar: "تحويل" },
+    { selector: '.editor-tab-buttons [data-tab-target="export"]', ar: "تصدير" },
+    { selector: '[data-tab-panel="presets"] .page-card-title h4', ar: "الأنماط الجاهزة" },
+    { selector: '[data-tab-panel="presets"] .page-card-title p', ar: "ابدأ بشكل جاهز ثم عدّل التفاصيل يدويًا." },
+    { selector: "#editorAutoEnhanceButtonDuplicate", ar: "تحسين تلقائي" },
+    { selector: '[data-tab-panel="adjustments"] .page-card-title h4', ar: "التعديلات" },
+    { selector: '[data-tab-panel="adjustments"] .page-card-title p', ar: "تحكم مباشر في الإضاءة واللون والنعومة مع معاينة فورية." },
+    { selector: '[data-tab-panel="crop"] .page-card-title h4', ar: "القص والإطار" },
+    { selector: '[data-tab-panel="crop"] .page-card-title p', ar: "اختر النسبة المناسبة، ثم حرّك الصورة وحدد حجم التصدير النهائي." },
+    { selector: '[data-tab-panel="cutout"] .page-card-title h4', ar: "إزالة الخلفية" },
+    { selector: '[data-tab-panel="cutout"] .page-card-title p', ar: "تعمل أفضل مع الخلفيات النظيفة والبسيطة." },
+    { selector: "#editorCutoutButton", ar: "إزالة الخلفية" },
+    { selector: "#editorRestoreBgButton", ar: "استعادة الخلفية" },
+    { selector: '[data-tab-panel="text"] .page-card-title h4', ar: "النص فوق الصورة" },
+    { selector: '[data-tab-panel="text"] .page-card-title p', ar: "أضف عنوانًا أو ملصقًا أو نصًا ترويجيًا فوق الصورة مباشرة." },
+    { selector: "#editorTextInput", type: "attr", attr: "placeholder", ar: "اكتب النص الذي تريد إضافته..." },
+    { selector: "#editorClearTextButton", ar: "مسح النص" },
+    { selector: '[data-tab-panel="insert"] .page-card-title h4', ar: "إدراج طبقة صورة" },
+    { selector: '[data-tab-panel="insert"] .page-card-title p', ar: "أضف صورة أخرى فوق الصورة الأساسية للشعارات أو الملصقات أو التركيب البسيط." },
+    { selector: "#editorInsertImageButton", ar: "إدراج صورة" },
+    { selector: "#editorRemoveOverlayButton", ar: "حذف الصورة المدرجة" },
+    { selector: '[data-tab-panel="transform"] .page-card-title h4', ar: "التحويل" },
+    { selector: '[data-tab-panel="transform"] .page-card-title p', ar: "دوّر الصورة أو اعكسها أو أعدها للوضع الأصلي دون مغادرة الصفحة." },
+    { selector: '[data-transform="rotate-left"] span:last-child', ar: "تدوير لليسار" },
+    { selector: '[data-transform="rotate-right"] span:last-child', ar: "تدوير لليمين" },
+    { selector: '[data-transform="flip-x"] span:last-child', ar: "عكس أفقي" },
+    { selector: '[data-transform="flip-y"] span:last-child', ar: "عكس عمودي" },
+    { selector: "#editorResetButton span:last-child", ar: "إعادة ضبط" },
+    { selector: '[data-tab-panel="export"] .page-card-title h4', ar: "صدّر الصورة" },
+    { selector: '[data-tab-panel="export"] .page-card-title p', ar: "نزّل النتيجة النهائية كما تظهر بالضبط داخل المعاينة." },
+    { selector: "#editorDownloadPngButton", ar: "تنزيل PNG" },
+    { selector: "#editorDownloadJpgButton", ar: "تنزيل JPG" },
+    { selector: ".editor-export-note", ar: "PNG مناسب للشفافية، بينما JPG مناسب للمشاركة السريعة والحجم الأخف." },
+    { selector: ".dashboard-section .dashboard-section-head h3", ar: "أدوات العمل" },
+    { selector: ".dashboard-section .dashboard-link span:first-of-type", ar: "فتح كل تطبيقات Orphex" },
+    { selector: ".editor-working-tools-grid article:nth-child(1) .page-card-title h4", ar: "الرفع والمعاينة" },
+    { selector: ".editor-working-tools-grid article:nth-child(1) .page-card-title p", ar: "ارفع صورتك، قارِن قبل وبعد، وشاهد النتيجة مباشرة على Canvas حي." },
+    { selector: ".editor-working-tools-grid article:nth-child(2) .page-card-title h4", ar: "القص والإطار" },
+    { selector: ".editor-working-tools-grid article:nth-child(2) .page-card-title p", ar: "بدّل بين النسب المختلفة وتحكم بالزوم والموضع قبل التصدير." },
+    { selector: ".editor-working-tools-grid article:nth-child(3) .page-card-title h4", ar: "الخلفية والنص والإدراج" },
+    { selector: ".editor-working-tools-grid article:nth-child(3) .page-card-title p", ar: "أزل الخلفية، أضف النص، وأدرج طبقة صورة جديدة للشعارات أو الملصقات." },
+    { selector: ".editor-working-tools-grid article:nth-child(4) .page-card-title h4", ar: "التحويل والتصدير" },
+    { selector: ".editor-working-tools-grid article:nth-child(4) .page-card-title p", ar: "دوّر الصورة أو اعكسها ثم صدّرها بصيغة PNG أو JPG من نفس المعاينة." },
+    { selector: "#dashboardEmptyTitle", ar: "كل أدوات تحرير الصور العاملة معروضة هنا." },
+    { selector: "#dashboardEmptyTitle", type: "attr", attr: "data-default-title", ar: "كل أدوات تحرير الصور العاملة معروضة هنا." },
+    { selector: "#dashboardEmptyText", ar: "ابحث عن القص أو إدراج الصور أو الخلفية أو النص أو التصدير أو الأنماط أو التحويل." },
+    { selector: "#dashboardEmptyText", type: "attr", attr: "data-default-text", ar: "ابحث عن القص أو إدراج الصور أو الخلفية أو النص أو التصدير أو الأنماط أو التحويل." }
+  ]
+};
+
+const UI_COPY = {
+  ar: {
+    themeNight: "الوضع الليلي",
+    themeDay: "الوضع النهاري",
+    switchToNight: "التبديل إلى الوضع الليلي",
+    switchToDay: "التبديل إلى الوضع النهاري",
+    switchToArabic: "التبديل إلى العربية",
+    switchToEnglish: "التبديل إلى الإنجليزية",
+    nothingMatched: (query) => `لا توجد نتيجة مطابقة لعبارة "${query}".`,
+    broaderKeyword: "جرّب كلمة أوسع مثل: صور، أدوات، تصدير، صوت، أو ذكاء.",
+    processingText: "يتم تجهيز الأدوات. يرجى الانتظار."
+  },
+  en: {
+    themeNight: "Night Mode",
+    themeDay: "Day Mode",
+    switchToNight: "Switch to night mode",
+    switchToDay: "Switch to day mode",
+    switchToArabic: "Switch to Arabic",
+    switchToEnglish: "Switch to English",
+    nothingMatched: (query) => `Nothing matched "${query}".`,
+    broaderKeyword: "Try a broader keyword like image, export, sound, tools, or AI.",
+    processingText: "Tools are being prepared. Stay tuned."
+  }
+};
+
+const EXTRA_PAGE_AR_LOCALE_ENTRIES = {
+  "apps.html": [
+    { selector: "title", ar: "Orphex | التطبيقات" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "استكشف مجموعة Orphex الكاملة التي تقودها Astrix Video Pro وتدعمها أدوات الصور والتصميم والحركة والصوت و3D." },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن التطبيقات ومسارات العمل والأدوات الإبداعية..." }
+  ],
+  "plugins.html": [
+    { selector: "title", ar: "Orphex | أدوات الذكاء" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "اكتشف وحدات الذكاء داخل Astrix Video Pro من التحرير التلقائي وتنظيف الصوت إلى الترجمة والمزامنة والتصدير السريع." },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن أدوات الذكاء ووحدات الصوت وميزات التصدير..." }
+  ],
+  "assets.html": [
+    { selector: "title", ar: "Orphex | الأصول" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "تصفح أصوات Orphex والميمز والقوالب والأصول الصوتية المصممة لـ Astrix Video Pro." },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن الأصوات والميمز والقوالب وأدوات الصوت..." },
+    { selector: "#dashboardEmptyTitle", ar: "مكتبة الأصول جاهزة." },
+    { selector: "#dashboardEmptyTitle", type: "attr", attr: "data-default-title", ar: "مكتبة الأصول جاهزة." },
+    { selector: "#dashboardEmptyText", ar: "ابحث حسب نوع الصوت أو المزاج أو القالب أو فئة الميم." },
+    { selector: "#dashboardEmptyText", type: "attr", attr: "data-default-text", ar: "ابحث حسب نوع الصوت أو المزاج أو القالب أو فئة الميم." }
+  ],
+  "updates.html": [
+    { selector: "title", ar: "Orphex | التحديثات" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "تابع تحديثات Orphex وAstrix Video Pro وخطوات الطريق القادمة لميزات الذكاء والصوت والميمز." },
+    { selector: "#dashboardSearch", type: "attr", attr: "placeholder", ar: "ابحث عن التحديثات والإصدارات وعناصر خارطة الطريق..." },
+    { selector: "#dashboardEmptyTitle", ar: "لا توجد تحديثات مخفية الآن." },
+    { selector: "#dashboardEmptyTitle", type: "attr", attr: "data-default-title", ar: "لا توجد تحديثات مخفية الآن." },
+    { selector: "#dashboardEmptyText", ar: "ابحث في موجز التحديثات الحالي باسم المنتج أو الإصدار أو كلمة من خارطة الطريق." },
+    { selector: "#dashboardEmptyText", type: "attr", attr: "data-default-text", ar: "ابحث في موجز التحديثات الحالي باسم المنتج أو الإصدار أو كلمة من خارطة الطريق." }
+  ],
+  "settings.html": [
+    { selector: "title", ar: "Orphex | الإعدادات" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "اضبط إعدادات Orphex الافتراضية لـ Astrix Video Pro من سلوك الذكاء والقوالب إلى المزامنة والتصدير وتفضيلات الحساب." }
+  ],
+  "account.html": [
+    { selector: "title", ar: "Orphex | الحساب" },
+    { selector: 'meta[name="description"]', type: "attr", attr: "content", ar: "أدر حساب Orphex واشتراك Astrix Video Pro وخيارات الدفع والمزايا الاحترافية المتاحة في كل خطة." }
+  ]
+};
+
+const AR_TEXT_TRANSLATIONS = {
+  "CREATE WITHOUT LIMITS": "ابتكر بلا حدود",
+  "Creative Control Center": "مركز التحكم الإبداعي",
+  "Astrix Video Pro": "Astrix Video Pro",
+  "Edit Image Workspace": "مساحة تحرير الصور",
+  "Photo Pro Access": "وصول Photo Pro",
+  "Home": "الرئيسية",
+  "Edit Image": "تحرير الصور",
+  "AI Tools": "أدوات الذكاء",
+  "Sound & Meme": "الصوت والميمز",
+  "Apps": "التطبيقات",
+  "Updates": "التحديثات",
+  "Settings": "الإعدادات",
+  "Pro Plan": "خطة Pro",
+  "Creative Suite": "الحزمة الإبداعية",
+  "Asset Library": "مكتبة الأصول",
+  "Plans & Billing": "الخطط والفوترة",
+  "Photo Editing": "تحرير الصور",
+  "Start Work": "ابدأ العمل",
+  "Open Page": "افتح الصفحة",
+  "Explore": "استكشف",
+  "Manage": "إدارة",
+  "View All": "عرض الكل",
+  "Latest Updates": "أحدث التحديثات",
+  "Start Editing": "ابدأ التحرير",
+  "Explore Pages": "استكشف الصفحات",
+  "Welcome to Orphex": "مرحبًا بك في Orphex",
+  "All your creative tools. One place. Start with image editing, move into AI tools, sound, memes, apps, and updates from the left side instantly.": "كل أدواتك الإبداعية في مكان واحد. ابدأ بتحرير الصور ثم انتقل مباشرة إلى أدوات الذكاء والصوت والميمز والتطبيقات والتحديثات من الشريط الجانبي.",
+  "My Apps": "تطبيقاتي",
+  "Everything ready to start from here.": "كل شيء جاهز للبدء من هنا.",
+  "Use search to jump directly into the workspace or page you need.": "استخدم البحث للوصول مباشرة إلى مساحة العمل أو الصفحة التي تحتاجها.",
+  "Canvas editor now works as a standalone page": "محرر الـ Canvas يعمل الآن كصفحة مستقلة.",
+  "Sidebar features now open dedicated pages": "ميزات الشريط الجانبي أصبحت تفتح صفحات مستقلة.",
+  "Explore the Orphex Suite": "استكشف حزمة Orphex",
+  "Orphex Photo is now the standalone work page for image editing, while the rest of the suite extends the same creative pipeline across video, design, audio, and 3D.": "أصبحت Orphex Photo صفحة العمل المستقلة لتحرير الصور، بينما تكمل بقية الحزمة نفس المسار الإبداعي عبر الفيديو والتصميم والصوت و3D.",
+  "Live now": "متاح الآن",
+  "One connected suite": "حزمة مترابطة",
+  "Work page": "صفحة العمل",
+  "AI-first": "الذكاء أولًا",
+  "Cloud ready": "جاهز للسحابة",
+  "Editing, audio, and export": "التحرير والصوت والتصدير",
+  "Desktop and mobile flow": "سير عمل بين الكمبيوتر والجوال",
+  "Flagship Experience": "التجربة الأساسية",
+  "See AI Modules": "شاهد وحدات الذكاء",
+  "Upgrade Pro": "الترقية إلى Pro",
+  "Orphex now opens into a clean dashboard, then sends work into dedicated pages.": "يفتح Orphex الآن على لوحة نظيفة ثم يوجّه العمل إلى صفحات مخصصة.",
+  "The main dashboard stays focused and overview-driven, while Edit Image and the other modules open as separate pages for actual work.": "تبقى اللوحة الرئيسية مركزة على النظرة العامة، بينما تفتح صفحة تحرير الصور وبقية الوحدات كصفحات مستقلة للعمل الفعلي.",
+  "One Screen Editing": "تحرير في شاشة واحدة",
+  "HD / 4K / Social Export": "تصدير HD / 4K / Social",
+  "Auto edit": "مونتاج تلقائي",
+  "Arrange clips, music, and transitions in minutes.": "رتّب المقاطع والموسيقى والانتقالات خلال دقائق.",
+  "Smart audio": "صوت ذكي",
+  "Clean voice, sync SFX, and generate voice over.": "نظّف الصوت وازامن المؤثرات وأنشئ تعليقًا صوتيًا.",
+  "Meme ready": "جاهز للميمز",
+  "Add internet-style reactions without leaving the project.": "أضف ردود أفعال وميمز بدون مغادرة المشروع.",
+  "Pro controls": "تحكم احترافي",
+  "Advanced timeline, audio studio, cloud sync, and export presets.": "تايم لاين متقدم واستوديو صوت ومزامنة سحابية وإعدادات تصدير.",
+  "All Apps": "كل التطبيقات",
+  "Open Edit Image": "افتح تحرير الصور",
+  "Available Now": "متاح الآن",
+  "Professional AI-powered video editing with sound, memes, subtitles, templates, and export in one screen.": "مونتاج فيديو احترافي بالذكاء الاصطناعي مع الصوت والميمز والترجمة والقوالب والتصدير في شاشة واحدة.",
+  "Astrix AI Modules": "وحدات Astrix AI",
+  "Every Pro feature is organized as a clean workflow layer: editing intelligence, audio cleanup, captioning, enhancement, meme sync, and export acceleration.": "كل ميزة Pro منظمة كطبقة عمل واضحة: ذكاء التحرير، وتنظيف الصوت، والترجمة، والتحسين، ومزامنة الميمز، وتسريع التصدير.",
+  "8 core AI tools": "8 أدوات AI أساسية",
+  "From editing to export": "من التحرير إلى التصدير",
+  "Audio stack": "منظومة صوت",
+  "Cleaner, sync, voice over": "تنظيف ومزامنة وتعليق صوتي",
+  "Creator first": "مصمم لصانع المحتوى",
+  "Fast mode and one-screen UX": "وضع سريع وتجربة شاشة واحدة",
+  "Pro ready": "جاهز للاحتراف",
+  "Timeline, sync, and multi export": "تايم لاين ومزامنة وتصدير متعدد",
+  "Editing AI": "ذكاء التحرير",
+  "Audio & Subtitle AI": "ذكاء الصوت والترجمة",
+  "Sound, Meme & Template Assets": "أصول الصوت والميمز والقوالب",
+  "Everything creators need for fast edits is organized inside the same workspace: internal sounds, meme triggers, templates, and AI sync helpers.": "كل ما يحتاجه صانع المحتوى للتعديل السريع منظم داخل نفس المساحة: أصوات داخلية، وميمز، وقوالب، ومساعدات مزامنة بالذكاء الاصطناعي.",
+  "50 sounds": "50 صوتًا",
+  "Curated for fast edits": "مختارة للتعديلات السريعة",
+  "Meme board": "لوحة ميمز",
+  "One-click reactions": "ردود فعل بضغطة واحدة",
+  "Sound Sync AI": "Sound Sync AI",
+  "Motion-aware timing": "توقيت متوافق مع الحركة",
+  "Template packs": "حزم قوالب",
+  "TikTok, YouTube, reels, ads": "تيك توك ويوتيوب وريلز وإعلانات",
+  "Sound Effects Library": "مكتبة المؤثرات الصوتية",
+  "Match with AI Tools": "اربطها بأدوات الذكاء",
+  "Latest Updates": "أحدث التحديثات",
+  "Follow the rollout of Astrix Video Pro features, library expansions, and system upgrades that shape the Orphex roadmap.": "تابع إطلاق ميزات Astrix Video Pro وتوسعات المكتبة وترقيات النظام التي تشكل خارطة طريق Orphex.",
+  "3 live tracks": "3 مسارات مباشرة",
+  "AI, sound, and meme updates": "تحديثات الذكاء والصوت والميمز",
+  "Weekly pace": "إيقاع أسبوعي",
+  "Product polish and rollout": "تحسين المنتج والإطلاق",
+  "Suite wide": "على مستوى الحزمة",
+  "Apps, assets, and billing": "التطبيقات والأصول والفوترة",
+  "Clear status": "حالة واضحة",
+  "Shipping, testing, or coming soon": "جاهز أو قيد الاختبار أو قريبًا",
+  "Current Release Notes": "ملاحظات الإصدار الحالية",
+  "Roadmap Focus": "تركيز خارطة الطريق",
+  "Workflow Settings": "إعدادات سير العمل",
+  "Control how Astrix Video Pro behaves by default: faster edits, subtitle style, audio cleanup, export targets, cloud sync, and AI assistance.": "تحكم في سلوك Astrix Video Pro افتراضيًا: تعديلات أسرع، ونمط الترجمة، وتنظيف الصوت، ووجهات التصدير، والمزامنة السحابية، ومساعدة الذكاء.",
+  "Fast Mode": "الوضع السريع",
+  "Cloud Sync": "المزامنة السحابية",
+  "Fast defaults": "إعدادات سريعة",
+  "Ready for daily creators": "جاهز لصناع المحتوى اليومي",
+  "Pro control": "تحكم احترافي",
+  "Advanced timeline when needed": "تايم لاين متقدم عند الحاجة",
+  "Multi-device": "أجهزة متعددة",
+  "Same preferences across devices": "نفس التفضيلات على كل الأجهزة",
+  "Export presets": "إعدادات تصدير",
+  "HD, 4K, and social output": "HD و4K ومخرجات المنصات",
+  "Core Preferences": "التفضيلات الأساسية",
+  "Open Billing": "افتح الفوترة",
+  "Account & Subscription": "الحساب والاشتراك",
+  "Open your user profile, see what Pro unlocks, compare plans, and keep Astrix Video Pro synced across your devices.": "افتح ملفك الشخصي وشاهد ما الذي تفتحه خطة Pro وقارن بين الباقات وحافظ على مزامنة Astrix Video Pro عبر أجهزتك.",
+  "Pro tools enabled": "أدوات Pro مفعلة",
+  "Cloud Sync active": "Cloud Sync نشطة",
+  "Multi Export ready": "التصدير المتعدد جاهز",
+  "Current workspace profile": "ملف مساحة العمل الحالي",
+  "AI tools available": "أدوات AI متاحة",
+  "Mobile and desktop continuity": "استمرارية بين الجوال والكمبيوتر",
+  "Export quality by plan": "جودة التصدير حسب الخطة",
+  "Profile Overview": "نظرة عامة على الملف",
+  "Billing Snapshot": "ملخص الفوترة",
+  "Choose Your Pro Plan": "اختر خطة Pro المناسبة",
+  "See Everything Pro Unlocks": "شاهد كل ما تفتحه Pro"
+};
 
 const explainQueue = [
   {
@@ -607,6 +933,7 @@ const refs = {
   homeThemeToggle: document.getElementById("homeThemeToggle"),
   homeThemeLabel: document.getElementById("homeThemeLabel"),
   homeThemeGlyph: document.getElementById("homeThemeGlyph"),
+  siteLocaleToggle: document.getElementById("siteLocaleToggle"),
   dashboardSearch: document.getElementById("dashboardSearch"),
   dashboardEmptyState: document.getElementById("dashboardEmptyState"),
   dashboardEmptyTitle: document.getElementById("dashboardEmptyTitle"),
@@ -674,7 +1001,8 @@ const state = {
   heroDemoPaused: false,
   heroDemoTimer: null,
   processingTimer: null,
-  homeTheme: "night"
+  homeTheme: "night",
+  locale: "ar"
 };
 
 init();
@@ -684,6 +1012,7 @@ function init() {
     refs.year.textContent = String(new Date().getFullYear());
   }
 
+  initSiteLocale();
   initHomeTheme();
   setActiveNav();
   setupRevealObserver();
@@ -704,6 +1033,220 @@ function init() {
   }
 
   bindEvents();
+}
+
+function getCurrentPageName() {
+  return window.location.pathname.split("/").pop() || "index.html";
+}
+
+function getLocaleRecord(node) {
+  let record = localeDefaults.get(node);
+  if (!record) {
+    record = { text: undefined, attrs: {} };
+    localeDefaults.set(node, record);
+  }
+  return record;
+}
+
+function rememberDefaultText(node) {
+  const record = getLocaleRecord(node);
+  if (typeof record.text === "undefined") {
+    record.text = node.textContent ?? "";
+  }
+  return record.text;
+}
+
+function rememberDefaultAttr(node, attr) {
+  const record = getLocaleRecord(node);
+  if (!(attr in record.attrs)) {
+    record.attrs[attr] = node.getAttribute(attr);
+  }
+  return record.attrs[attr];
+}
+
+function resolveLocaleValue(value, index, fallback) {
+  if (Array.isArray(value)) {
+    return value[index] ?? value[value.length - 1] ?? fallback;
+  }
+  return typeof value === "undefined" ? fallback : value;
+}
+
+function getArabicLocaleEntries() {
+  const pageName = getCurrentPageName();
+  return [
+    ...COMMON_AR_LOCALE_ENTRIES,
+    ...(PAGE_AR_LOCALE_ENTRIES[pageName] || []),
+    ...(EXTRA_PAGE_AR_LOCALE_ENTRIES[pageName] || [])
+  ];
+}
+
+function applyLocaleEntries(locale) {
+  const entries = getArabicLocaleEntries();
+  if (!entries.length) return;
+
+  entries.forEach((entry) => {
+    const nodes = Array.from(document.querySelectorAll(entry.selector));
+    if (!nodes.length) return;
+
+    nodes.forEach((node, index) => {
+      if (entry.type === "attr" && entry.attr) {
+        const defaultAttr = rememberDefaultAttr(node, entry.attr);
+        if (locale === "ar") {
+          const localizedValue = resolveLocaleValue(entry.ar, index, defaultAttr ?? "");
+          node.setAttribute(entry.attr, localizedValue);
+          return;
+        }
+
+        if (defaultAttr === null) {
+          node.removeAttribute(entry.attr);
+        } else {
+          node.setAttribute(entry.attr, defaultAttr);
+        }
+        return;
+      }
+
+      const defaultText = rememberDefaultText(node);
+      node.textContent = locale === "ar" ? resolveLocaleValue(entry.ar, index, defaultText) : defaultText;
+    });
+  });
+}
+
+function applyTextTranslations(locale) {
+  const leafNodes = Array.from(document.querySelectorAll("body *"));
+  if (!leafNodes.length) return;
+
+  leafNodes.forEach((node) => {
+    if (node.children.length || node.matches("script, style")) return;
+
+    const defaultText = rememberDefaultText(node);
+    const normalizedText = defaultText.trim();
+    if (!normalizedText) return;
+
+    if (locale === "ar" && AR_TEXT_TRANSLATIONS[normalizedText]) {
+      node.textContent = AR_TEXT_TRANSLATIONS[normalizedText];
+      return;
+    }
+
+    if (locale === "en") {
+      node.textContent = defaultText;
+    }
+  });
+}
+
+function ensureLocaleToggle() {
+  const topBar = document.querySelector(".dashboard-main-top");
+  if (!topBar) return null;
+
+  let actions = topBar.querySelector(".dashboard-top-actions");
+  if (!actions) {
+    actions = document.createElement("div");
+    actions.className = "dashboard-top-actions";
+    const controls = topBar.querySelector(".dashboard-window-controls");
+    if (controls) {
+      actions.appendChild(controls);
+    }
+    topBar.appendChild(actions);
+  }
+
+  let toggle = document.getElementById("siteLocaleToggle");
+  if (!toggle) {
+    toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.id = "siteLocaleToggle";
+    toggle.className = "dashboard-language-toggle";
+    toggle.innerHTML =
+      '<span class="dashboard-language-icon" aria-hidden="true">A</span>' +
+      '<span class="dashboard-language-track" aria-hidden="true">' +
+      '<span class="dashboard-language-chip" data-locale-chip="ar">AR</span>' +
+      '<span class="dashboard-language-chip" data-locale-chip="en">EN</span>' +
+      "</span>";
+
+    const themeToggle = actions.querySelector(".home-theme-toggle");
+    if (themeToggle) {
+      actions.insertBefore(toggle, themeToggle);
+    } else {
+      actions.prepend(toggle);
+    }
+  }
+
+  refs.siteLocaleToggle = toggle;
+  return toggle;
+}
+
+function updateLocaleToggleCopy() {
+  const toggle = refs.siteLocaleToggle || document.getElementById("siteLocaleToggle");
+  if (!toggle) return;
+
+  const copy = UI_COPY[state.locale] || UI_COPY.ar;
+  toggle.dataset.activeLocale = state.locale;
+  toggle.setAttribute("aria-label", state.locale === "ar" ? copy.switchToEnglish : copy.switchToArabic);
+}
+
+function updateThemeToggleCopy() {
+  if (!refs.homeThemeToggle) return;
+
+  const copy = UI_COPY[state.locale] || UI_COPY.ar;
+  const isDay = state.homeTheme === "day";
+
+  refs.homeThemeToggle.setAttribute("aria-pressed", String(isDay));
+  refs.homeThemeToggle.setAttribute("aria-label", isDay ? copy.switchToNight : copy.switchToDay);
+
+  if (refs.homeThemeLabel) {
+    refs.homeThemeLabel.textContent = isDay ? copy.themeDay : copy.themeNight;
+  }
+
+  if (refs.homeThemeGlyph) {
+    refs.homeThemeGlyph.textContent = isDay ? "☀" : "☾";
+  }
+}
+
+function applySiteLocale(locale, options = {}) {
+  const { persist = true } = options;
+  const normalizedLocale = locale === "en" ? "en" : "ar";
+
+  state.locale = normalizedLocale;
+  document.documentElement.lang = normalizedLocale;
+  document.body.dataset.siteLocale = normalizedLocale;
+
+  applyLocaleEntries(normalizedLocale);
+  applyTextTranslations(normalizedLocale);
+  updateLocaleToggleCopy();
+  updateThemeToggleCopy();
+
+  if (persist) {
+    try {
+      window.localStorage.setItem(SITE_LOCALE_STORAGE_KEY, normalizedLocale);
+    } catch (error) {
+      // Ignore storage failures and keep the in-memory locale only.
+    }
+  }
+
+  window.dispatchEvent(
+    new CustomEvent("orphex:localechange", {
+      detail: { locale: normalizedLocale }
+    })
+  );
+}
+
+function initSiteLocale() {
+  const toggle = ensureLocaleToggle();
+  let initialLocale = "ar";
+
+  try {
+    const savedLocale = window.localStorage.getItem(SITE_LOCALE_STORAGE_KEY);
+    if (savedLocale === "ar" || savedLocale === "en") {
+      initialLocale = savedLocale;
+    }
+  } catch (error) {
+    initialLocale = "ar";
+  }
+
+  applySiteLocale(initialLocale, { persist: false });
+
+  toggle?.addEventListener("click", () => {
+    const nextLocale = state.locale === "ar" ? "en" : "ar";
+    applySiteLocale(nextLocale);
+  });
 }
 
 function bindEvents() {
@@ -822,22 +1365,12 @@ function initHomeTheme() {
 
 function applyHomeTheme(theme) {
   const normalizedTheme = theme === "day" ? "day" : "night";
-  const isDay = normalizedTheme === "day";
 
   state.homeTheme = normalizedTheme;
   document.body.dataset.homeTheme = normalizedTheme;
 
-  refs.homeThemeToggle?.classList.toggle("is-day", isDay);
-  refs.homeThemeToggle?.setAttribute("aria-pressed", String(isDay));
-  refs.homeThemeToggle?.setAttribute("aria-label", isDay ? "Switch to night mode" : "Switch to day mode");
-
-  if (refs.homeThemeLabel) {
-    refs.homeThemeLabel.textContent = isDay ? "Day Mode" : "Night Mode";
-  }
-
-  if (refs.homeThemeGlyph) {
-    refs.homeThemeGlyph.textContent = isDay ? "☀" : "☾";
-  }
+  refs.homeThemeToggle?.classList.toggle("is-day", normalizedTheme === "day");
+  updateThemeToggleCopy();
 }
 
 function setActiveNav() {
@@ -1049,19 +1582,21 @@ function initDashboardShell() {
   const toolCards = Array.from(document.querySelectorAll("[data-tool-card]"));
   const processingNodes = Array.from(document.querySelectorAll("[data-processing-label]"));
   const sidebarLinks = Array.from(document.querySelectorAll(".sidebar-link, .sidebar-account"));
-  const defaultEmptyTitle =
-    refs.dashboardEmptyTitle?.dataset.defaultTitle ||
-    refs.dashboardEmptyTitle?.textContent ||
-    "Tools are being prepared. Stay tuned.";
-  const defaultEmptyText =
-    refs.dashboardEmptyText?.dataset.defaultText ||
-    refs.dashboardEmptyText?.textContent ||
-    "Use search to find the right tools faster.";
 
   hideProcessingModal();
   closeDashboardSidebar();
 
   const applyFilter = () => {
+    const copy = UI_COPY[state.locale] || UI_COPY.ar;
+    const defaultEmptyTitle =
+      refs.dashboardEmptyTitle?.dataset.defaultTitle ||
+      refs.dashboardEmptyTitle?.textContent ||
+      "Tools are being prepared. Stay tuned.";
+    const defaultEmptyText =
+      refs.dashboardEmptyText?.dataset.defaultText ||
+      refs.dashboardEmptyText?.textContent ||
+      "Use search to find the right tools faster.";
+
     if (!toolCards.length) {
       if (refs.dashboardEmptyState) {
         refs.dashboardEmptyState.hidden = true;
@@ -1082,13 +1617,13 @@ function initDashboardShell() {
     if (refs.dashboardEmptyState) {
       refs.dashboardEmptyState.hidden = visibleCount > 0;
       if (refs.dashboardEmptyTitle) {
-        refs.dashboardEmptyTitle.textContent = visibleCount ? defaultEmptyTitle : query ? `Nothing matched "${query}".` : defaultEmptyTitle;
+        refs.dashboardEmptyTitle.textContent = visibleCount ? defaultEmptyTitle : query ? copy.nothingMatched(query) : defaultEmptyTitle;
       }
       if (refs.dashboardEmptyText) {
         refs.dashboardEmptyText.textContent = visibleCount
           ? defaultEmptyText
           : query
-            ? "Try a broader keyword like video, AI, sound, or export."
+            ? copy.broaderKeyword
             : defaultEmptyText;
       }
     }
@@ -1121,6 +1656,7 @@ function initDashboardShell() {
   });
 
   document.addEventListener("keydown", handleDashboardKeydown);
+  window.addEventListener("orphex:localechange", applyFilter);
 
   applyFilter();
 }
@@ -1152,7 +1688,7 @@ function showProcessingModal(title) {
   if (!refs.processingModal || !refs.processingTitle || !refs.processingText) return;
 
   refs.processingTitle.textContent = title;
-  refs.processingText.textContent = "Tools are being prepared. Stay tuned.";
+  refs.processingText.textContent = (UI_COPY[state.locale] || UI_COPY.ar).processingText;
   refs.processingModal.hidden = false;
 
   if (state.processingTimer) {

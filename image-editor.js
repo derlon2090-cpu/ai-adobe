@@ -88,6 +88,102 @@
 
   const sampleSrc = "assets/orphex-logo.jpg";
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const editorLocaleStrings = {
+    ar: {
+      "Custom Preset": "نمط مخصص",
+      "Clean Preset": "نمط نظيف",
+      "Portrait Preset": "نمط بورتريه",
+      "Product Preset": "نمط المنتج",
+      "Noir Preset": "نمط نوار",
+      "Social Glow Preset": "نمط توهج اجتماعي",
+      "Original Frame": "الإطار الأصلي",
+      "Square Frame": "إطار مربع",
+      "4:5 Frame": "إطار 4:5",
+      "9:16 Frame": "إطار 9:16",
+      "16:9 Frame": "إطار 16:9",
+      "Source Fit": "بحجم المصدر",
+      "Show Edited": "اعرض التعديل",
+      "Before / After": "قبل / بعد",
+      "Cutout Active": "الإزالة مفعلة",
+      "Remove Background": "إزالة الخلفية",
+      "Before View": "عرض قبل التعديل",
+      "Preview Ready": "المعاينة جاهزة",
+      "Image Loaded": "تم تحميل الصورة",
+      "Fresh Canvas": "مساحة جديدة",
+      "Cutout On": "الإزالة مفعلة",
+      "Cutout Off": "الإزالة متوقفة",
+      "Text On": "النص مفعّل",
+      "Text Off": "النص متوقف",
+      "Layer On": "الطبقة مفعلة",
+      "Layer Off": "الطبقة متوقفة",
+      "No overlay text yet.": "لا يوجد نص مضاف بعد.",
+      "No image selected": "لا توجد صورة محددة",
+      "No base image loaded yet": "لم يتم تحميل صورة أساسية بعد",
+      "Ready after upload": "جاهز بعد الرفع",
+      "Inserted layer": "طبقة مدرجة",
+      "Upload an image or use the sample to begin.": "ارفع صورة أو استخدم العينة للبدء.",
+      "Workspace ready.": "المساحة جاهزة.",
+      "Start with a fresh canvas. Upload your main image, insert another image layer if needed, then adjust, crop, and export.": "ابدأ بمساحة جديدة. ارفع الصورة الأساسية، وأدرج طبقة صورة إضافية عند الحاجة، ثم عدّل واقصص وصدّر مباشرة.",
+      "Image uploaded.": "تم رفع الصورة.",
+      "Your image is ready for live editing inside Orphex.": "صورتك جاهزة الآن للتحرير المباشر داخل Orphex.",
+      "Inserted image added.": "تمت إضافة الصورة المدرجة.",
+      "The new image layer is now sitting above the main canvas and can be moved, scaled, or faded.": "طبقة الصورة الجديدة أصبحت فوق المساحة الرئيسية ويمكن تحريكها وتكبيرها أو تغيير شفافيتها.",
+      "Sample restored.": "تمت استعادة العينة.",
+      "The default Orphex sample is active again for quick testing.": "عينة Orphex الافتراضية فعالة من جديد للاختبار السريع.",
+      "Upload a base image first.": "ارفع صورة أساسية أولًا.",
+      "Before / After becomes useful after you add a main image to the canvas.": "ميزة قبل / بعد تصبح مفيدة بعد إضافة صورة رئيسية إلى مساحة العمل.",
+      "Before view enabled.": "تم تفعيل عرض ما قبل التعديل.",
+      "Edited view restored.": "تمت استعادة عرض التعديل.",
+      "Preview is temporarily showing the source image without color, cutout, or text changes.": "المعاينة تعرض الآن الصورة الأصلية مؤقتًا بدون تغييرات اللون أو الإزالة أو النص.",
+      "Preview is back to the full edited result.": "عادت المعاينة إلى النتيجة المعدلة الكاملة.",
+      "Editor reset.": "تمت إعادة ضبط المحرر.",
+      "All adjustments, crop settings, cutout changes, inserted layers, text, and transforms were cleared.": "تم مسح جميع التعديلات والقص والإزالة والطبقات المدرجة والنص والتحويلات.",
+      "Presets are applied to the main image after you load one into the workspace.": "يتم تطبيق الأنماط على الصورة الأساسية بعد تحميلها داخل مساحة العمل.",
+      "Auto Enhance applied.": "تم تطبيق التحسين التلقائي.",
+      "Orphex boosted the image with a balanced, high-clarity preset.": "قام Orphex بتحسين الصورة بنمط متوازن وعالي الوضوح.",
+      "You can keep the preset as-is or fine-tune every slider manually.": "يمكنك إبقاء النمط كما هو أو ضبط كل شريط يدويًا.",
+      "Background removal works on the main image after you load it.": "إزالة الخلفية تعمل على الصورة الأساسية بعد تحميلها.",
+      "Quick cutout enabled.": "تم تفعيل الإزالة السريعة.",
+      "Background cleanup works best on clean backdrops. PNG export preserves transparency.": "تنظيف الخلفية يعمل أفضل مع الخلفيات النظيفة، وتصدير PNG يحافظ على الشفافية.",
+      "Background restored.": "تمت استعادة الخلفية.",
+      "The original background is visible again.": "الخلفية الأصلية أصبحت ظاهرة من جديد.",
+      "Text removed.": "تم حذف النص.",
+      "The overlay text was cleared from the current design.": "تمت إزالة النص المضاف من التصميم الحالي.",
+      "Inserted image removed.": "تم حذف الصورة المدرجة.",
+      "The extra image layer was removed and the canvas is back to the base artwork only.": "تمت إزالة طبقة الصورة الإضافية وعادت المساحة إلى العمل الأساسي فقط.",
+      "Export size updated.": "تم تحديث حجم التصدير.",
+      "The new download size will be used the next time you export the image.": "سيتم استخدام حجم التنزيل الجديد في المرة القادمة عند تصدير الصورة.",
+      "Nothing to export yet.": "لا يوجد ما يمكن تصديره بعد.",
+      "Upload a main image or insert an image layer first, then export the result.": "ارفع صورة أساسية أو أدرج طبقة صورة أولًا، ثم صدّر النتيجة.",
+      "Export complete.": "اكتمل التصدير.",
+      "Frame updated.": "تم تحديث الإطار.",
+      "The live preview and exported result now use the selected crop format.": "المعاينة المباشرة والنتيجة المصدرة تستخدمان الآن تنسيق القص المحدد.",
+      "Transform applied.": "تم تطبيق التحويل.",
+      "Rotation and flip controls affect both the live preview and exported file.": "أدوات التدوير والعكس تؤثر على المعاينة المباشرة والملف المصدّر معًا.",
+      "Normal X": "X طبيعي",
+      "Flip X": "عكس X",
+      "Normal Y": "Y طبيعي",
+      "Flip Y": "عكس Y"
+    }
+  };
+
+  const getEditorLocale = () => {
+    const lang = (document.documentElement.lang || "").toLowerCase();
+    return lang.startsWith("en") ? "en" : "ar";
+  };
+
+  const translateEditorText = (text) => {
+    if (getEditorLocale() !== "ar") return text;
+    if (typeof text === "string" && text.endsWith(" applied.")) {
+      const presetLabel = text.slice(0, -9);
+      return `تم تطبيق ${translateEditorText(presetLabel)}.`;
+    }
+    if (typeof text === "string" && text.startsWith("The edited image was prepared as ")) {
+      const suffix = text.replace("The edited image was prepared as ", "");
+      return `تم تجهيز الصورة المعدلة بصيغة ${suffix}`;
+    }
+    return editorLocaleStrings.ar[text] || text;
+  };
 
   const presets = {
     custom: { label: "Custom Preset", brightness: 100, contrast: 100, saturation: 100, warmth: 0, blur: 0 },
@@ -114,6 +210,7 @@
   };
 
   const state = {
+    locale: getEditorLocale(),
     source: "",
     fileName: "untitled-image",
     extension: "png",
@@ -151,7 +248,9 @@
     dragOriginX: 0,
     dragOriginY: 0,
     cutoutCacheKey: "",
-    cutoutCanvas: null
+    cutoutCanvas: null,
+    statusTitle: "Workspace ready.",
+    statusText: "Start with a fresh canvas. Upload your main image, insert another image layer if needed, then adjust, crop, and export."
   };
 
   bindEvents();
@@ -170,6 +269,14 @@
 
   renderPreview();
   updateMeta();
+  renderStatus();
+
+  window.addEventListener("orphex:localechange", (event) => {
+    state.locale = event.detail?.locale === "en" ? "en" : "ar";
+    syncControls();
+    updateMeta();
+    renderStatus();
+  });
 
   function bindEvents() {
     refs.uploadButton?.addEventListener("click", () => refs.uploadInput?.click());
@@ -366,7 +473,7 @@
     state.compare = !state.compare;
     refs.compareButton?.setAttribute("aria-pressed", state.compare ? "true" : "false");
     if (refs.compareButton) {
-      refs.compareButton.textContent = state.compare ? "Show Edited" : "Before / After";
+      refs.compareButton.textContent = translateEditorText(state.compare ? "Show Edited" : "Before / After");
     }
     renderPreview();
     updateMeta();
@@ -562,12 +669,12 @@
     setText(refs.overlayYValue, `${state.overlayY}%`);
     setText(refs.overlayOpacityValue, `${state.overlayOpacity}%`);
     setText(refs.textColorValue, state.textColor.toLowerCase());
-    setText(refs.textLengthValue, `${state.text.trim().length} chars`);
-    setText(refs.exportSizeValue, exportSizes[state.exportSize]?.label || "Source Fit");
+    setText(refs.textLengthValue, state.locale === "ar" ? `${state.text.trim().length} حرف` : `${state.text.trim().length} chars`);
+    setText(refs.exportSizeValue, translateEditorText(exportSizes[state.exportSize]?.label || "Source Fit"));
 
     refs.compareButton?.setAttribute("aria-pressed", state.compare ? "true" : "false");
     if (refs.compareButton) {
-      refs.compareButton.textContent = state.compare ? "Show Edited" : "Before / After";
+      refs.compareButton.textContent = translateEditorText(state.compare ? "Show Edited" : "Before / After");
     }
 
     refs.presetButtons.forEach((button) => {
@@ -579,14 +686,14 @@
     });
 
     if (refs.presetStatus) {
-      refs.presetStatus.textContent = presets[state.preset]?.label || "Custom Preset";
+      refs.presetStatus.textContent = translateEditorText(presets[state.preset]?.label || "Custom Preset");
     }
     if (refs.frameStatus) {
-      refs.frameStatus.textContent = frameModes[state.frame]?.label || "Original Frame";
+      refs.frameStatus.textContent = translateEditorText(frameModes[state.frame]?.label || "Original Frame");
     }
     if (refs.cutoutButton) {
       refs.cutoutButton.classList.toggle("is-active", state.cutoutEnabled);
-      refs.cutoutButton.textContent = state.cutoutEnabled ? "Cutout Active" : "Remove Background";
+      refs.cutoutButton.textContent = translateEditorText(state.cutoutEnabled ? "Cutout Active" : "Remove Background");
     }
     if (refs.removeOverlayButton) {
       refs.removeOverlayButton.classList.toggle("is-active", hasOverlayImage());
@@ -700,7 +807,12 @@
     link.download = `${state.fileName}-edited.${extension}`;
     link.click();
 
-    setStatus("Export complete.", `The edited image was prepared as ${extension.toUpperCase()} using the current frame, cutout, text, and adjustments.`);
+    setStatus(
+      "Export complete.",
+      state.locale === "ar"
+        ? `تم تجهيز الصورة المعدلة بصيغة ${extension.toUpperCase()} اعتمادًا على الإطار الحالي والإزالة والنص والتعديلات.`
+        : `The edited image was prepared as ${extension.toUpperCase()} using the current frame, cutout, text, and adjustments.`
+    );
   }
 
   function getRenderDimensions(mode) {
@@ -846,34 +958,56 @@
     const width = refs.sourceImage.naturalWidth || 0;
     const height = refs.sourceImage.naturalHeight || 0;
     const exportDimensions = getRenderDimensions("export");
-    const previewState = state.compare ? "Before View" : "Preview Ready";
-    const imageState = width && height ? "Image Loaded" : "Fresh Canvas";
-    const cutoutState = state.cutoutEnabled ? "Cutout On" : "Cutout Off";
-    const textState = state.text.trim() ? "Text On" : "Text Off";
-    const overlayState = hasOverlayImage() ? "Layer On" : "Layer Off";
-    const featureSummary = state.text.trim() ? `${state.text.trim().length} chars overlay` : "No overlay text yet.";
-    const orientation = `${state.flipX === -1 ? "Flip X" : "Normal X"} | ${state.flipY === -1 ? "Flip Y" : "Normal Y"}`;
+    const previewState = translateEditorText(state.compare ? "Before View" : "Preview Ready");
+    const imageState = translateEditorText(width && height ? "Image Loaded" : "Fresh Canvas");
+    const cutoutState = translateEditorText(state.cutoutEnabled ? "Cutout On" : "Cutout Off");
+    const textState = translateEditorText(state.text.trim() ? "Text On" : "Text Off");
+    const overlayState = translateEditorText(hasOverlayImage() ? "Layer On" : "Layer Off");
+    const featureSummary = state.text.trim()
+      ? state.locale === "ar"
+        ? `${state.text.trim().length} حرف فوق الصورة`
+        : `${state.text.trim().length} chars overlay`
+      : translateEditorText("No overlay text yet.");
+    const orientation = `${translateEditorText(state.flipX === -1 ? "Flip X" : "Normal X")} | ${translateEditorText(state.flipY === -1 ? "Flip Y" : "Normal Y")}`;
 
-    setText(refs.fileName, hasBaseImage() ? `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}` : "No image selected");
+    setText(refs.fileName, hasBaseImage() ? `${state.fileName}.${state.extension === "jpeg" ? "jpg" : state.extension}` : translateEditorText("No image selected"));
     setText(refs.previewState, previewState);
     setText(refs.imageState, imageState);
-    setText(refs.imageMeta, width && height ? `${width} x ${height} px source` : "No base image loaded yet");
-    setText(refs.sizeMeta, hasBaseImage() || hasOverlayImage() ? `${exportDimensions.width} x ${exportDimensions.height} export` : "Ready after upload");
-    setText(refs.transformMeta, `Rotation ${normalizeDisplayRotation()} deg | ${orientation}`);
+    setText(refs.imageMeta, width && height ? (state.locale === "ar" ? `${width} × ${height} بكسل أصلي` : `${width} x ${height} px source`) : translateEditorText("No base image loaded yet"));
+    setText(refs.sizeMeta, hasBaseImage() || hasOverlayImage() ? (state.locale === "ar" ? `${exportDimensions.width} × ${exportDimensions.height} تصدير` : `${exportDimensions.width} x ${exportDimensions.height} export`) : translateEditorText("Ready after upload"));
+    setText(refs.transformMeta, state.locale === "ar" ? `دوران ${normalizeDisplayRotation()}° | ${orientation}` : `Rotation ${normalizeDisplayRotation()} deg | ${orientation}`);
     setText(refs.cutoutMeta, cutoutState);
     setText(refs.textMeta, textState);
     setText(refs.featureMeta, featureSummary);
     setText(refs.overlayMeta, overlayState);
-    setText(refs.overlayInfo, hasOverlayImage() ? `${state.overlayFileName || "Inserted layer"} | ${state.overlayOpacity}% opacity` : "No inserted image layer yet.");
-    setText(refs.frameMeta, hasBaseImage() || hasOverlayImage() ? `${frameModes[state.frame]?.label || "Original Frame"} | ${exportSizes[state.exportSize]?.label || "Source Fit"}` : "Upload an image or use the sample to begin.");
+    setText(
+      refs.overlayInfo,
+      hasOverlayImage()
+        ? state.locale === "ar"
+          ? `${state.overlayFileName || translateEditorText("Inserted layer")} | شفافية ${state.overlayOpacity}%`
+          : `${state.overlayFileName || "Inserted layer"} | ${state.overlayOpacity}% opacity`
+        : translateEditorText("No inserted image layer yet.")
+    );
+    setText(
+      refs.frameMeta,
+      hasBaseImage() || hasOverlayImage()
+        ? `${translateEditorText(frameModes[state.frame]?.label || "Original Frame")} | ${translateEditorText(exportSizes[state.exportSize]?.label || "Source Fit")}`
+        : translateEditorText("Upload an image or use the sample to begin.")
+    );
   }
 
   function setStatus(title, text) {
+    state.statusTitle = title;
+    state.statusText = text;
+    renderStatus();
+  }
+
+  function renderStatus() {
     const strong = refs.statusBox?.querySelector("strong");
     if (strong) {
-      strong.textContent = title;
+      strong.textContent = translateEditorText(state.statusTitle);
     }
-    setText(refs.statusText, text);
+    setText(refs.statusText, translateEditorText(state.statusText));
   }
 
   function invalidateCutoutCache() {
